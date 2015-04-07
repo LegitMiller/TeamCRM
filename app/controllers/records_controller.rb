@@ -38,7 +38,7 @@ class RecordsController < ApplicationController
   # GET /records/1/edit
   def edit
     @profiles= Profile.all
-    if current_user.profile.title != "admin"
+    if current_user.profile.title == "admin"
     elsif current_user.profile.title == "processor" 
       if Record.find_by_id(params[:id]).processor_id != current_user.id
         redirect_to records_path, notice: 'Unable to edit unowned record.'
