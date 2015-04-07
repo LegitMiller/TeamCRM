@@ -1,0 +1,43 @@
+
+<br />
+<h1>My Groups</h1>
+  <div class="media">
+    <div class="media-body">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>My Groups</th>
+            <th><center>Description</center></th>
+            <th class="text-right">Member Count</th>
+          </tr>
+        </thead>
+        <tbody>
+        <!--these are the groups I own-->
+          <% current_user.owned_groups.each do |group| %>
+            <tr>
+              <td><%= link_to group.title, group_path(group), class: 'btn btn-warning btn-lg', "data-no-turbolink"=>"true" %></td>
+              <td><center><%= truncate group.desc %></center></td>
+              <td class="text-right">250</td>
+            </tr>
+          <% end %>
+        <!--these are the groups I'm a part of.-->
+          <% if !current_user.groups.blank? %>
+            <% current_user.groups.order(:created_at).each do |group| %>
+              <% if Member.find_by(:group_id => group.id, :user_id => current_user.id).usertype != "banned"  %>
+                <tr>
+                  <td><%= link_to group.title, group_path(group), class: 'btn btn-default btn-lg', "data-no-turbolink"=>"true" %></td>
+                  <td><center><%= truncate group.desc %></center></td>
+                  <td class="text-right">250</td>
+                </tr>
+              <% end %>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<center>
+<p>
+	<%= link_to "Create New Group", new_group_path, class: 'btn btn-default btn-lg', "data-no-turbolink"=>"true" %>
+</p>
+</center>

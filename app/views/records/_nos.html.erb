@@ -1,0 +1,42 @@
+<h3>Notes History</h3>
+<div class="media">
+  <div class="media-body">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Comments</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @record.notes.order(:created_at).reverse.each do |note|%>
+          <tr>
+            <%= form_for [@record, @record.notes.build] do |f| %>
+              <div class="form-group">
+                <div class="input-group">
+                  <% if !note.comment.blank? %>
+                    <td>
+                      <div>
+                        <%= getname(note.user_id) %> said <%= time_ago_in_words note.updated_at %> ago
+                      </div>
+                      <%= f.text_field :user_id, "value"=> current_user.id, "placeholder" => "cost", "style"=>"width:45px", "type"=>"number", "hidden"=>"true" %>
+                      <p>
+                        <%= f.text_area :comment, "value" => note.comment,"placeholder" => "notes", "style"=>"width:100%", :class => "input-lg form-control", "onkeyup"=>"textAreaAdjust(this)", "onclick"=>"textAreaAdjust(this)" %>
+                      </p>
+
+                      <div class="text-right">                  
+                        <%= link_to(image_tag("trash.png", size: "18x20", alt: "Remove", "style"=>"padding:2px"), record_note_path(@record, note), method: :delete, :class => "btn btn-default btn-sm") %>
+
+                        <%= f.submit "Submit", :class=> "btn btn-info btn-sm", :onclick=> "value=#{note.id}"%>
+                    </td>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+

@@ -1,0 +1,36 @@
+<h1>Profiles</h1>
+
+<%= form_tag profiles_path, :method => 'get', :class => "form-inline" do %><!--url_for(:controller => 'groups', :action => 'modcash'), :method => 'post' -->
+  <p>
+    <%= text_field_tag :search, params[:search], :class => "input-lg", autofocus: true %>
+    <%= submit_tag "Search", :name => nil, :class => "btn btn-default btn-lg", :style => "margin:0px 0px 10px 10px" %>
+  </p>
+<% end %>
+
+<% if @profiles.any? %>
+<% else %>
+  <p>No search results match your search, <%= params[:search] %>.</p>
+<% end %>
+
+<div class="media">
+  <div class="media-body">
+    <table class="table table-hover">
+      <tbody>
+        <% @profiles.each do |profile| %>
+          <tr>
+            <td>
+              <% if profile.firstname.blank? || profile.lastname.blank? %>
+                <%= link_to profile.email, profile, :class => "btn btn-default btn-lg","data-no-turbolink"=>"true"  %>
+              <% else %>
+                <%= link_to profile.firstname + " " + profile.lastname, profile, :class => "btn btn-default btn-lg", "data-no-turbolink"=>"true"  %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<br>
+

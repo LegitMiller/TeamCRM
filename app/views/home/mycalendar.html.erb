@@ -1,0 +1,15 @@
+
+<br />
+<h1>My Calendar</h1>
+
+<% events_by_date = %>
+
+<%= calendar do |date| %>
+  <%= date.day %>
+<% end %>
+
+<center>
+<p>
+	<%= link_to "Create New Group", new_group_path, class: 'btn btn-default btn-lg', "data-no-turbolink"=>"true" %>
+</p>
+</center>

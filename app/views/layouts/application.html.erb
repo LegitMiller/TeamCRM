@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TeamCRM</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+	<div class = "container">
+		<ul class = "nav nav-tabs">
+			<li><%= link_to(image_tag("Group-icon.png"), root_path, "style"=>"padding:0px", "title"=>"BarterXS") %></li>
+
+
+
+
+			<% if !current_user.blank? %>
+				<li class = "pull-right"><%= link_to "Logout", :destroy_user_session, method: :delete %></li>
+
+				<li class = "pull-right"><%= editname current_user.id %></li>
+
+			<% else %>
+				<h4><li class = "pull-right">TeamCRM</li></h4>
+			<% end %>
+		</ul>
+
+		<%= yield %>
+
+		<div class ="notice"><%= notice %></div>
+		<div class ="alert"><%= alert %></div>
+
+	</div>
+</body>
+</html>

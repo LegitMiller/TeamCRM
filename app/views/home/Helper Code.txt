@@ -1,0 +1,133 @@
+        <!--these are the groups I own-->
+          <% @groups.each do |group| %>
+            <tr>
+
+              <td><%= link_to group.title, group_path(group), class: 'btn btn-default btn-lg', "data-no-turbolink"=>"true" %></td>
+              <td><center><%= truncate group.desc %></center></td>
+              <td class="text-right">250</td>
+              
+            </tr>
+          <% end %>
+
+        <!--these are the groups I'm a part of needs editing.-->
+          <% current_user.groups.order(:created_at).each do |group| %>
+            <tr>
+
+              <td><%= link_to group.title, group_path(group), class: 'btn btn-default btn-lg', "data-no-turbolink"=>"true" %></td>
+              <td><center><%= truncate group.desc %></center></td>
+              <td class="text-right">250</td>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+
+
+
+
+<h1>My Groups</h1>
+  <div class="media">
+    <div class="media-body">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>My Groups</th>
+            <th><center>Description</center></th>
+            <th class="text-right">Member Count</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% current_user.groups.order(:created_at).each do |group| %>
+            <tr>
+
+              <td><%= link_to group.title, edit_group_path(group), class: 'btn btn-default btn-lg btn-warning', "data-no-turbolink"=>"true" %></td>
+              <td><center><%= truncate group.desc %></center></td>
+              <td class="text-right">250</td>
+              
+            </tr>
+          <% end %>
+
+          <% current_user.groups.order(:created_at).each do |group| %>
+            <tr>
+
+              <td><%= link_to group.title, group_path(group), class: 'btn btn-default btn-lg', "data-no-turbolink"=>"true" %></td>
+              <td><center><%= truncate group.desc %></center></td>
+              <td class="text-right">250</td>
+              
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<p>
+	<%= link_to "New Group", new_group_path %>
+</p>
+<h1>My Downline</h1>
+  <div class="media">
+    <div class="media-body">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Groups I'm a part of</th>
+            <th><center>Description</center></th>
+            <th class="text-right">Member Count</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% current_user.groups.order(:created_at).each do |group| %>
+            <tr>
+
+              <td><%= link_to group.title, edit_group_path(group), class: 'btn btn-default btn-lg', "data-no-turbolink"=>"true" %></td>
+              <td><center><%= truncate group.desc %></center></td>
+              <td class="text-right">250</td>
+              
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+<h1>Coming Events</h1>
+    <div class="media">
+    <div class="media-body">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>My Groups</th>
+            <th><center>Description</center></th>
+            <th class="text-right">Member Count</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% current_user.groups.order(:created_at).each do |group| %>
+            <tr>
+
+              <td><%= link_to group.title, edit_group_path(group), class: 'btn btn-default btn-lg', "data-no-turbolink"=>"true" %></td>
+              <td><center><%= truncate group.desc %></center></td>
+              <td class="text-right">250</td>
+              
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>

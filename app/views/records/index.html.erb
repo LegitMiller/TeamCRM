@@ -1,0 +1,101 @@
+<h1>Active Client List</h1>
+<br />
+<div class="row">
+  <div class="col-xs-6 col-sm-6">
+    <%= form_tag records_path, :method => 'get', :class => "form-inline" do %>
+      <%= text_field_tag :search, params[:search], :class => "input-lg", autofocus: true %>
+      <%= submit_tag "Search", :name => nil, :class => "btn btn-default btn-lg", :style => "margin:0px 0px 10px 10px" %>
+    <% end %>
+  </div>
+  <div class="col-xs-6 col-sm-6">
+    <%= link_to 'New Record', new_record_path, class: 'btn btn-default btn-lg btn-info pull-right', "data-no-turbolink"=>"true"  %>
+  </div>
+</div>
+
+<% if @records.any? %>
+<% else %>
+  <p>No search results match your search: <%= params[:search] %>.</p>
+<% end %>
+<table class="table table-hover" id="records">
+  <thead>
+    <tr>
+      <th><%= sortable "firstname", "Frist Name"%></th>
+      <th><%= sortable "lastname", "Last Name" %></th>
+      <th><%= sortable "receivedate", "Record Age" %></th>
+      <th><%= sortable "progress", "Progress" %></th>       
+      <th><%= sortable "loanofficer_id", "Loan Officer" %></th>
+      <th><%= sortable "processor_id", "Processor" %></th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @records.each do |record| %>
+      <% if record.progress != "11" and record.progress != "12" %>
+       <!--<tr data-link="<%= edit_record_path(record) %>">-->
+          <tr> 
+          <td><%= correctlink record, record.firstname %></td>
+          <td><%= correctlink record, record.lastname %></td>
+          <td><%= time_ago_in_words record.receivedate %></td>
+          <td><%= record.progress %></td>
+          <td><%= getname record.loanofficer_id %></td>
+          <td><%= getname record.processor_id %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<br />
+<br />
+<br />
+<hr />
+<p onclick="showClosedTable()", class="btn btn-default btn-lg"> Inactive Client List</p>
+<br>
+
+<table class="table table-hover" id="deadrecords" style="visibility:hidden">
+  <thead>
+    <tr>
+      <th><%= sortable "firstname", "Frist Name"%></th>
+      <th><%= sortable "lastname", "Last Name" %></th>
+      <th><%= sortable "receivedate", "Record Age" %></th>
+      <th><%= sortable "progress", "Progress" %></th>       
+      <th><%= sortable "loanofficer_id", "Loan Officer" %></th>
+      <th><%= sortable "processor_id", "Processor" %></th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @records.each do |record| %>
+      <% if record.progress == "11" or record.progress == "12" %>
+       <!--<tr data-link="<%= edit_record_path(record) %>">-->
+          <tr> 
+          <td><%= correctlink record, record.firstname %></td>
+          <td><%= correctlink record, record.lastname %></td>
+          <td><%= time_ago_in_words record.receivedate %></td>
+          <td><%= record.progress %></td>
+          <td><%= getname record.loanofficer_id %></td>
+          <td><%= getname record.processor_id %></td>
+          <% if current_user.profile.title == "admin" || current_user.id == record.loanofficer_id || current_user.id == record.processor_id %>
+            <td><%= link_to 'Destroy', record, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-default btn-xs' %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+
+<script>
+function showClosedTable() {
+  if (document.getElementById('deadrecords').style.visibility=='hidden'){
+    document.getElementById('deadrecords').style.visibility='visible';
+  } else {
+    document.getElementById('deadrecords').style.visibility='hidden';
+  }
+
+    return false;
+}
+</script>
+<br />

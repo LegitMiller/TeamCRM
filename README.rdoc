@@ -1,0 +1,176 @@
+== README
+
+Here are things we have to do:
+
+
+
+
+
+= Housekeeping stuff
+
+* delete, create and edit capabilities restricted to admins and owners in controllers
+
+* consider other security loopholes
+
+>Choose one of these Options to fix deleted users issues.
+>* if you delete a user delete all groups owned by that user
+>* if you delete a user remove that user from anyone claiming he's their upline
+>* if you delete a group delete all events owned by that group
+>* if you delete a group delete all member records of that group
+>* if you delete an event delete all RSVPs associated (not yet implemented)
+>..OR..
+>* Every place you call user.id have a contingency incase that returns null
+>..OR.. (this is best I think)
+>* Never really delete an account, just hide it, make it so you can't login or something.
+>..OR..
+>* do delete it 
+>* and migrate the data somewhere else
+>* so the groups and events still show up that the user created.
+
+* add migration to add Repeat settings to events model such as every week, every month, specific day of week every month.
+
+* refactor all views code to helper classes or models (ask professional how best to structure the code to make it readable).
+
+* improve layout design to allow white label to look good as is. 
+
+* implement Test driven development if nate knows how to do that (I don't).
+
+* In controllers make sure everything is filled out that needs to be filled like time and place for events.
+
+
+
+
+
+= Barebones Features:
+
+
+
+
+
+
+
+
+= MVP Features:
+
+* Profile system (On profile show, differentiate the groups according to the ones they started, are a member of, are an admin of, and which groups are private. listed with number of members).
+
+* Notification system (compile a list of invites and disply to user upon login)
+
+* Profile System (update it so they have control over notification settings)
+
+* Autotext system (on event page - a copy button so they can copy it to text it to their prospects. Does this require integration with the phone?)
+
+* Calendar system (calendar shows 2. all events in all their groups, 3. events they've created regardless of if their going (all three kinds are highlighted differently)).
+
+* Group-Search system (searh by location (zip) Search by name (default) order by popularity option)
+
+* Event System (make invitation generator run when event created (EventsController def update? loop through @event.group.members.someNotificaitonthingy???))
+
+* Event System (make hand-picked invitation system)
+
+* event system (able to search by location) (map)
+
+
+
+
+
+= Alpha Features
+
+* Group system (add private functionality to make membership by invite only Admins controlled)
+
+* Map system (open up phone's map program or show google maps in the app on the events show page).
+
+* Notification system (expand it to include buzzing their phone at a specific time for reminders, new invites and updates)
+
+* Autotext system (Integrate with phone - autotext a message and the details of the event to a list of their contacts of their choosing.)
+
+* Group-Member System (messaging and chat. You can choose to recieve notifications from all member messages, all owner messages, all admin messages, all messages that mention your name, or any mixture of those per group. These settings will be changed on the group page for each individual so we'll have to make a migration to the member model to include those settings. this acts a a group texting system for like getting updates from leaders).
+
+
+
+
+
+= Beta Features:
+
+* Calendar System - ShareTime (where people can offer timeslots they're available and others can reserve them)
+> not shared with everyone, by invitation. "I'm going to let you into my sharetime."
+> Request, and allow system.
+> limits options available. or something. 
+> Needs notifications for cancelations, and reminders.
+
+* individual key indicator tracking + upline(s) viewable?
+> Possible indicators
+>> meeting 
+>> calls, invites
+>> calls
+>> presentations
+>> messages
+>> follow ups
+>> new reps
+>> 30 min of personal dev
+>> 30 min of excersize
+>> alacarte pick and choose
+>> used products
+>> Create your own (3 max)
+> Possible functionalities of this include
+>> 90 day challange in groups and calendar. see others progress.
+>> group vs group competitions?
+
+
+
+
+
+= Other Considerations
+
+* Data correlation and collection
+> when do people go to meetings?
+> how many calls does it take to sign someone up?
+> etc.
+
+* Product design and ease of use
+> Taxbot design - a couple buttons on front page and a number (score or progress bar or something).
+> Other features (see Vema's app). 
+> integrated to contacts for lists and stuff 
+
+* Name:
+> The Networker
+> EventPro
+> PluggedIn
+
+
+
+
+
+= finished items
+
+* [MAJOR] make group system
+
+* [MAJOR] make event system
+
+* [MAJOR] make profile system
+
+* [MAJOR] make group-member system
+
+* Create RSVP or attendies model for events (similar functionality to members for groups)
+
+* code functionality of RSVP model (button to RSVP on event page just me, +1 +more, or cancel RSVP)
+
+* Group-Events System (in a group only show the upcoming or currently running events (requires migration in events))
+
+* if you're banned from a group you access it (and therefore can't see its events)
+
+* Group system (give admins the right to create and edit events but only the owner can ban demote or promote members)
+
+* Map system (make the address on the events page a link to google maps searching that specific address).
+
+* Event system (allow admins to move events to other groups)
+
+* Event System (Search *results* come up with only future results (still need to do the same thing to default index view))
+
+* event system (index only calls and displays future events by default)
+
+* add migration to add details to events model such as time, date, etc. (if not already there)
+
+* Profile system (Others can see the groups you're in on your profile show page).
+
+* Calendar system (calendar shows 1. all events they are going to 

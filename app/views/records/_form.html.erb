@@ -1,0 +1,67 @@
+<div class="row">
+  <%= form_for(@record) do |f| %>
+    <% if @record.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@record.errors.count, "error") %> prohibited this record from being saved:</h2>
+
+        <ul>
+        <% @record.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="form-group">
+      <div class="col-xs-6 col-sm-3">
+        <div class="input-group">
+          <br>
+
+          <%= f.text_field :firstname, autofocus: true, :class => "input-lg form-control", "placeholder" => "first name" %>
+        </div>
+      </div>
+      <div class="col-xs-6 col-sm-3">
+        <div class="input-group">
+          <br>
+          <%= f.text_field :lastname, :class => "input-lg form-control", "placeholder" => "last name"  %>
+        </div>
+      </div>
+      <div class="col-xs-6 col-sm-3">
+        <div class="input-group">
+          <br>
+          <%= f.text_field :phone, :class => "input-lg form-control", "placeholder" => "phone"  %>
+        </div>
+      </div>
+      <div class="col-xs-6 col-sm-3">
+        <div class="input-group">
+          <br>
+          <%= f.text_field :email, :class => "input-lg form-control", "placeholder" => "email"  %>
+        </div>
+      </div>
+      <div class="field" hidden="true">
+        <br>
+        <%= f.label :receivedate %><br>
+        <%= f.datetime_select :receivedate, :class => "input-lg form-control" %>
+      </div>
+      <div class="field" hidden="true">
+        <br>
+        <%= f.label "Progress" %>&nbsp
+        <%= f.select :progress, options_for_select([["1. Not contacted", "1"]]), {:selected => params['new']}, {:class => "btn btn-default btn-lg dropdown-toggle"} %>
+      </div>
+      <div class="field" hidden="true">
+        <%= f.label :loanofficer_id %><br>
+        <%= f.number_field :loanofficer_id, "value" => current_user.id %>
+      </div>
+      <div class="field" hidden="true">
+        <%= f.label :processor_id %><br>
+        <%= f.number_field :processor_id %>
+      </div>
+      <div class="col-xs-6 col-sm-3">
+        <div class="actions">
+          <center><br />
+            <%= f.submit "Submit", :class=> "btn btn-info btn-lg" %>
+          </center>
+        </div>
+      </div>
+    </div>  
+  <% end %>
+</div>  

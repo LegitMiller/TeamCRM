@@ -1,0 +1,27 @@
+    <table class="table table-hover" id="records">
+      <thead>
+        <tr>
+          <th colspan="6"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% current_user.notifications.order(:created_at).reverse.each do |notification| %>
+          <tr>
+            <td>
+              <center>
+                <%= getname notification.maker_id, true %>
+                changed <%= notification.changetype %>
+                of <%= link_to Record.find(notification.record_id).firstname + " " + Record.find(notification.record_id).lastname, edit_record_path(notification.record_id), :class => 'btn btn-default btn-xs' %>
+                from <%= notification.change %>
+                to <%= Record.find(notification.record_id).progress %>
+                <!--<%= time_ago_in_words notification.created_at %> ago -->
+                <%= notification.created_at.strftime("on %m/%d/%Y") %>
+                <%= notification.created_at.strftime("at %I:%M%p") %>
+              </center>
+            </td>
+            <td><center><%= link_to 'Destroy', notification, method: :delete, data: { confirm: 'Are you sure?' } %></center></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>

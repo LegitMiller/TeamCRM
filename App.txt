@@ -1,0 +1,253 @@
+
+BARROWER INFORMATION
+first
+middle
+last
+ssn
+date of birth
+home phone
+workphone
+marital status
+-maried
+-sep
+-unmar
+number of years in school
+-0 to 20
+number of dependents and their ages
+-0 to 10 plus textbox
+will there be a co-barrower on this loan?
+
+CO BARROWER INFORMATION
+first
+middle
+last
+social
+birthday
+home
+work phone
+marital status
+num of years is school
+num of dependents and age, not including those on the barrower section
+relationship to primary barrower
+-married to primary
+-additional applicant - REQUIRES COBARROWERS ADDRESS SECTION to appear
+
+CURRENT ADDRESS, CO BARROWER ADDRESS
+address
+city
+state
+zip
+do you own or rent?
+how many years?
+(mailing address if different from present address)
+address
+city
+state
+zip
+(previous address) 
+address
+city
+state
+zip
+
+
+BARROWER EMPLOYMENT
+self employed? - if yes, employer changes to business
+name of employer
+address
+city
+state
+zip
+work phone
+position or title
+how many years and months have you been with this employer?
+0-50 (if two years or less barrowers previous emplyoer shows up. which includes starting and end dates of employment and monthly gross income after title)
+how many years have you been in this line of work?
+0-50
+
+
+LOAN PURPOSE
+Which best describes the purpose of this loan?
+-Purchasing a home I've already found
+-Purchasing a home that I haven't located yet
+-Refinance my existing loan balance
+-Construction
+-Construction Permanent
+-Other, explain:
+Purchase Price
+
+LOAN INFORMATION
+What type of mortgage are you applying for?
+-VA
+-FHA
+-Conventional
+-USDA/Rural Housing Service
+Agency Case Number
+Lender Case Number
+Amount
+Interest Rate
+Term / Due
+Amortization Type **
+-Fixed Rate
+-GPM
+-ARM (inclusdes textbox)
+-Other (includes textbox)
+** If you are considering an alternative type mortgage such as an ARM, GPM or Interest Only type mortgage that features a variable rate, click the links below to download and read important information about these programs: Consumer Handbook on Adjustable Rate Mortgages, Interest-Only Mortgage Payments and Payment Option ARMs - Are They for You?
+
+BORROWER INCOME
+Base Monthly Income
+Monthly Overtime Pay
+Monthly Bonuses
+Monthly Commissions
+Monthly Dividends / Interest Income
+*Other Income
+Total Monthly Income
+*Description of Other Income
+
+*Notice: Alimony, child support, or separate maintenance income need not be revealed if the Borrower or Co-Borrower does not choose to have it considered for repaying this loan.
+
+BORROWER-COMBINED HOUSING
+Enter amounts for your present rent and/or mortgage payments in the first column and proposed amounts for the new property or refinance of existing property in the second column. The totals will calculate automatically.
+
+ 	Present	Proposed	 
+ 
+Rent	   	 	 
+First Mortgage P&I	   	  	 
+Other Financing	   	  	 
+Hazard Insurance	   	  	 
+Real Estate Taxes	   	  	 
+Mortgage Insurance	   	  	 
+Homeowner Assn. Dues	   	  	 
+Other	   	  	 
+ 
+Total	   	 
+
+BORROWER REAL ESTATE OWNED
+Status
+Address
+City
+State
+Zip Code
+Property Type
+-stingle family residence
+-two to fourplex
+-conmmercial non-residential
+-commercial residential
+-condomimiums
+-co-op
+-farm
+-land
+-mixed use property
+-mobile home
+-multi-family property
+-townhome
+Current Value
+Current Mortgage Balance
+Monthly Mortgage Payments
+Annual Taxes and Insurance
+If this is a rental property, what is the gross monthly rental income?
+Do you own any other properties
+-Yes
+-No
+
+BORROWER LIQUID ASSETS
+Name of Financial Institution
+Address
+City
+State
+Zip Code
+Account Number
+Type of Financial Account
+-savings account
+-checking account
+-stocks
+-bonds
+-certificate of deposit
+-money market fund
+-mutual fund
+-trust fund
+-other
+Balance
+Do you have any additional assets?
+-Yes
+-No
+
+BORROWER OTHER ASSETS
+Vested Interest in Retirement Fund
+Net worth of businesses owned
+Select the model, make, and value of the cars you own
+Automobile 1
+    -year, model, textbox
+Automobile 2
+Automobile 3
+Automobile 4
+Other Assets
+
+
+BORROWER LIABILITIES
+Name of Credit Card Company or other Financial Institution
+Address
+City
+State
+Zip Code
+Account Number
+Type of Monthly Payment
+-child care
+-home equity line of credit
+-installment loan
+-Liens
+-mortgage
+-open,30 day change
+-other expense
+-other liabilities
+-revoloving charge
+-separate maintenance
+-taxes
+Monthly Payment / Number of Months
+Balance
+Do you have any additional monthly payments?
+-Yes
+-No
+
+DECLARATIONS 
+(YES, NO)
+Are there any outstanding judgements against you?	    
+Have you been declared bankrupt within the past 7 years?	    
+Have you had property foreclosed upon or given title or deed in lieu thereof in the last 7 years?	    
+Are you a party to a lawsuit?	    
+Have you directly or indirectly been obligated on any loan which resulted in foreclosure, transfer of title in lieu of foreclosure, or judgement?	    
+Are you presently delinquent or in default on any Federal debt or any other loan, mortgage, financial obligation, bond, or loan guarantee?	    
+Are you obligated to pay alimony, child support, or separate maintenance?	    
+Is any part of the down payment borrowed?	    
+Are you a co-maker or endorser on a note?	    
+Are you a U.S. Citizen?	    
+Are you a permanent resident alien?	    
+Do you intend to occupy the property as your primary residence?	    
+Have you had an ownership interest in a property in the last three years?	    
+
+HMDA
+The following information is requested by the Federal Government for certain types of loans related to a dwelling in order to monitor the lender's compliance with equal credit opportunity, fair housing and home mortgage disclosure laws. You are not required to furnish this information, but are encouraged to do so. The law provides that a Lender may not discriminate either on the basis of this information, or on whether you choose to furnish it. If you furnish the information, please provide both ethnicity and race. For race you may check more than one designation. If you do not furnish ethnicity, race, or sex, under Federal regulations, this lender is required to note the information on the basis of visual observation and surname if you have made this application in person. If you do not furnish this information, please check the box below. (Lender must review the above material to assure that the disclosures satisfy all requirements to which lender is subject under applicable state law for the particular type of loan applied for.)
+Borrower
+-I do not wish to furnish this information (check box)
+Ethnicity
+-Hispanic or Latino
+-Not Hispanic or Latino
+Race
+-American Indian or Alaska Native
+-White
+-Asian
+-Native Hawiian or Other Pacific Islander
+-Black or African American
+Sex
+-Male
+-Female
+
+
+FINISH
+Click 'Finish' to send your application.
+If you're finished with your application and ready to send it to your loan officer, just click 'Finish'. You can also return later to complete your application by clicking on the 'Loan Application' link and selecting 'Finish loan application' under 'Returning Visitors'. Everything you've entered so far has already been saved.
+Once your application is submitted, you'll receive e-mail notifications as each step of your loan process is completed. You can also log into your own private area of our web site to view the progress of your loan or attach other documents.
+DirectFax
+Our DirectFax technology allows you to securely attach paper documents to your loan application using any fax machine. Fax the provided cover page along with your documents to the toll free number printed on it. Or, if you already have your documents in an electronic format such as PDF, click here to upload them. Click 'Print Cover Page' and choose the printer to send it to.
+
+

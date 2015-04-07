@@ -1,0 +1,46 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Firstname:</strong>
+  <%= @record.firstname %>
+</p>
+
+<p>
+  <strong>Lastname:</strong>
+  <%= @record.lastname %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @record.phone %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @record.email %>
+</p>
+
+<p>
+  <strong>Receivedate:</strong>
+  <%= @record.receivedate %>
+</p>
+
+<p>
+  <strong>Progress:</strong>
+  <%= @record.progress %>
+</p>
+
+<p>
+  <strong>Loan Officer:</strong>
+  <%= @record.loanofficer_id %>
+</p>
+<p>
+  <strong>Processor:</strong>
+  <%= @record.processor_id %>
+</p>
+
+<%= link_to 'Back', records_path, class: 'btn btn-default btn-lg' %>
+
+<br />
+<!--<%= link_to @record.firstname, edit_record_path(@record), class: 'btn btn-default btn-lg' %>-->
+<%= render 'nos' %>

@@ -1,0 +1,95 @@
+<div class="row">
+  <div class="col-xs-4 col-sm-4">
+    <h1><%= @profile.firstname %> <%= @profile.lastname %></h1>
+  </div>
+  <div class="col-xs-4 col-sm-4">
+    <br />
+    <%= @profile.phone %>
+    <br />
+    <%= @profile.email %>
+  </div>
+  <div class="col-xs-4 col-sm-4">
+    <br />
+    <strong>Title:</strong>
+    <%= @profile.title %>
+    <br />
+    <strong>Status:</strong>
+    <%= @profile.status %>
+  </div>
+</div>
+
+<div class="media">
+  <div class="media-body">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Average First Touch Waiting Time</th>
+          <th>Average Successful Closing Time</th>
+          <th>Success Rate</th>
+          <th colspan="1"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            @firsttouch
+          </td>
+          <td>
+            @lasttouch
+          </td>
+          <td>
+            <%= @successrate %> %
+          </td>
+          <td>
+            Overall Score!
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="media">
+  <div class="media-body">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th colspan="1"></th>
+          <th>First Touch Time</th>
+          <th>Successful Closing Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @recs.each do |rec| %>
+          <tr>
+            <td>
+              <% if rec.firstname.blank? || rec.lastname.blank? %>
+                <%= link_to rec.email, edit_record_path(rec), :class => "btn btn-default btn-md","data-no-turbolink"=>"true"  %>
+              <% else %>
+                <%= link_to rec.firstname + " " + rec.lastname, edit_record_path(rec), :class => "btn btn-default btn-md", "data-no-turbolink"=>"true"  %>
+              <% end %>
+            </td>
+            <td>
+              <%= distance_of_time_in_words(rec.created_at, Time.now) %>
+            </td>
+            <td>
+              <%= distance_of_time_in_words(rec.created_at, Time.now) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<% if !@profile.bio.blank?%>
+  <p>
+    <strong>Bio:</strong>
+    <%= @profile.bio %>
+  </p>
+<% end %>
+
+
+<%= link_to 'Back', profiles_path, :class => "btn btn-default btn-xs" %>
+<p id="notice"><%= notice %></p>
