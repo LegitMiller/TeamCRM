@@ -62,12 +62,20 @@
       </div>
       <div class="col-xs-6 col-sm-6">
         <div class="input-group">
+          <%= f.label :processor_id %><br>
           <br>
-          <%= f.label "Progress" %>&nbsp
-          <% listofprogress = [["1 Not contacted", "1"],["2 Interested", "2"],["3 App Taken", "3"],["4 Priced", "4"],["5 Disclosure Signed", "5"],["6 No Appraisal Needed", "6"],["7 Appraisal Ordered", "7"],["8 Appraisal Recieved", "8"],["9 In Underwriting", "9"],["10 Closing Scheduled", "10"],["11 Closed", "11"],["12 Dead", "12"],["Unknown", "unknown"]] %>
-            <%= f.select :progress, options_for_select(listofprogress, @record.progress.to_s), {prompt: true}, { :class => "btn btn-default btn-lg dropdown-toggle", "required"=>"true"} %>
+          <% listofpros = [] %>
+          <% mynewprofile = Profile.new %>
+          <% mynewprofile.id = "0" %>
+          <% mynewprofile.firstname = "none" %>
+          <% listofpros.push(mynewprofile) %>
+
+          <% @profiles.each do |profile|  %>
+            <% listofpros.push(profile) if profile.title == "processor" %>
+          <% end %>
+          <%= f.collection_select :processor_id, listofpros, :user_id, :firstname, {prompt: false}, { :class => "btn btn-default btn-lg dropdown-toggle", "required"=>"false"} %>
         </div>
-      </div>
+      </div>   
       <div class="clearfix visible-xs-block"></div>
       <div class="col-xs-6 col-sm-6">
         <div class="text-left">
