@@ -42,17 +42,16 @@
         <%= f.label :receivedate %><br>
         <%= f.datetime_select :receivedate, :class => "input-lg form-control" %>
       </div>
-      <div class="col-xs-6 col-sm-6">
+      <div class="col-xs-12 col-sm-12">
         <div class="input-group">
-          <br>
-          <%= f.label "Progress" %>&nbsp
+          <%= f.label :progress %><br>
           <% listofprogress = [["1 Not contacted", "1"],["2 Interested", "2"],["3 App Taken", "3"],["4 Priced", "4"],["5 Disclosure Signed", "5"],["6 No Appraisal Needed", "6"],["7 Appraisal Ordered", "7"],["8 Appraisal Recieved", "8"],["9 In Underwriting", "9"],["10 Closing Scheduled", "10"],["11 Closed", "11"],["12 Dead", "12"],["Unknown", "unknown"]] %>
             <%= f.select :progress, options_for_select(listofprogress, @record.progress.to_s), {prompt: true}, { :class => "btn btn-default btn-lg dropdown-toggle", "required"=>"true"} %>
         </div>
       </div>
-      <div class="col-xs-6 col-sm-6">
+      <div class="col-xs-4 col-sm-4">
         <div class="input-group">
-          <br>
+          <%= f.label :loanofficer_id %><br>
           <% listoflos = [] %>
           <% @profiles.each do |profile|  %>
             <% listoflos.push(profile) if profile.title == "loan officer" %>
@@ -60,10 +59,9 @@
           <%= f.collection_select :loanofficer_id, listoflos, :user_id, :firstname, {prompt: true}, { :class => "btn btn-default btn-lg dropdown-toggle", "required"=>"true"} %>
         </div>
       </div>
-      <div class="col-xs-6 col-sm-6">
+      <div class="col-xs-4 col-sm-4">
         <div class="input-group">
           <%= f.label :processor_id %><br>
-          <br>
           <% listofpros = [] %>
           <% mynewprofile = Profile.new %>
           <% mynewprofile.id = "0" %>

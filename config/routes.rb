@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :phases
+
+  resources :progressions
+
   resources :notifications
 
   get 'notes/create'

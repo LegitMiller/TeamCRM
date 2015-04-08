@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @progression.name %>
+</p>
+
+<p>
+  <strong>Phase:</strong>
+  <%= @progression.phase_id %>
+</p>
+
+<%= link_to 'Edit', edit_progression_path(@progression) %> |
+<%= link_to 'Back', progressions_path %>
