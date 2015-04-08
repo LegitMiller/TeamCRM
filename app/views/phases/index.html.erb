@@ -1,4 +1,4 @@
-<h1>Listing phases</h1>
+<h1>Phases </h1>
 
 <table>
   <thead>
@@ -10,13 +10,30 @@
   </thead>
 
   <tbody>
-    <% @phases.each do |phase| %>
+    <% @phases.order(:phase_id).reverse.each do |phase| %>
       <tr>
-        <td><%= phase.name %></td>
+        <td><h3><%= phase.name %></h3></td>
         <td><%= phase.phase_id %></td>
         <td><%= link_to 'Show', phase %></td>
         <td><%= link_to 'Edit', edit_phase_path(phase) %></td>
         <td><%= link_to 'Destroy', phase, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+       </tr>
+       <tr>
+        <td>
+          <table class="table table-hover">
+            <tbody>
+              <% @progressions.each do |progression| %>
+                <% if progression.phase == phase %>
+                  <tr> 
+                    <td></td>
+                    <td><%= progression.name + " textbox" %></td>
+                    <td><%= "Phase Dropdown" %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        </td>  
       </tr>
     <% end %>
   </tbody>
@@ -25,3 +42,5 @@
 <br>
 
 <%= link_to 'New Phase', new_phase_path %>
+
+
