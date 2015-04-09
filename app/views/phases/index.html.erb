@@ -3,7 +3,7 @@
 <br />
 <% @phases.order(:phase_id).each do |phase| %>
   <%= render partial: "phase", locals: { phase: phase } %>
-  <table class="table table-hover" style="margin: 0px 0px 0px 15px">
+  <table class="table table-hover" style="margin: 0px 0px 0px 45px">
     <tbody>
       <% @progressions.each do |progression| %>
         <% if progression.phase == phase %>
@@ -25,13 +25,16 @@
                 <%= f.text_field :name, "value" => progression.name, "placeholder" => "Name", :class => "input form-control", :onkeyup => "showPSubmit(#{progression.id})" %>
               </td>
               <td>
+                <center>
                 <% listofphases = [] %>
                 <% @phases.each do |ph|  %>
                   <% listofphases.push(ph)%>
                 <% end %>
                 <!--<div class="input-group-addon">Phase </div>-->
                 <%= f.label :phase_id %>
-                <%= f.collection_select :phase_id, listofphases, :id, :name,{prompt: true}, { :class => "btn btn-default dropdown-toggle", "required"=>"true", "onchange" => "showPSubmit(#{progression.id})"} %></td>
+                <%= f.collection_select :phase_id, listofphases, :id, :name,{prompt: true}, { :class => "btn btn-default dropdown-toggle", "required"=>"true", "onchange" => "showPSubmit(#{progression.id})"} %>
+                </center>
+              </td>
               <td>
                   <%= link_to(image_tag("trash.png", size: "18x20", alt: "Remove", "style"=>"padding:2px"), progression, method: :delete, :class => "btn btn-default btn-sm") %>
               </td>
@@ -50,12 +53,75 @@
   <br />     
 <% end %>
 
-<br>
+<br />
+<hr />
 
-<%= link_to 'New Phase', new_phase_path, :class=> "btn btn-info btn-lg"  %>
+<div class="row">
+  <div class="col-xs-6 col-sm-6">
+  <h2>New Developement Phase</h2>
+  <br />
+    <%= form_for(@newphase) do |f| %>
+      <% if @newphase.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@newphase.errors.count, "error") %> prohibited this phase from being saved:</h2>
 
+          <ul>
+          <% @newphase.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
 
+      <div class="field">
+        <%= f.text_field :name, "placeholder" => "Name", :class => "input-lg form-control", prompt: true, :required=>"true"  %>
+      </div>
 
+        <div class="input-group">
+          <div class="input-group-addon">Order </div>
+          <%= f.number_field :phase_id, :class => "input-lg form-control", prompt: true, :required=>"true"  %>
+        </div>
+      <div class="actions pull-right">
+        <%= f.submit(:class=> "btn btn-info btn-lg") %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="col-xs-6 col-sm-6">
+
+    <h2>New Progression Point</h2>
+    <br />
+    <%= form_for(@newprogression) do |f| %>
+      <% if @newprogression.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@newprogression.errors.count, "error") %> prohibited this progression from being saved:</h2>
+
+          <ul>
+          <% @newprogression.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="field">
+        <%= f.text_field :name, "placeholder" => "Name", :class => "input-lg form-control", prompt: true, :required=>"true" %>
+      </div>
+      <div class="input-group">
+        <% listofphases = [] %>
+        <% @phases.each do |ph|  %>
+          <% listofphases.push(ph)%>
+        <% end %>
+        <!--<div class="input-group-addon">Phase </div>-->
+        <div class="input-group-addon">Phase </div>
+        <%= f.collection_select :phase_id, listofphases, :id, :name, {prompt: true}, { :class => "btn btn-default btn-lg input-lg form-control", "required"=>"true"} %>
+      </div>
+      <div class="actions pull-right">
+        <%= f.submit(:class=> "btn btn-info btn-lg")%>
+      </div>
+    <% end %>
+  </div>
+</div>
 
 <script>
 function showSubmit(pid) {

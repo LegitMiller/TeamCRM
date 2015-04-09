@@ -11,7 +11,7 @@
   <% end %>
   
   <div class="row">
-    <div class="col-xs-6 col-sm-6">
+    <div class="col-xs-5 col-sm-5">
       <%= f.text_field :name, "value" => phase.name,"placeholder" => "Name", :class => "input-lg form-control", :onkeyup => "showSubmit(#{phase.id})", :style => "width: 100%" %>
     </div>
     <div class="col-xs-3 col-sm-3">  
@@ -24,7 +24,7 @@
       <%= link_to(image_tag("trash.png", size: "18x20", alt: "Remove", "style"=>"padding:2px"), phase, method: :delete, :class => "btn btn-default btn-lg") %>
     </div>
 
-    <div class="col-xs-2 col-sm-2">  
+    <div class="col-xs-3 col-sm-3">  
       <div class="actions">
         <div class="text-right">  
           <%= f.submit(:class=> "btn btn-info btn-lg", :id => "hiddensubmit#{phase.id}", :style => "visibility:hidden") %>

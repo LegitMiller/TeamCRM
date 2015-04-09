@@ -1,5 +1,8 @@
 class Record < ActiveRecord::Base
 	has_many :notes
+  
+  has_many :steps
+  has_many :progressions, through: :steps
 
   def self.search(search)
 		if search
@@ -21,4 +24,5 @@ class Record < ActiveRecord::Base
   		Record.all
   	end
   end
+  
 end

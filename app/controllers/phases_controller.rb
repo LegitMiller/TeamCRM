@@ -7,20 +7,8 @@ class PhasesController < ApplicationController
   def index
     @phases = Phase.all
     @progressions = Progression.all
-  end
-
-  # GET /phases/1
-  # GET /phases/1.json
-  def show
-  end
-
-  # GET /phases/new
-  def new
-    if current_user.profile.title == "admin"
-      @phase = Phase.new
-    else
-      redirect_to root_path
-    end
+    @newphase = Phase.new
+    @newprogression = Progression.new
   end
 
   # GET /phases/1/edit
@@ -73,6 +61,7 @@ class PhasesController < ApplicationController
   # DELETE /phases/1.json
   def destroy
     if current_user.profile.title == "admin"
+      @phase.progressions.destroy_all
       @phase.destroy
       respond_to do |format|
         format.html { redirect_to phases_path, notice: 'Phase was successfully destroyed.' }

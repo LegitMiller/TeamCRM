@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :steps
+
   resources :phases
 
   resources :progressions
@@ -29,7 +31,8 @@ Rails.application.routes.draw do
 
   #root 'records#index\?direction=asc&sort=firstname'
   
-  
+  get "records_addstep" => "records#addstep"
+
   root 'home#index'
 
   #get 'events/create'

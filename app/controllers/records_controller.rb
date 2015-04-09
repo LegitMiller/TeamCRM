@@ -48,6 +48,9 @@ class RecordsController < ApplicationController
         redirect_to records_path, notice: 'Unable to edit unowned record.'
       end
     end
+    @phases = Phase.all
+    @progressions = Progression.all
+    @steps = Record.find(params[:id]).steps
   end
 
   # POST /records
@@ -123,6 +126,13 @@ class RecordsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def addstep
+    @steprecord = Record.find(params[:id])
+    newstep = Step.where(record_id: @steprecord.id, progression_id: XXXXXX).first_or_create
+    redirect_to @steprecord
+  end
+
 
   private
 

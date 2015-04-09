@@ -4,20 +4,7 @@ class ProgressionsController < ApplicationController
 
   # GET /progressions
   # GET /progressions.json
-  def index
-    @progressions = Progression.all
-  end
-
-  # GET /progressions/1
-  # GET /progressions/1.json
-  def show
-  end
-
-  # GET /progressions/new
-  def new
-    @progression = Progression.new
-  end
-
+  
   # GET /progressions/1/edit
   def edit
     if current_user.profile.title == "admin"

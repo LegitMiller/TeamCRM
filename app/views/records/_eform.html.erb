@@ -44,24 +44,45 @@
       </div>
       <div class="col-xs-12 col-sm-12">
         <div class="input-group">
-          <%= f.label :progress %><br>
+          <div class="input-group-addon">Progress </div>
+
+          <%= link_to("I Accept", {:controller => :records, :action => :addstep, :id=>@record.id, :step_id=>@record.id}) %>
+
+          <% if @steps.exists?(:record_id => @record.id) %>
+            <%= link_to "Free", {:controller => :profiles, :action => :changestatus}, :method => 'post', :class =>"btn btn-lg btn-default" %>
+            <%= link_to("I Accept", {:controller => :records, :action => :addstep, :id=>@record.id, :step_id=>@record.id}) %>
+
+
+
+############# take the Above and fill out below accordingly, Also wrap this up in a partial and loop it.
+
+            <%= link_to "Busy", root_path, :class =>"btn btn-lg btn-success active" %>
+          <% elsif current_user.profile.status == "free"  %>
+            <%= link_to "Free", root_path, :class =>"btn btn-lg btn-success active" %>
+            <%= link_to "Busy", {:controller => :profiles, :action => :changestatus}, :method => 'post', :class =>"btn btn-lg btn-default" %>
+          <% else %>
+            <%= link_to "Free", {:controller => :profiles, :action => :changestatus}, :method => 'post', :class =>"btn btn-lg btn-default" %>
+          <% end %>
+
+##############
+
           <% listofprogress = [["1 Not contacted", "1"],["2 Interested", "2"],["3 App Taken", "3"],["4 Priced", "4"],["5 Disclosure Signed", "5"],["6 No Appraisal Needed", "6"],["7 Appraisal Ordered", "7"],["8 Appraisal Recieved", "8"],["9 In Underwriting", "9"],["10 Closing Scheduled", "10"],["11 Closed", "11"],["12 Dead", "12"],["Unknown", "unknown"]] %>
-            <%= f.select :progress, options_for_select(listofprogress, @record.progress.to_s), {prompt: true}, { :class => "btn btn-default btn-lg dropdown-toggle", "required"=>"true"} %>
+            <%= f.select :progress, options_for_select(listofprogress, @record.progress.to_s), {prompt: true}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control", "required"=>"true"} %>
         </div>
       </div>
       <div class="col-xs-4 col-sm-4">
         <div class="input-group">
-          <%= f.label :loanofficer_id %><br>
+          <div class="input-group-addon">Loan Officer </div>
           <% listoflos = [] %>
           <% @profiles.each do |profile|  %>
             <% listoflos.push(profile) if profile.title == "loan officer" %>
           <% end %>
-          <%= f.collection_select :loanofficer_id, listoflos, :user_id, :firstname, {prompt: true}, { :class => "btn btn-default btn-lg dropdown-toggle", "required"=>"true"} %>
+          <%= f.collection_select :loanofficer_id, listoflos, :user_id, :firstname, {prompt: true}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control", "required"=>"true"} %>
         </div>
       </div>
       <div class="col-xs-4 col-sm-4">
         <div class="input-group">
-          <%= f.label :processor_id %><br>
+          <div class="input-group-addon">Processor </div>
           <% listofpros = [] %>
           <% mynewprofile = Profile.new %>
           <% mynewprofile.id = "0" %>
@@ -71,7 +92,7 @@
           <% @profiles.each do |profile|  %>
             <% listofpros.push(profile) if profile.title == "processor" %>
           <% end %>
-          <%= f.collection_select :processor_id, listofpros, :user_id, :firstname, {prompt: false}, { :class => "btn btn-default btn-lg dropdown-toggle", "required"=>"false"} %>
+          <%= f.collection_select :processor_id, listofpros, :user_id, :firstname, {prompt: false}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control", "required"=>"false"} %>
         </div>
       </div>   
       <div class="clearfix visible-xs-block"></div>
