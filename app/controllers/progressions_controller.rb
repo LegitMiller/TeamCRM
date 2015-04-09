@@ -34,7 +34,7 @@ class ProgressionsController < ApplicationController
 
       respond_to do |format|
         if @progression.save
-          format.html { redirect_to @progression, notice: 'Progression was successfully created.' }
+          format.html { redirect_to phases_path, notice: 'Progression was successfully created.' }
           format.json { render :show, status: :created, location: @progression }
         else
           format.html { render :new }
@@ -52,7 +52,7 @@ class ProgressionsController < ApplicationController
     if current_user.profile.title == "admin"
       respond_to do |format|
         if @progression.update(progression_params)
-          format.html { redirect_to @progression, notice: 'Progression was successfully updated.' }
+          format.html { redirect_to phases_path, notice: 'Progression was successfully updated.' }
           format.json { render :show, status: :ok, location: @progression }
         else
           format.html { render :edit }
@@ -70,7 +70,7 @@ class ProgressionsController < ApplicationController
     if current_user.profile.title == "admin" 
       @progression.destroy
       respond_to do |format|
-        format.html { redirect_to progressions_url, notice: 'Progression was successfully destroyed.' }
+        format.html { redirect_to phases_path, notice: 'Progression was successfully destroyed.' }
         format.json { head :no_content }
       end
     else

@@ -1,0 +1,35 @@
+<%= form_for(phase) do |f| %>
+  <% if phase.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@phase.errors.count, "error") %> prohibited this phase from being saved:</h2>
+      <ul>
+      <% phase.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="row">
+    <div class="col-xs-6 col-sm-6">
+      <%= f.text_field :name, "value" => phase.name,"placeholder" => "Name", :class => "input-lg form-control", :onkeyup => "showSubmit(#{phase.id})", :style => "width: 100%" %>
+    </div>
+    <div class="col-xs-3 col-sm-3">  
+      <div class="input-group">
+        <div class="input-group-addon">Order </div>
+        <%= f.number_field :phase_id, :class => "input-lg form-control", :onchange => "showSubmit(#{phase.id})" %>
+      </div>
+    </div>
+    <div class="col-xs-1 col-sm-1">  
+      <%= link_to(image_tag("trash.png", size: "18x20", alt: "Remove", "style"=>"padding:2px"), phase, method: :delete, :class => "btn btn-default btn-lg") %>
+    </div>
+
+    <div class="col-xs-2 col-sm-2">  
+      <div class="actions">
+        <div class="text-right">  
+          <%= f.submit(:class=> "btn btn-info btn-lg", :id => "hiddensubmit#{phase.id}", :style => "visibility:hidden") %>
+        </div>
+      </div>
+    </div>  
+  </div> 
+<% end %>

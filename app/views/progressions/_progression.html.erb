@@ -1,0 +1,33 @@
+<%= form_for(progression) do |f| %>
+  <% if progression.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(progression.errors.count, "error") %> prohibited this progression from being saved:</h2>
+      <ul>
+      <% progression.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-xs-4 col-sm-4">
+      <div class="input-group">
+        <%= f.text_field :name, "value" => progression.name, "placeholder" => "Name", :class => "input form-control" %>
+      </div>
+    </div>
+    <div class="col-xs-4 col-sm-4">  
+      <div class="input-group">
+        <%= f.label :phase_id %><br>
+        <% listofphases = [] %>
+        <% @phases.each do |ph|  %>
+          <% listofphases.push(ph)%>
+        <% end %>
+        <%= f.collection_select :phase_id, listofphases, :id, :name,{prompt: true}, { :class => "btn btn-default dropdown-toggle", "required"=>"true"} %>
+      </div>
+    </div>
+    <div class="col-xs-4 col-sm-4">  
+      <%= f.submit(:class=> "btn btn-info btn") %>
+    </div>
+  </div>
+<% end %>
