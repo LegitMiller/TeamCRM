@@ -38,6 +38,10 @@ class RecordsController < ApplicationController
   # GET /records/1/edit
   def edit
     @profiles= Profile.all
+    @phases = Phase.all
+    @progressions = Progression.all
+    @steps = Record.find(params[:id]).steps
+    
     if current_user.profile.title == "admin"
     elsif current_user.profile.title == "processor" 
       if Record.find_by_id(params[:id]).processor_id != current_user.id
@@ -48,9 +52,7 @@ class RecordsController < ApplicationController
         redirect_to records_path, notice: 'Unable to edit unowned record.'
       end
     end
-    @phases = Phase.all
-    @progressions = Progression.all
-    @steps = Record.find(params[:id]).steps
+
   end
 
   # POST /records
@@ -128,11 +130,14 @@ class RecordsController < ApplicationController
   end
 
   def addstep
-    @steprecord = Record.find(params[:id])
-    newstep = Step.where(record_id: @steprecord.id, progression_id: XXXXXX).first_or_create
-    redirect_to @steprecord
+    Step.where(record_id: params[:id], progression_id: params[:progression_id]).first_or_create
+    redirect_to edit_record_path(params[:id])
   end
-
+  
+  def removestep
+    Step.where(record_id: params[:id], progression_id: params[:progression_id]).destroy_all
+    redirect_to edit_record_path(params[:id])
+  end
 
   private
 

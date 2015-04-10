@@ -33,6 +33,8 @@ Rails.application.routes.draw do
   
   get "records_addstep" => "records#addstep"
 
+  get "records_removestep" => "records#removestep"
+
   root 'home#index'
 
   #get 'events/create'
