@@ -76,30 +76,7 @@ class RecordsController < ApplicationController
   # PATCH/PUT /records/1.json
   def update
     
-    #CHECK TO SEE IF WE NEED TO MAKE A NOTIFICATION
-    if @record.progress != params[:progress]
-      mychange = "Progress"
-      oldchange = @record.progress
-    elsif @record.processor_id != params[:processor_id]
-      mychange = "Assigned"
-      oldchange = @record.processor_id
-    elsif @record.loanofficer_id != params[:loanofficer_id]
-      mychange = "Assigned"
-      oldchange = @record.loanofficer_id
-    end
-
-    #USER REQUIREMENTS 
-    if current_user.id == @record.processor_id 
-      if !@record.loanofficer_id.blank?
-        #notify loan officer of all the actions the processor takes
-        Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange, 0)
-      end
-    elsif current_user.id == @record.loanofficer_id 
-      if !@record.processor_id.blank?
-        #notify processor of all the actions the loanofficer takes
-        Notification.createnotification(current_user.id, @record.processor_id, @record.id, mychange, oldchange, 0)
-      end
-    end
+    notificationprocess(@record.id, params[:loanofficer_id], params[:processor_id], params[:progress]) 
 
     respond_to do |format|
       if @record.update(record_params)
@@ -129,7 +106,45 @@ class RecordsController < ApplicationController
     end
   end
 
+  def notificationprocess(recordid, recloid, recproid, recordprogress)
+    #CHECK TO SEE IF WE NEED TO MAKE A NOTIFICATION 
+    #THIS IS BROKEN!!! 
+    #STILL DOESN'T RECOGNIZE ASSIGNMENT CHANGES!
+    #ALSO NOTIFIES YOU EVERY TIME SUBMIT WAS HIT FOR PROGRESS AREA
+    #EVEN IF ITS CHANGED PROGRESS FROM HOLDING TO HOLDING!!!
+    #AND THE TIMING IS OFF BY 6 HORS
+    @record = Record.find(recordid)
+    if @record.progress != recordprogress
+      mychange = "Progress"
+      oldchange = @record.progress
+    elsif @record.processor_id != recproid
+      mychange = "Assigned"
+      oldchange = @record.processor_id
+    elsif @record.loanofficer_id != recloid
+      mychange = "Assigned"
+      oldchange = @record.loanofficer_id
+    end
+
+    #USER REQUIREMENTS 
+    if current_user.id == @record.processor_id 
+      if !@record.loanofficer_id.blank?
+        #notify loan officer of all the actions the processor takes
+        Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange, 0)
+      end
+    elsif current_user.id == @record.loanofficer_id 
+      if !@record.processor_id.blank?
+        #notify processor of all the actions the loanofficer takes
+        Notification.createnotification(current_user.id, @record.processor_id, @record.id, mychange, oldchange, 0)
+      end
+    else #if the admin changed something tell both the processor and the loan officer.
+        Notification.createnotification(current_user.id, @record.processor_id, @record.id, mychange, oldchange, 0)
+        Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange, 0)
+    end
+
+  end
+
   def addstep
+    #Call Notification creator or something here.
     Step.where(record_id: params[:id], progression_id: params[:progression_id]).first_or_create
     redirect_to edit_record_path(params[:id])
   end

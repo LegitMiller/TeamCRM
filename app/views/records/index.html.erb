@@ -31,7 +31,7 @@
 
   <tbody>
     <% @records.each do |record| %>
-      <% if record.progress != "11" and record.progress != "12" %>
+      <% if record.progress != "Holding" and record.progress != "Completed" and record.progress != "Dropped" and record.progress != "Unknown" %>
        <!--<tr data-link="<%= edit_record_path(record) %>">-->
           <tr> 
           <td><%= correctlink record, record.firstname %></td>
@@ -68,7 +68,7 @@
 
   <tbody>
     <% @records.each do |record| %>
-      <% if record.progress == "11" or record.progress == "12" %>
+      <% if record.progress == "Holding" or record.progress == "Completed" or record.progress == "Dropped" or record.progress == "Unknown" %>
        <!--<tr data-link="<%= edit_record_path(record) %>">-->
           <tr> 
           <td><%= correctlink record, record.firstname %></td>
