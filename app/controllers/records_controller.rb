@@ -75,8 +75,9 @@ class RecordsController < ApplicationController
   # PATCH/PUT /records/1
   # PATCH/PUT /records/1.json
   def update
-    
-    notificationprocess(@record.id, params[:loanofficer_id], params[:processor_id], params[:progress]) 
+    #rparams = params[:record]
+    #testme = rparams[:progress]
+    notificationprocess(@record.id, params[:record][:loanofficer_id], params[:record][:processor_id], params[:record][:progress]) 
 
     respond_to do |format|
       if @record.update(record_params)
@@ -108,37 +109,43 @@ class RecordsController < ApplicationController
 
   def notificationprocess(recordid, recloid, recproid, recordprogress)
     #CHECK TO SEE IF WE NEED TO MAKE A NOTIFICATION 
-    #THIS IS BROKEN!!! 
-    #STILL DOESN'T RECOGNIZE ASSIGNMENT CHANGES!
-    #ALSO NOTIFIES YOU EVERY TIME SUBMIT WAS HIT FOR PROGRESS AREA
-    #EVEN IF ITS CHANGED PROGRESS FROM HOLDING TO HOLDING!!!
+    #THIS IS BROKEN!!!  BUT ITS BROKEN IN THE _nlist.erb
+    #it needs to change verbage based on what has changed
     #AND THE TIMING IS OFF BY 6 HORS
+
+
+
     @record = Record.find(recordid)
-    if @record.progress != recordprogress
+    if @record.progress != recordprogress.to_s
       mychange = "Progress"
       oldchange = @record.progress
-    elsif @record.processor_id != recproid
-      mychange = "Assigned"
+      #Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, "THE PROGRESS", oldchange, 0)
+    elsif @record.processor_id.to_i != recproid.to_i
+      mychange = "Assigned processor"
       oldchange = @record.processor_id
-    elsif @record.loanofficer_id != recloid
+      #Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, "THE PROCESSOR", oldchange, 0)
+    elsif @record.loanofficer_id != recloid.to_i
       mychange = "Assigned"
       oldchange = @record.loanofficer_id
+      #Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, "THE LOANOFFICER", oldchange, 0)
     end
-
+    
     #USER REQUIREMENTS 
-    if current_user.id == @record.processor_id 
-      if !@record.loanofficer_id.blank?
-        #notify loan officer of all the actions the processor takes
-        Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange, 0)
+    if !mychange.blank?
+      if current_user.id == @record.processor_id  
+        if !@record.loanofficer_id.blank?
+          #notify loan officer of all the actions the processor takes
+          Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange, 0)
+        end
+      elsif current_user.id == @record.loanofficer_id 
+        if !@record.processor_id.blank?
+          #notify processor of all the actions the loanofficer takes
+          Notification.createnotification(current_user.id, @record.processor_id, @record.id, mychange, oldchange, 0)
+        end
+      else #if the admin changed something tell both the processor and the loan officer.
+          Notification.createnotification(current_user.id, @record.processor_id, @record.id, mychange, oldchange, 0)
+          Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange, 0)
       end
-    elsif current_user.id == @record.loanofficer_id 
-      if !@record.processor_id.blank?
-        #notify processor of all the actions the loanofficer takes
-        Notification.createnotification(current_user.id, @record.processor_id, @record.id, mychange, oldchange, 0)
-      end
-    else #if the admin changed something tell both the processor and the loan officer.
-        Notification.createnotification(current_user.id, @record.processor_id, @record.id, mychange, oldchange, 0)
-        Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange, 0)
     end
 
   end

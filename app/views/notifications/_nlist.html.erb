@@ -16,8 +16,9 @@
                 from <%= notification.change %>
                 to <%= Record.find(notification.record_id).progress %>
                 <!--<%= time_ago_in_words notification.created_at %> ago -->
-                <%= notification.created_at.strftime("on %m/%d/%Y") %>
-                <%= notification.created_at.strftime("at %I:%M%p") %>
+                <% temptime = notification.created_at-6.hours %>
+                <%= temptime.strftime("on %m/%d/%Y") %>
+                <%= temptime.strftime("at %l:%M%p")%>
               </center>
             </td>
             <td>
