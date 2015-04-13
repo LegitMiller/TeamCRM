@@ -9,7 +9,7 @@ class ProgressionsController < ApplicationController
   def edit
     if current_user.profile.title == "admin"
     else
-      redirect_to root_path
+      redirect_to root_path, notice: 'Access Denied; you are not Admin.'
     end
   end
 
@@ -29,7 +29,7 @@ class ProgressionsController < ApplicationController
         end
       end
     else
-      redirect_to root_path
+      redirect_to root_path, notice: 'Nothing created, you are not Admin.'
     end
   end
 
@@ -47,7 +47,7 @@ class ProgressionsController < ApplicationController
         end
       end
     else
-      redirect_to root_path
+      redirect_to root_path, notice: 'Nothing updated, you are not Admin.'
     end      
   end
 
@@ -61,7 +61,7 @@ class ProgressionsController < ApplicationController
         format.json { head :no_content }
       end
     else
-      redirect_to root_path
+      redirect_to root_path, notice: 'Nothing deleted, you are not Admin.'
     end
   end
 

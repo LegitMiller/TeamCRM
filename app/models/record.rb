@@ -42,6 +42,5 @@ class Record < ActiveRecord::Base
       record.save!
     end
   end
-
   
 end

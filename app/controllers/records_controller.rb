@@ -31,8 +31,12 @@ class RecordsController < ApplicationController
   end
 
   def import
-    Record.import(params[:file])
-    redirect_to records_path, notice: "Records Imported"
+    if current_user.profile.title == "admin"
+      Record.import(params[:file])
+      redirect_to records_path, notice: "Records Imported"
+    else
+      redirect_to records_path, notice: "No Records Imported; You are not Admin."
+    end
   end
 
   # GET /records/1
@@ -117,14 +121,14 @@ class RecordsController < ApplicationController
     end
   end
 
-  def notificationprocess(recordid, recloid, recproid, recordprogress, phasebool = nil)
+  def notificationprocess(recordid, recloid, recproid, recordprogress, mytype = nil)
     #CHECK TO SEE IF WE NEED TO MAKE A NOTIFICATION 
 
     @record = Record.find(recordid)
-    if phasebool == true 
+    if mytype == "phase" 
         mychange = "Phase: " + Phase.find(recordprogress).name
         oldchange = "'Not Done'"
-    elsif recordprogress.to_i.is_a? Integer
+    elsif mytype == "progression"# and recordprogress.to_i.is_a? Integer
       if Step.exists?(:record_id => recordid, :progression_id => recordprogress)
         mychange = "Progression Step: " + Progression.find(recordprogress).name
         oldchange = "'Done'"
@@ -169,7 +173,7 @@ class RecordsController < ApplicationController
 
   def addstep
     myrecord = Record.find(params[:id])
-    notificationprocess(myrecord.id, myrecord.loanofficer_id, myrecord.processor_id, params[:progression_id]) 
+    notificationprocess(myrecord.id, myrecord.loanofficer_id, myrecord.processor_id, params[:progression_id], "progression") 
    
     Step.where(record_id: params[:id], progression_id: params[:progression_id]).first_or_create
     redirect_to edit_record_path(params[:id])
@@ -190,7 +194,7 @@ class RecordsController < ApplicationController
     end 
     if phasecomplete == true
       #send notification for phase complete
-      notificationprocess(myrecord.id, myrecord.loanofficer_id, myrecord.processor_id, myphase.id, true) 
+      notificationprocess(myrecord.id, myrecord.loanofficer_id, myrecord.processor_id, myphase.id, "phase") 
     end
 
   end

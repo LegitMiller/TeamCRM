@@ -42,7 +42,7 @@
         <div class="input-group">
           <br>
           <%= f.label :title %>&nbsp
-          <%= f.select :title, options_for_select([["Loan Officer", "loan officer"], ["Processor", "processor"]], @profile.title), {:selected => params[:title]}, { :class => "btn btn-default btn-lg dropdown-toggle"}  %>
+          <%= f.select :title, options_for_select(@listoftitles, @profile.title), {:selected => params[:title]}, { :class => "btn btn-default btn-lg dropdown-toggle"}  %>
         </div>
       </div>
       <div class="col-xs-6 col-sm-3">

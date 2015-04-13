@@ -85,24 +85,25 @@
     <% end %>
   </tbody>
 </table>
-<h2>Backup</h2>
-<br />
-<div class="row">
-  <div class="col-xs-4 col-sm-4">
-  <h3>Export Records</h3>
-    <%= link_to "To CSV File", records_path(format: "csv"), :class => 'btn btn-default btn' %>
 
+<% if current_user.profile.title == "admin" %>
+  <h2>Backup</h2>
+  <br />
+  <div class="row">
+    <div class="col-xs-4 col-sm-4">
+    <h3>Export Records</h3>
+      <%= link_to "To CSV File", records_path(format: "csv"), :class => 'btn btn-default btn' %>
+
+    </div>
+    <div class="col-xs-4 col-sm-4">
+      <h3>Import Records</h3>
+      <%= form_tag import_records_path, multipart: true do %>
+        <%= file_field_tag :file, :class => 'btn btn-default btn' %><br />
+        <%= submit_tag "Import", :class => 'btn btn-default btn' %>
+      <% end %>
+    </div>
   </div>
-  <div class="col-xs-4 col-sm-4">
-    <h3>Import Records</h3>
-    <%= form_tag import_records_path, multipart: true do %>
-      <%= file_field_tag :file, :class => 'btn btn-default btn' %><br />
-      <%= submit_tag "Import", :class => 'btn btn-default btn' %>
-    <% end %>
-
-
-  </div>
-</div>
+<% end %>
 
 <script>
 function showClosedTable() {

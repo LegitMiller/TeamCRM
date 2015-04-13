@@ -39,7 +39,16 @@ class ProfilesController < ApplicationController
 
   # GET /profiles/1/edit
   def edit
-    if Profile.find_by_id(params[:id]).user_id == current_user.id
+    @listoftitles = [["Loan Officer", "Loan Officer"],["Processor", "Processor"]]
+
+      if current_user.profile.title == "master"
+        @listoftitles = [["Loan Officer", "Loan Officer"],["Processor", "Processor"],["admin", "admin"]]
+      end
+      
+    if Profile.find_by_id(params[:id]).user_id == current_user.id || current_user.profile.title = "master"
+      if @profile.email == "jordan.kay@gmail.com" and current_user.email == "jordan.kay@gmail.com"
+        @listoftitles = [["Loan Officer", "Loan Officer"],["Processor", "Processor"],["admin", "admin"],["master", "master"]]
+      end
     else
       redirect_to root_path
     end
@@ -118,6 +127,6 @@ class ProfilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
-      params.require(:profile).permit(:firstname, :lastname, :phone, :rank, :upline, :email, :bio, :user_id, :status, :title)
+      params.require(:profile).permit(:firstname, :lastname, :phone, :email, :title, :bio, :status, :user_id)
     end
 end
