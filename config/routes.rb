@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   resources :records do
     resources :notes
+    collection { post :import }
   end
 
   #get 'guests/invite'

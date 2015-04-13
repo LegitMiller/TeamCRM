@@ -3,6 +3,8 @@ class RecordsController < ApplicationController
   before_action :authenticate_user!
   helper_method :sort_column, :sort_direction
 
+  require 'csv'
+
   # GET /records
   # GET /records.json
   def index
@@ -22,7 +24,15 @@ class RecordsController < ApplicationController
         @records = Record.search(params[:search])
       end
     end
-    #end
+    respond_to do |format|
+      format.html
+      format.csv { send_data @records.to_csv } #render text: @records.to_csv }
+    end
+  end
+
+  def import
+    Record.import(params[:file])
+    redirect_to records_path, notice: "Records Imported"
   end
 
   # GET /records/1
