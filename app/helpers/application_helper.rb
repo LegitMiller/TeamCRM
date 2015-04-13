@@ -27,7 +27,7 @@ module ApplicationHelper
 	      link_to uprofile.firstname + " " + uprofile.lastname, uprofile, :class => myclass
 	    end
   	else	
-  		"unknown"
+  		"none"
 	  end
   end
   def editname(myid)
@@ -38,7 +38,7 @@ module ApplicationHelper
 	      link_to current_user.profile.firstname + " " + current_user.profile.lastname, edit_profile_path(current_user.id), :class => 'btn btn-default btn-xs'
 	    end
   	else	
-  		"unknown"
+  		"none"
 	  end
   end
 end

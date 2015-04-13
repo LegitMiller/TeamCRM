@@ -121,11 +121,11 @@ class RecordsController < ApplicationController
       oldchange = @record.progress
       #Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, "THE PROGRESS", oldchange, 0)
     elsif @record.processor_id.to_i != recproid.to_i
-      mychange = "Assigned processor"
+      mychange = "Assigned Processor"
       oldchange = @record.processor_id
       #Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, "THE PROCESSOR", oldchange, 0)
     elsif @record.loanofficer_id != recloid.to_i
-      mychange = "Assigned"
+      mychange = "Assigned Loan Officer"
       oldchange = @record.loanofficer_id
       #Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, "THE LOANOFFICER", oldchange, 0)
     end
@@ -136,11 +136,15 @@ class RecordsController < ApplicationController
         if !@record.loanofficer_id.blank?
           #notify loan officer of all the actions the processor takes
           Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange, 0)
+        else !recloid.blank?  
+          Notification.createnotification(current_user.id, recloid, @record.id, mychange, oldchange, 0)
         end
       elsif current_user.id == @record.loanofficer_id 
-        if !@record.processor_id.blank?
+        if !@record.processor_id.blank? 
           #notify processor of all the actions the loanofficer takes
           Notification.createnotification(current_user.id, @record.processor_id, @record.id, mychange, oldchange, 0)
+        else !recproid.blank?  
+          Notification.createnotification(current_user.id, recproid, @record.id, mychange, oldchange, 0)
         end
       else #if the admin changed something tell both the processor and the loan officer.
           Notification.createnotification(current_user.id, @record.processor_id, @record.id, mychange, oldchange, 0)
