@@ -36,7 +36,7 @@
       <div class="col-xs-4 col-sm-4">
         <div class="input-group">
           <div class="input-group-addon">Progress </div>
-          <% listofprogress = [["New", "New"],["In progress", "In Progress"],["Holding", "Holding"],["Completed", "Completed"],["Dropped", "Dropped"],["Unknown", "Unknown"]] %>
+          <% listofprogress = [["New", "New"],["In Progress", "In Progress"],["On Hold", "On Hold"],["Completed", "Completed"],["Dropped", "Dropped"],["Unknown", "Unknown"]] %>
             <%= f.select :progress, options_for_select(listofprogress, @record.progress.to_s), {prompt: true}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control", "required"=>"true"} %>
         </div>
       </div>

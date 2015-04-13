@@ -117,27 +117,30 @@ class RecordsController < ApplicationController
     end
   end
 
-  def notificationprocess(recordid, recloid, recproid, recordprogress)
+  def notificationprocess(recordid, recloid, recproid, recordprogress, phasebool = nil)
     #CHECK TO SEE IF WE NEED TO MAKE A NOTIFICATION 
-    #THIS IS BROKEN!!!  BUT ITS BROKEN IN THE _nlist.erb
-    #it needs to change verbage based on what has changed
-    #AND THE TIMING IS OFF BY 6 HORS
-
-
 
     @record = Record.find(recordid)
-    if @record.progress != recordprogress.to_s
+    if phasebool == true 
+        mychange = "Phase: " + Phase.find(recordprogress).name
+        oldchange = "'Not Done'"
+    elsif recordprogress.to_i.is_a? Integer
+      if Step.exists?(:record_id => recordid, :progression_id => recordprogress)
+        mychange = "Progression Step: " + Progression.find(recordprogress).name
+        oldchange = "'Done'"
+      else
+        mychange = "Progression Step: " + Progression.find(recordprogress).name
+        oldchange = "'Not Done'"
+      end
+    elsif @record.progress != recordprogress.to_s
       mychange = "Progress"
       oldchange = @record.progress
-      #Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, "THE PROGRESS", oldchange, 0)
     elsif @record.processor_id.to_i != recproid.to_i
       mychange = "Assigned Processor"
       oldchange = @record.processor_id
-      #Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, "THE PROCESSOR", oldchange, 0)
     elsif @record.loanofficer_id != recloid.to_i
       mychange = "Assigned Loan Officer"
       oldchange = @record.loanofficer_id
-      #Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, "THE LOANOFFICER", oldchange, 0)
     end
     
     #USER REQUIREMENTS 
@@ -165,12 +168,37 @@ class RecordsController < ApplicationController
   end
 
   def addstep
-    #Call Notification creator or something here.
+    myrecord = Record.find(params[:id])
+    notificationprocess(myrecord.id, myrecord.loanofficer_id, myrecord.processor_id, params[:progression_id]) 
+   
     Step.where(record_id: params[:id], progression_id: params[:progression_id]).first_or_create
     redirect_to edit_record_path(params[:id])
+
+    #cycle through all the progressions and if phase is complete send another notification for phase complete - phase complete ones should trigger email.
+    #put in a check box for if a client wants to recieve email updates on the client record thingy.
+
+    myprogression = Progression.find(params[:progression_id])
+
+    myphase = myprogression.phase
+
+    phasecomplete = true
+    
+    myphase.progressions.each do |progression|
+      if !Step.exists?(:record_id => params[:id], :progression_id => progression.id)
+        phasecomplete = false
+      end
+    end 
+    if phasecomplete == true
+      #send notification for phase complete
+      notificationprocess(myrecord.id, myrecord.loanofficer_id, myrecord.processor_id, myphase.id, true) 
+    end
+
   end
   
   def removestep
+    myrecord = Record.find(params[:id])
+    notificationprocess(myrecord.id, myrecord.loanofficer_id, myrecord.processor_id, params[:progression_id]) 
+   
     Step.where(record_id: params[:id], progression_id: params[:progression_id]).destroy_all
     redirect_to edit_record_path(params[:id])
   end

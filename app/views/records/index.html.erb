@@ -31,7 +31,7 @@
 
   <tbody>
     <% @records.each do |record| %>
-      <% if record.progress != "Holding" and record.progress != "Completed" and record.progress != "Dropped" and record.progress != "Unknown" %>
+      <% if record.progress != "On Hold" and record.progress != "Completed" and record.progress != "Dropped" and record.progress != "Unknown" %>
        <!--<tr data-link="<%= edit_record_path(record) %>">-->
           <tr> 
           <td><%= correctlink record, record.firstname %></td>
@@ -68,7 +68,7 @@
 
   <tbody>
     <% @records.each do |record| %>
-      <% if record.progress == "Holding" or record.progress == "Completed" or record.progress == "Dropped" or record.progress == "Unknown" %>
+      <% if record.progress == "On Hold" or record.progress == "Completed" or record.progress == "Dropped" or record.progress == "Unknown" %>
        <!--<tr data-link="<%= edit_record_path(record) %>">-->
           <tr> 
           <td><%= correctlink record, record.firstname %></td>
@@ -88,16 +88,16 @@
 <h2>Backup</h2>
 <br />
 <div class="row">
-  <div class="col-xs-6 col-sm-6">
+  <div class="col-xs-4 col-sm-4">
   <h3>Export Records</h3>
     <%= link_to "To CSV File", records_path(format: "csv"), :class => 'btn btn-default btn' %>
 
   </div>
-  <div class="col-xs-6 col-sm-6">
+  <div class="col-xs-4 col-sm-4">
     <h3>Import Records</h3>
     <%= form_tag import_records_path, multipart: true do %>
-      <%= file_field_tag :file, :class => 'btn btn-default btn' %>
-      <div class="pull-right"><%= submit_tag "Import", :class => 'btn btn-default btn' %></div>
+      <%= file_field_tag :file, :class => 'btn btn-default btn' %><br />
+      <%= submit_tag "Import", :class => 'btn btn-default btn' %>
     <% end %>
 
 

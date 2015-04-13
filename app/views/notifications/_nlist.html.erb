@@ -21,7 +21,11 @@
                   <% newname = getname Record.find(notification.record_id).loanofficer_id %>
                 <% else %>
                   <% oldname = notification.change %>
-                  <% newname = Record.find(notification.record_id).progress %>
+                  <% if oldname == "'Done'" %>
+                    <% newname = "'Not Done'" %>
+                  <% else %>
+                    <% newname = "'Done'" %>
+                  <% end %>
                 <% end %>
 
                 <%= getname notification.maker_id, true %>
