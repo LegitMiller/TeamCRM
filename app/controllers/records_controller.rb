@@ -153,22 +153,53 @@ class RecordsController < ApplicationController
         if !@record.loanofficer_id.blank?
           #notify loan officer of all the actions the processor takes
           Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange, 0)
+          checkmailer(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange)
         else !recloid.blank?  
           Notification.createnotification(current_user.id, recloid, @record.id, mychange, oldchange, 0)
+          checkmailer(current_user.id, recloid, @record.id, mychange, oldchange)
         end
       elsif current_user.id == @record.loanofficer_id 
         if !@record.processor_id.blank? 
           #notify processor of all the actions the loanofficer takes
           Notification.createnotification(current_user.id, @record.processor_id, @record.id, mychange, oldchange, 0)
+          checkmailer(current_user.id, @record.processor_id, @record.id, mychange, oldchange)
         else !recproid.blank?  
           Notification.createnotification(current_user.id, recproid, @record.id, mychange, oldchange, 0)
+          checkmailer(current_user.id, recproid, @record.id, mychange, oldchange)
         end
       else #if the admin changed something tell both the processor and the loan officer.
           Notification.createnotification(current_user.id, @record.processor_id, @record.id, mychange, oldchange, 0)
           Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange, 0)
+          checkmailer(current_user.id, @record.processor_id, @record.id, mychange, oldchange)
+          checkmailer(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange)
       end
     end
+  end
 
+  def checkmailer(efrom, eto, recordid, mychange, oldchange)
+    if !eto.blank?
+      record = Record.find(recordid)
+      profile = Profile.find(eto)
+      if mychange[0,5] == "Phase" 
+        if record.phasemail == true
+          UserMailer.phase_record_email(efrom, eto, recordid, mychange, oldchange).deliver
+        end
+        if profile.phasemail == true
+          UserMailer.phase_profile_email(efrom, eto, recordid, mychange, oldchange).deliver
+        end
+      elsif mychange[0,16] == "Progression Step"
+        if record.progressmail == true 
+          UserMailer.progression_record_email(efrom, eto, recordid, mychange, oldchange).deliver
+        end
+        if profile.progressmail == true
+          UserMailer.progression_profile_email(efrom, eto, recordid, mychange, oldchange).deliver
+        end
+      else #progress or assignment 
+        if profile.assignmail == true
+          UserMailer.profile_email(efrom, eto, recordid, mychange, oldchange).deliver
+        end
+      end
+    end
   end
 
   def addstep
@@ -225,6 +256,6 @@ class RecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def record_params
-      params.require(:record).permit(:firstname, :lastname, :phone, :email, :receivedate, :progress, :loanofficer_id, :processor_id)
+      params.require(:record).permit(:firstname, :lastname, :phone, :email, :receivedate, :progress, :progressmail, :phasemail, :loanofficer_id, :processor_id)
     end
 end

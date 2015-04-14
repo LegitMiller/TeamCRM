@@ -7,6 +7,9 @@ class CreateProfiles < ActiveRecord::Migration
       t.string :email
       t.string :title
       t.string :bio
+      t.boolean :phasemail
+      t.boolean :progressmail
+      t.boolean :assignmail
       t.string :status
       t.integer :user_id
 

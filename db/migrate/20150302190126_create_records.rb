@@ -7,6 +7,8 @@ class CreateRecords < ActiveRecord::Migration
       t.string :email
       t.datetime :receivedate
       t.string :progress
+      t.boolean :phasemail
+      t.boolean :progressmail
       t.integer :loanofficer_id
       t.integer :processor_id
 

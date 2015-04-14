@@ -100,7 +100,9 @@ class ProfilesController < ApplicationController
     else
       current_user.profile.update_attributes :status => "free"
     end
-
+    
+    UserMailer.welcome_email(current_user.profile).deliver
+    
     redirect_to root_path
   end
 
@@ -127,6 +129,6 @@ class ProfilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
-      params.require(:profile).permit(:firstname, :lastname, :phone, :email, :title, :bio, :status, :user_id)
+      params.require(:profile).permit(:firstname, :lastname, :phone, :email, :title, :bio, :assignmail, :progressmail, :phasemail, :status, :user_id)
     end
 end

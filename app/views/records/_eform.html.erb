@@ -47,7 +47,7 @@
           <% @profiles.each do |profile|  %>
             <% listoflos.push(profile) if profile.title == "loan officer" %>
           <% end %>
-          <%= f.collection_select :loanofficer_id, listoflos, :user_id, :firstname, {prompt: true}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control", "required"=>"true"} %>
+          <%= f.collection_select :loanofficer_id, listoflos, :user_id, :firstname, {prompt: true}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control"} %>
         </div>
       </div>
       <div class="col-xs-4 col-sm-4">
@@ -65,6 +65,20 @@
           <%= f.collection_select :processor_id, listofpros, :user_id, :firstname, {prompt: false}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control", "required"=>"false"} %>
         </div>
       </div>
+
+      <div class="col-xs-6 col-sm-6">
+        <div class="input-group">
+          <div class="input-group-addon">Progress Made </div>
+          <%= f.select :progressmail, options_for_select([['email notification', true], ["don't email notification", false]], @record.progressmail),{:selected => params[:progressmail]}, {:class => "input-lg form-control"} %>
+        </div>
+      </div>
+      <div class="col-xs-6 col-sm-6">
+        <div class="input-group">
+          <div class="input-group-addon">Phase Completion </div>
+          <%= f.select :phasemail, options_for_select([['email notification', true], ["don't email notification", false]], @record.phasemail),{:selected => params[:phasemail]}, {:class => "input-lg form-control"} %>
+        </div>
+      </div>
+
       <% @phases.order(:phase_id).each do |phase|  %>
         <div class="col-xs-12 col-sm-12">
           <% phasecomplete = true %>
