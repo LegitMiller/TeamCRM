@@ -19,10 +19,10 @@
         <% @profiles.each do |profile| %>
           <tr>
             <td>
-              <% if profile.firstname.blank? || profile.lastname.blank? %>
+              <% if profile.name.blank?  %>
                 <%= link_to profile.email, profile, :class => "btn btn-default btn-lg","data-no-turbolink"=>"true"  %>
               <% else %>
-                <%= link_to profile.firstname + " " + profile.lastname, profile, :class => "btn btn-default btn-lg", "data-no-turbolink"=>"true"  %>
+                <%= link_to profile.name, profile, :class => "btn btn-default btn-lg", "data-no-turbolink"=>"true"  %>
               <% end %>
             </td>
           </tr>

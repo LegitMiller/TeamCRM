@@ -5,11 +5,11 @@ class Profile < ActiveRecord::Base
 	def self.search(search)
 		if search
     		#find(:all, :conditions => ['title LIKE ?', "%#{search}%"])
-    		results = where('firstname LIKE ?', "%#{search}%")
+    		results = where('name LIKE ?', "%#{search}%")
     		if !results.blank? 
     			results
     		else
-    			results = where('lastname LIKE ?', "%#{search}%")	
+    			results = where('email LIKE ?', "%#{search}%")	
 	    		if !results.blank? 
 	    			results
 	    		else

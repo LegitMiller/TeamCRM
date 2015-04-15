@@ -1,0 +1,37 @@
+
+<h2>Progress</h2>
+<div class="row">
+  <% @phases.order(:phase_id).each do |phase|  %>
+    <div class="col-xs-12 col-sm-12">
+      <% phasecomplete = true %>
+      <% phase.progressions.each do |progression| %>
+        <% if !@steps.exists?(:record_id => @record.id, :progression_id => progression.id) %>
+          <% phasecomplete = false %>
+        <% end %>
+      <% end %>  
+      <h3>
+        <% if phasecomplete == true %>
+          <%= image_tag("justcheckon.png", size: "64x64", alt: "Done", "style"=>"padding:2px") %>
+          <%= phase.name %>
+        <% else %>
+          <%= image_tag("justcheckoff.png", size: "64x64", alt: "Done", "style"=>"padding:2px") %>
+          <%= phase.name %>
+        <% end %>
+      </h3>
+    </div>
+    <% phase.progressions.each do |progression| %>
+      <div class="col-xs-6 col-sm-6">
+        <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <% if @steps.exists?(:record_id => @record.id, :progression_id => progression.id) %>
+          <%= link_to image_tag("checkon.png", size: "48x48", alt: "Done", "style"=>"padding:2px"), { :controller => :records, :action => :removestep, :id=>@record.id, :progression_id => progression.id } %>
+          <!--<%= link_to "Mark Undone", { :controller => :records, :action => :removestep, :id=>@record.id, :progression_id => progression.id }, :class =>"btn btn-lg btn-success" %>-->
+        <% else %>
+        <%= link_to image_tag("checkoff.png", size: "48x48", alt: "Done", "style"=>"padding:2px"), { :controller => :records, :action => :addstep, :id=>@record.id, :progression_id => progression.id } %>
+          
+          <!--<%= link_to "Mark Done", { :controller => :records, :action => :addstep, :id=>@record.id, :progression_id => progression.id }, :class =>"btn btn-lg btn-default" %>-->
+        <% end %>
+        <%= progression.name %></h4>
+      </div>
+    <% end %>
+  <% end %>  <br />
+</div>

@@ -7,7 +7,7 @@ class ProgressionsController < ApplicationController
   
   # GET /progressions/1/edit
   def edit
-    if current_user.profile.title == "admin"
+    if current_user.profile.title == "admin" or current_user.profile.title == "master"
     else
       redirect_to root_path, notice: 'Access Denied; you are not Admin.'
     end
@@ -16,7 +16,7 @@ class ProgressionsController < ApplicationController
   # POST /progressions
   # POST /progressions.json
   def create
-    if current_user.profile.title == "admin"
+    if current_user.profile.title == "admin" or current_user.profile.title == "master"
       @progression = Progression.new(progression_params)
 
       respond_to do |format|
@@ -36,7 +36,7 @@ class ProgressionsController < ApplicationController
   # PATCH/PUT /progressions/1
   # PATCH/PUT /progressions/1.json
   def update
-    if current_user.profile.title == "admin"
+    if current_user.profile.title == "admin" or current_user.profile.title == "master"
       respond_to do |format|
         if @progression.update(progression_params)
           format.html { redirect_to phases_path, notice: 'Progression was successfully updated.' }
@@ -54,7 +54,7 @@ class ProgressionsController < ApplicationController
   # DELETE /progressions/1
   # DELETE /progressions/1.json
   def destroy
-    if current_user.profile.title == "admin" 
+    if current_user.profile.title == "admin" or current_user.profile.title == "master"
       @progression.destroy
       respond_to do |format|
         format.html { redirect_to phases_path, notice: 'Progression was successfully destroyed.' }

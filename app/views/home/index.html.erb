@@ -28,35 +28,33 @@
 
 </center>
 
-<br />
-<hr />
-<h3><%= link_to "Notifications", notifications_path %></h3>
-<br />
+
 <%= render 'notifications/nlist' %>
 
-<br />
-<hr />
-<table class="table">
-  <strong>Admins:</strong>
-  <tbody>
-    <% @profiles.each do |profile| %>
-      <% if profile.title == "admin" %>
-    <tr>
-      <td>
-        <%= getname profile.user_id%> 
-      </td>
-      <td>
-        joined <%= time_ago_in_words profile.created_at %> ago
-      </td>
-    </tr>
-    <% end %>
-  <% end %> 
-  </tbody>
-</table>  
+<% if current_user.profile.title == "admin" or current_user.profile.title == "master" %>
+  <br />
+  <hr />
+  <table class="table">
+    <strong>Admins:</strong>
+    <tbody>
+      <% @profiles.each do |profile| %>
+        <% if profile.title == "admin" %>
+      <tr>
+        <td>
+          <%= getname profile.user_id%> 
+        </td>
+        <td>
+          joined <%= time_ago_in_words profile.created_at %> ago
+        </td>
+      </tr>
+      <% end %>
+    <% end %> 
+    </tbody>
+  </table>  
 
-<!--<%= link_to "sup", "#{@mylink}" %>
-<%= link_to "sup2", @mylink %>-->
-<% if current_user.profile.title == "admin" %>
+  <!--<%= link_to "sup", "#{@mylink}" %>
+  <%= link_to "sup2", @mylink %>-->
+
   <center>
     <%= link_to "Edit Progression Points", phases_path, class: 'btn btn-default btn-lg btn-warning', "data-no-turbolink"=>"true" %>
   </center>

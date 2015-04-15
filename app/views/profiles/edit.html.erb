@@ -1,5 +1,6 @@
+<div onClick='<%=@dosomethingspecial%>'>
   <div class="row">
-    <div class="col-xs-4 col-sm-4">
+    <div class="col-xs-4 col-sm-4" >
     	<h1><%= link_to "My Profile", @profile %></h1>
     </div>
     <div class="col-xs-4 col-sm-4">
@@ -16,3 +17,12 @@
 
 
 <%= render 'form' %>
+
+</div>
+<script>
+function showRams() {
+  document.body.style.backgroundImage = "url('http://todofondosdelanfl.com/wp-content/uploads/images/c7/st-louis-rams-wallpapers-1.jpg')";
+  return false;
+}
+</script>
+

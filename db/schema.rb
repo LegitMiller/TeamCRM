@@ -42,8 +42,7 @@ ActiveRecord::Schema.define(version: 20150409213921) do
   end
 
   create_table "profiles", force: true do |t|
-    t.string   "firstname"
-    t.string   "lastname"
+    t.string   "name"
     t.string   "phone"
     t.string   "email"
     t.string   "title"

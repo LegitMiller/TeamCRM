@@ -12,7 +12,7 @@ class RecordsController < ApplicationController
     #  @records = Record.all
     #else
     #  #@records = Record.order(params[:sort])#.search(params[:search])
-    if current_user.profile.title == "admin"
+    if current_user.profile.title == "admin" or current_user.profile.title == "master"
       @records = Record.order(sort_column + " " + sort_direction)
     elsif current_user.profile.title == "processor"
       #@records = Record.where('progress= ? OR progress= ? OR processor_id= ?', 'appraisal ordered','appraisal received',current_user.id).order(sort_column + " " + sort_direction)
@@ -56,7 +56,7 @@ class RecordsController < ApplicationController
     @progressions = Progression.all
     @steps = Record.find(params[:id]).steps
     
-    if current_user.profile.title == "admin"
+    if current_user.profile.title == "admin" or current_user.profile.title == "master"
     elsif current_user.profile.title == "processor" 
       if Record.find_by_id(params[:id]).processor_id != current_user.id
         redirect_to records_path, notice: 'Unable to edit unowned record.'
@@ -108,7 +108,7 @@ class RecordsController < ApplicationController
   # DELETE /records/1.json
   def destroy
 
-    if current_user.profile.title == "admin"
+    if current_user.profile.title == "admin" or current_user.profile.title == "master"
       @record.destroy
     elsif current_user.profile.title == "processor"
       @record.update_attributes :processor_id => "0"
@@ -153,25 +153,44 @@ class RecordsController < ApplicationController
         if !@record.loanofficer_id.blank?
           #notify loan officer of all the actions the processor takes
           Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange, 0)
-          checkmailer(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange)
+          #checkmailer(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange)
         else !recloid.blank?  
           Notification.createnotification(current_user.id, recloid, @record.id, mychange, oldchange, 0)
-          checkmailer(current_user.id, recloid, @record.id, mychange, oldchange)
+          #checkmailer(current_user.id, recloid, @record.id, mychange, oldchange)
         end
       elsif current_user.id == @record.loanofficer_id 
         if !@record.processor_id.blank? 
           #notify processor of all the actions the loanofficer takes
           Notification.createnotification(current_user.id, @record.processor_id, @record.id, mychange, oldchange, 0)
-          checkmailer(current_user.id, @record.processor_id, @record.id, mychange, oldchange)
+          #checkmailer(current_user.id, @record.processor_id, @record.id, mychange, oldchange)
         else !recproid.blank?  
           Notification.createnotification(current_user.id, recproid, @record.id, mychange, oldchange, 0)
-          checkmailer(current_user.id, recproid, @record.id, mychange, oldchange)
+          #checkmailer(current_user.id, recproid, @record.id, mychange, oldchange)
         end
       else #if the admin changed something tell both the processor and the loan officer.
-          Notification.createnotification(current_user.id, @record.processor_id, @record.id, mychange, oldchange, 0)
+
+        if !@record.loanofficer_id.blank?
+          #notify loan officer of all the actions the processor takes
           Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange, 0)
-          checkmailer(current_user.id, @record.processor_id, @record.id, mychange, oldchange)
-          checkmailer(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange)
+          #checkmailer(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange)
+        else !recloid.blank?  
+          Notification.createnotification(current_user.id, recloid, @record.id, mychange, oldchange, 0)
+          #checkmailer(current_user.id, recloid, @record.id, mychange, oldchange)
+        end
+        if !@record.processor_id.blank? 
+          #notify processor of all the actions the loanofficer takes
+          Notification.createnotification(current_user.id, @record.processor_id, @record.id, mychange, oldchange, 0)
+          #checkmailer(current_user.id, @record.processor_id, @record.id, mychange, oldchange)
+        else !recproid.blank?  
+          Notification.createnotification(current_user.id, recproid, @record.id, mychange, oldchange, 0)
+          #checkmailer(current_user.id, recproid, @record.id, mychange, oldchange)
+        end
+
+
+        #  Notification.createnotification(current_user.id, @record.processor_id, @record.id, mychange, oldchange, 0)
+        #  Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange, 0)
+          #checkmailer(current_user.id, @record.processor_id, @record.id, mychange, oldchange)
+          #checkmailer(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange)
       end
     end
   end

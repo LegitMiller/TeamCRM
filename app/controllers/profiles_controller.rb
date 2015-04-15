@@ -10,7 +10,10 @@ class ProfilesController < ApplicationController
   # GET /profiles/1
   # GET /profiles/1.json
   def show
-    
+    if @profile.email == "john@superiorlending.net" #@profile.firstname == "John" and @profile.lastname == "Johnson" and 
+      @dosomethingspecial="showRams()"
+    end
+
     #@recs = Records.where(processor_id: current_user.id).order(sort_column + " " + sort_direction)
     #      @records = Record.where(processor_id: current_user.id).order(sort_column + " " + sort_direction)
     @recs = Record.where('processor_id= ? OR loanofficer_id= ?',params[:id],params[:id])
@@ -39,15 +42,20 @@ class ProfilesController < ApplicationController
 
   # GET /profiles/1/edit
   def edit
-    @listoftitles = [["Loan Officer", "Loan Officer"],["Processor", "Processor"]]
+
+    if @profile.email == "john@superiorlending.net" #@profile.firstname == "John" and @profile.lastname == "Johnson" and 
+      @dosomethingspecial="showRams()"
+    end
+
+    @listoftitles = [["Loan Officer", "loan officer"],["Processor", "processor"]]
 
       if current_user.profile.title == "master"
-        @listoftitles = [["Loan Officer", "Loan Officer"],["Processor", "Processor"],["admin", "admin"]]
+        @listoftitles = [["Loan Officer", "loan officer"],["Processor", "processor"],["Admin", "admin"]]
       end
       
     if Profile.find_by_id(params[:id]).user_id == current_user.id || current_user.profile.title = "master"
       if @profile.email == "jordan.kay@gmail.com" and current_user.email == "jordan.kay@gmail.com"
-        @listoftitles = [["Loan Officer", "Loan Officer"],["Processor", "Processor"],["admin", "admin"],["master", "master"]]
+        @listoftitles = [["Loan Officer", "loan officer"],["Processor", "processor"],["Admin", "admin"],["Master", "master"]]
       end
     else
       redirect_to root_path
@@ -101,7 +109,7 @@ class ProfilesController < ApplicationController
       current_user.profile.update_attributes :status => "free"
     end
     
-    UserMailer.welcome_email(current_user.profile).deliver
+  #  UserMailer.welcome_email(current_user.profile).deliver
     
     redirect_to root_path
   end
@@ -129,6 +137,6 @@ class ProfilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
-      params.require(:profile).permit(:firstname, :lastname, :phone, :email, :title, :bio, :assignmail, :progressmail, :phasemail, :status, :user_id)
+      params.require(:profile).permit(:name, :phone, :email, :title, :bio, :assignmail, :progressmail, :phasemail, :status, :user_id)
     end
 end

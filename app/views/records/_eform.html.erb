@@ -44,10 +44,15 @@
         <div class="input-group">
           <div class="input-group-addon">Loan Officer </div>
           <% listoflos = [] %>
+          <% mynewprofile = Profile.new %>
+          <% mynewprofile.id = "0" %>
+          <% mynewprofile.name = "none" %>
+          <% listoflos.push(mynewprofile) %>
+
           <% @profiles.each do |profile|  %>
             <% listoflos.push(profile) if profile.title == "loan officer" %>
           <% end %>
-          <%= f.collection_select :loanofficer_id, listoflos, :user_id, :firstname, {prompt: true}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control"} %>
+          <%= f.collection_select :loanofficer_id, listoflos, :user_id, :name, {prompt: false}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control", "required"=>"true"} %>
         </div>
       </div>
       <div class="col-xs-4 col-sm-4">
@@ -56,67 +61,32 @@
           <% listofpros = [] %>
           <% mynewprofile = Profile.new %>
           <% mynewprofile.id = "0" %>
-          <% mynewprofile.firstname = "none" %>
+          <% mynewprofile.name = "none" %>
           <% listofpros.push(mynewprofile) %>
 
           <% @profiles.each do |profile|  %>
             <% listofpros.push(profile) if profile.title == "processor" %>
           <% end %>
-          <%= f.collection_select :processor_id, listofpros, :user_id, :firstname, {prompt: false}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control", "required"=>"false"} %>
+          <%= f.collection_select :processor_id, listofpros, :user_id, :name, {prompt: false}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control", "required"=>"true"} %>
         </div>
       </div>
 
       <div class="col-xs-6 col-sm-6">
         <div class="input-group">
           <div class="input-group-addon">Progress Made </div>
-          <%= f.select :progressmail, options_for_select([['email notification', true], ["don't email notification", false]], @record.progressmail),{:selected => params[:progressmail]}, {:class => "input-lg form-control"} %>
+          <%= f.select :progressmail, options_for_select([["don't email notification", false], ["email notification", true]], @record.progressmail),{:selected => params[:progressmail]}, {:class => "input-lg form-control"} %>
         </div>
       </div>
       <div class="col-xs-6 col-sm-6">
         <div class="input-group">
           <div class="input-group-addon">Phase Completion </div>
-          <%= f.select :phasemail, options_for_select([['email notification', true], ["don't email notification", false]], @record.phasemail),{:selected => params[:phasemail]}, {:class => "input-lg form-control"} %>
+          <%= f.select :phasemail, options_for_select([["don't email notification", false], ['email notification', true]], @record.phasemail),{:selected => params[:phasemail]}, {:class => "input-lg form-control"} %>
         </div>
       </div>
-
-      <% @phases.order(:phase_id).each do |phase|  %>
-        <div class="col-xs-12 col-sm-12">
-          <% phasecomplete = true %>
-          <% phase.progressions.each do |progression| %>
-            <% if !@steps.exists?(:record_id => @record.id, :progression_id => progression.id) %>
-              <% phasecomplete = false %>
-            <% end %>
-          <% end %>  
-          <h3>
-            <% if phasecomplete == true %>
-              <%= image_tag("justcheckon.png", size: "64x64", alt: "Done", "style"=>"padding:2px") %>
-              <%= phase.name %>
-            <% else %>
-              <%= image_tag("justcheckoff.png", size: "64x64", alt: "Done", "style"=>"padding:2px") %>
-              <%= phase.name %>
-            <% end %>
-          </h3>
-        </div>
-        <% phase.progressions.each do |progression| %>
-          <div class="col-xs-6 col-sm-6">
-            <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <% if @steps.exists?(:record_id => @record.id, :progression_id => progression.id) %>
-              <%= link_to image_tag("checkon.png", size: "48x48", alt: "Done", "style"=>"padding:2px"), { :controller => :records, :action => :removestep, :id=>@record.id, :progression_id => progression.id } %>
-              <!--<%= link_to "Mark Undone", { :controller => :records, :action => :removestep, :id=>@record.id, :progression_id => progression.id }, :class =>"btn btn-lg btn-success" %>-->
-            <% else %>
-            <%= link_to image_tag("checkoff.png", size: "48x48", alt: "Done", "style"=>"padding:2px"), { :controller => :records, :action => :addstep, :id=>@record.id, :progression_id => progression.id } %>
-              
-              <!--<%= link_to "Mark Done", { :controller => :records, :action => :addstep, :id=>@record.id, :progression_id => progression.id }, :class =>"btn btn-lg btn-default" %>-->
-            <% end %>
-            <%= progression.name %></h4>
-          </div>
-        <% end %>
-      <% end %>  <p />
-
       <div class="clearfix visible-xs-block"></div>
       <div class="col-xs-6 col-sm-6">
         <div class="text-left">
-        <% if current_user.profile.title == "admin" || current_user.id == @record.loanofficer_id || current_user.id == @record.processor_id %>
+        <% if current_user.profile.title == "admin" || current_user.profile.title == "master" || current_user.id == @record.loanofficer_id || current_user.id == @record.processor_id %>
           <%= link_to(image_tag("trash.png", size: "18x20", alt: "Remove", "style"=>"padding:2px"), @record, method: :delete, data: { confirm: 'Are you sure you want to permanently destroy this client record?' }, :class => 'btn btn-default btn-lg') %>
         <% end %>
         </div>
@@ -128,6 +98,10 @@
           </div>
         </div>
       </div>   
+
+
+
+     
     </div>  
   <% end %>
 </div>  

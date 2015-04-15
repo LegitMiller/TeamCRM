@@ -13,7 +13,7 @@ class PhasesController < ApplicationController
 
   # GET /phases/1/edit
   def edit
-    if current_user.profile.title == "admin"
+    if current_user.profile.title == "admin" or current_user.profile.title == "master"
     else
       redirect_to root_path, notice: 'You are not Admin.'
     end
@@ -22,7 +22,7 @@ class PhasesController < ApplicationController
   # POST /phases
   # POST /phases.json
   def create
-    if current_user.profile.title == "admin"
+    if current_user.profile.title == "admin" or current_user.profile.title == "master"
       @phase = Phase.new(phase_params)
 
       respond_to do |format|
@@ -42,7 +42,7 @@ class PhasesController < ApplicationController
   # PATCH/PUT /phases/1
   # PATCH/PUT /phases/1.json
   def update
-    if current_user.profile.title == "admin"
+    if current_user.profile.title == "admin" or current_user.profile.title == "master"
       respond_to do |format|
         if @phase.update(phase_params)
           format.html { redirect_to phases_path, notice: 'Phase was successfully updated.' }
@@ -60,7 +60,7 @@ class PhasesController < ApplicationController
   # DELETE /phases/1
   # DELETE /phases/1.json
   def destroy
-    if current_user.profile.title == "admin"
+    if current_user.profile.title == "admin" or current_user.profile.title == "master"
       @phase.progressions.destroy_all
       @phase.destroy
       respond_to do |format|

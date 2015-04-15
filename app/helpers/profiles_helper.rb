@@ -6,8 +6,8 @@ module ProfilesHelper
 		#gravatar_id = Digest::MD5::hexdigest("jordan.kay@gmail.com")
 	  default_url = "http://upload.wikimedia.org/wikipedia/commons/c/ca/1x1.png"
     gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}?s=#{size}&d=#{CGI.escape(default_url)}"
-    if !user.firstname.blank?
-    	image_tag(gravatar_url, alt: user.firstname + " "+ user.lastname, class: "fullscreencenter")
+    if !user.name.blank?
+    	image_tag(gravatar_url, alt: user.name, class: "fullscreencenter")
     else
     	image_tag(gravatar_url, alt: user.email, class: "fullscreencenter")
     end

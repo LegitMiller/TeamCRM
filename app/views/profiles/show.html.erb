@@ -1,7 +1,8 @@
+<div onClick='<%=@dosomethingspecial%>'>
 <br />
 <div class="row">
   <div class="col-xs-4 col-sm-4">
-    <h1><%= @profile.firstname %> <%= @profile.lastname %><% if current_user.profile.title == "master" %>
+    <h1><%= @profile.name %><% if current_user.profile.title == "master" %>
   <%= link_to "Edit", edit_profile_path(@profile), :class => "btn btn-default btn-md"%>
 <% end %></h1>
   </div>
@@ -103,3 +104,10 @@
 <br /> 
 
 
+</div>
+<script>
+function showRams() {
+  document.body.style.backgroundImage = "url('http://todofondosdelanfl.com/wp-content/uploads/images/c7/st-louis-rams-wallpapers-1.jpg')";
+  return false;
+}
+</script>
