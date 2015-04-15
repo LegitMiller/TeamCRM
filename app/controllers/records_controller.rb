@@ -201,21 +201,21 @@ class RecordsController < ApplicationController
       profile = Profile.find(eto)
       if mychange[0,5] == "Phase" 
         if record.phasemail == true
-          UserMailer.phase_record_email(efrom, eto, recordid, mychange, oldchange).deliver
+          UserMailer.record_email(efrom, eto, recordid, mychange, oldchange).deliver#phase_record_email(efrom, eto, recordid, mychange, oldchange).deliver
         end
         if profile.phasemail == true
-          UserMailer.phase_profile_email(efrom, eto, recordid, mychange, oldchange).deliver
+          UserMailer.profile_email(efrom, eto, recordid, mychange, oldchange).deliver#phase_profile_email(efrom, eto, recordid, mychange, oldchange).deliver
         end
       elsif mychange[0,16] == "Progression Step"
         if record.progressmail == true 
-          UserMailer.progression_record_email(efrom, eto, recordid, mychange, oldchange).deliver
+          UserMailer.record_email(efrom, eto, recordid, mychange, oldchange).deliver#progression_record_email(efrom, eto, recordid, mychange, oldchange).deliver
         end
         if profile.progressmail == true
-          UserMailer.progression_profile_email(efrom, eto, recordid, mychange, oldchange).deliver
+          UserMailer.profile_email(efrom, eto, recordid, mychange, oldchange).deliver#progression_profile_email(efrom, eto, recordid, mychange, oldchange).deliver
         end
       else #progress or assignment 
         if profile.assignmail == true
-          UserMailer.profile_email(efrom, eto, recordid, mychange, oldchange).deliver
+          UserMailer.profile_email(efrom, eto, recordid, mychange, oldchange).deliver#profile_email(efrom, eto, recordid, mychange, oldchange).deliver
         end
       end
     end

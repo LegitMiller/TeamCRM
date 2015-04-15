@@ -6,40 +6,13 @@ class UserMailer < ActionMailer::Base
     mail(:to => profile.email, :subject => 'Welcome to My Awesome Site')
   end
 
-	def progression_record_email(efrom, eto, recordid, mychange, oldchange)
+	def record_email(efrom, eto, recordid, mychange, oldchange)
 		@changetype = mychange
 		@change = oldchange
 		@record = Record.find(recordid)
 		@eto = Profile.find(eto)
 		@efrom = Profile.find(efrom)
-	  mail(to: @record.email, subject: 'Progress was made on Your Loan, '+ @record.firstname + " " + @record.lastname + "!")
-	end
-
-	def progression_profile_email(efrom, eto, recordid, mychange, oldchange)
-		@changetype = mychange
-		@change = oldchange
-		@record = Record.find(recordid)
-		@eto = Profile.find(eto)
-		@efrom = Profile.find(efrom)
-	  mail(to: @eto.email, subject: 'Progress made on '+ @record.firstname + " " + @record.lastname)
-	end
-
-	def phase_record_email(efrom, eto, recordid, mychange, oldchange)
-		@changetype = mychange
-		@change = oldchange
-		@record = Record.find(recordid)
-		@eto = Profile.find(eto)
-		@efrom = Profile.find(efrom)
-	  mail(to: @record.email, subject: 'Progress was made on Your Loan, ' + "!")
-	end
-
-	def phase_profile_email(efrom, eto, recordid, mychange, oldchange)
-		@changetype = mychange
-		@change = oldchange
-		@record = Record.find(recordid)
-		@eto = Profile.find(eto)
-		@efrom = Profile.find(efrom)
-	  mail(to: @eto.email, subject: 'Progress made on '+ @record.firstname + " " + @record.lastname )
+	  mail(to: @record.email, subject: 'Progress was made on Your Loan, ' + @record.firstname + "!")
 	end
 
 	def profile_email(efrom, eto, recordid, mychange, oldchange)

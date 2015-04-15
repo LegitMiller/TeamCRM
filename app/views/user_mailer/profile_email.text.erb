@@ -1,9 +1,13 @@
 	<% if @changetype == "Progress" %>
     <% oldname = @change %>
-    <% newname = @record.progress %>
+    <% newname = "something new" %>
   <% elsif @changetype == "Assigned Processor" %>
     <% oldname = gettextname @change %>
-    <% newname = gettextname @record.processor_id %>
+    <% if @change == @eto.id %>
+      <% newname = "someone else" %>
+    <% else %>
+      <% newname = "You" %>
+    <% end %>
   <% elsif @changetype == "Assigned Loan Officer" %>
     <% oldname = gettextname @change %>
     <% if @change == @eto.id %>

@@ -3,9 +3,9 @@
 This is an automated message to let you know your loan is making progress! 
 
 
-	<% if @changetype == "Progress" %>
+  <% if @changetype == "Progress" %>
     <% oldname = @change %>
-    <% newname = @record.progress %>
+    <% newname = "something new" %>
   <% else %>
     <% oldname = @change %>
     <% if oldname == "'Done'" %>
@@ -15,8 +15,4 @@ This is an automated message to let you know your loan is making progress!
     <% end %>
   <% end %>
 
-  <%= getname @efrom, true %> changed <%= @changetype %> from <%= oldname %> to <%= newname %>
-  
-  <% temptime = Time.now-6.hours %>
-  <%= temptime.strftime("on %m/%d/%Y") %>
-  <%= temptime.strftime("at %l:%M%p")%>
+  <%= gettextname @efrom %> changed <%= @changetype %> from <%= oldname %> to <%= newname %><% temptime = Time.now-6.hours %><%= temptime.strftime(" on %m/%d/%Y") %> <%= temptime.strftime(" at %l:%M%p")%>
