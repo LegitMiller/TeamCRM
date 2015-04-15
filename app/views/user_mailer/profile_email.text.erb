@@ -2,11 +2,15 @@
     <% oldname = @change %>
     <% newname = @record.progress %>
   <% elsif @changetype == "Assigned Processor" %>
-    <% oldname = getname @change %>
-    <% newname = getname @record.processor_id %>
+    <% oldname = gettextname @change %>
+    <% newname = gettextname @record.processor_id %>
   <% elsif @changetype == "Assigned Loan Officer" %>
-    <% oldname = getname @change %>
-    <% newname = getname @record.loanofficer_id %>
+    <% oldname = gettextname @change %>
+    <% if @change == @eto.id %>
+      <% newname = "someone else" %>
+    <% else %>
+      <% newname = "You" %>
+    <% end %>
   <% else %>
     <% oldname = @change %>
     <% if oldname == "'Done'" %>
@@ -16,11 +20,4 @@
     <% end %>
   <% end %>
 
-  <%= getname @efrom, true %>
-  changed <%= link_to @record.firstname + " " + @record.lastname + "'s" , edit_record_path(@record)%> <%= @changetype %>
-  from <%= oldname %>
-  to <%= newname %>
-  <!--<%= time_ago_in_words notification.created_at %> ago -->
-  <% temptime = Time.now-6.hours %>
-  <%= temptime.strftime("on %m/%d/%Y") %>
-  <%= temptime.strftime("at %l:%M%p")%>
+  <%= gettextname @efrom %> changed <%= @record.firstname + " " + @record.lastname + "'s" %> <%= @changetype %> from <%= oldname %> to <%= newname %><% temptime = Time.now-6.hours %><%= temptime.strftime(" on %m/%d/%Y") %><%= temptime.strftime(" at %l:%M%p")%>.

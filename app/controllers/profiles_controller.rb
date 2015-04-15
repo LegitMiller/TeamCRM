@@ -109,7 +109,7 @@ class ProfilesController < ApplicationController
       current_user.profile.update_attributes :status => "free"
     end
     
-  #  UserMailer.welcome_email(current_user.profile).deliver
+   UserMailer.welcome_email(current_user.profile).deliver
     
     redirect_to root_path
   end

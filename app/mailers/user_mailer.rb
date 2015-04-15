@@ -1,5 +1,6 @@
 class UserMailer < ActionMailer::Base
-  default :from => "vimenpe89@gmail.com"
+  helper MailerHelper
+  default :from => "shadrak.kay@gmail.com"
 
   def welcome_email(profile)
     mail(:to => profile.email, :subject => 'Welcome to My Awesome Site')
