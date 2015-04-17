@@ -9,6 +9,10 @@ class CreateRecords < ActiveRecord::Migration
       t.string :progress
       t.boolean :phasemail
       t.boolean :progressmail
+      t.float :lopay
+      t.float :propay
+      t.float :jpay
+      t.float :opay
       t.integer :loanofficer_id
       t.integer :processor_id
 

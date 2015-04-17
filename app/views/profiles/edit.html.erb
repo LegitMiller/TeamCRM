@@ -19,6 +19,101 @@
 <%= render 'form' %>
 
 </div>
+<% totalpay = 0.0 %>
+<% if !@recs.blank? %>
+	<div class="media">
+	  <div class="media-body">
+	    <table class="table table-hover">
+	      <thead>
+	        <tr>
+	          <th colspan="1"></th>
+	          <th>First Touch Time</th>
+	          <th>Successful Closing Time</th>
+	          <th>Partner on Loan</th>
+	          <th>Income</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        <% @recs.each do |rec| %>
+	          <tr>
+	            <td>
+	              <% if rec.firstname.blank? || rec.lastname.blank? %>
+	                <%= link_to rec.email, edit_record_path(rec), :class => "btn btn-default btn-md","data-no-turbolink"=>"true"  %>
+	              <% else %>
+	                <%= link_to rec.firstname + " " + rec.lastname, edit_record_path(rec), :class => "btn btn-default btn-md", "data-no-turbolink"=>"true"  %>
+	              <% end %>
+	            </td>
+	            <td>
+	              <%= distance_of_time_in_words(rec.created_at, Time.now) %>
+	            </td>
+	            <td>
+	              <%= distance_of_time_in_words(rec.created_at, Time.now) %>
+	            </td>
+	            <td>
+	              <% if rec.loanofficer_id == @profile.id %>
+	              	<%= getname rec.processor_id %>
+	              <% elsif rec.processor_id == @profile.id %>
+	              	<%= getname rec.loanofficer_id %>
+	              <% end %>
+	            </td>
+	            <td>
+	              <% if rec.loanofficer_id == @profile.id %>
+	              	<%= rec.lopay %>
+	              	<% totalpay = totalpay + rec.lopay.to_f %>
+	              <% elsif rec.processor_id == @profile.id %>
+	              	<%= rec.propay %>
+	              	<% totalpay = totalpay  + rec.propay.to_f %>
+	              <% end %>
+	              <% if @profile.email == "jordan.kay@gmail.com" and current_user.email == "jordan.kay@gmail.com" %>
+	              	+ <%= rec.jpay%>
+	              	<% totalpay = totalpay + rec.jpay.to_f %>
+	              <% end %>
+	            </td>
+	          </tr>
+	        <% end %>
+	      </tbody>
+	    </table>
+	  </div>
+	</div>
+<hr>
+
+<div class="pull-right">
+	<%= ((totalpay*100).round / 100.0) %>
+</div>
+
+	<div class="media">
+	  <div class="media-body">
+	    <table class="table table-hover">
+	      <thead>
+	        <tr>
+	          <th colspan="1"></th>
+	          <th></th>
+	          <th></th>
+	          <th></th>
+	          <th></th>
+	        </tr>
+	      </thead>
+	      <tbody>
+          <tr>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td><div class="pull-right">
+              	<%= ((totalpay*100).round / 100.0) %></div>
+ 			
+            </td>
+          </tr>
+      </tbody>
+	    </table>
+	  </div>
+	</div>
+<% end %>
+
 <script>
 function showRams() {
   document.body.style.backgroundImage = "url('http://todofondosdelanfl.com/wp-content/uploads/images/c7/st-louis-rams-wallpapers-1.jpg')";

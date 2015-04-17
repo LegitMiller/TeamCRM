@@ -83,6 +83,34 @@
           <%= f.select :phasemail, options_for_select([["don't email notification", false], ['email notification', true]], @record.phasemail),{:selected => params[:phasemail]}, {:class => "input-lg form-control"} %>
         </div>
       </div>
+      <% if current_user.profile.title == "admin" || current_user.profile.title == "master" %>
+        <%if @record.progress == "Completed" %>
+          <div class="col-xs-6 col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">Loan Officer<br />Pay </div>
+              <%= f.number_field :lopay, :class => 'text_field', :step => 0.01, :class => "input-lg form-control" %>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">Processor<br />Pay </div>
+              <%= f.number_field :propay, :class => 'text_field', :step => 0.01, :class => "input-lg form-control" %>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">Programmer<br />Pay </div>
+              <%= f.number_field :jpay, :class => 'text_field', :step => 0.01, :class => "input-lg form-control" %>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon">Other<br />Pay </div>
+              <%= f.number_field :opay, :class => 'text_field', :step => 0.01, :class => "input-lg form-control" %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
       <div class="clearfix visible-xs-block"></div>
       <div class="col-xs-6 col-sm-6">
         <div class="text-left">
@@ -98,10 +126,6 @@
           </div>
         </div>
       </div>   
-
-
-
-     
     </div>  
   <% end %>
 </div>  

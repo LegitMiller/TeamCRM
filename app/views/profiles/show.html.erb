@@ -55,7 +55,7 @@
     </table>
   </div>
 </div>
-
+<% if !@recs.blank? %>
 <div class="media">
   <div class="media-body">
     <table class="table table-hover">
@@ -88,6 +88,7 @@
     </table>
   </div>
 </div>
+<% end %>
 
 
 <% if !@profile.bio.blank?%>

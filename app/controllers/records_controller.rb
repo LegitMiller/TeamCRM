@@ -275,6 +275,6 @@ class RecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def record_params
-      params.require(:record).permit(:firstname, :lastname, :phone, :email, :receivedate, :progress, :progressmail, :phasemail, :loanofficer_id, :processor_id)
+      params.require(:record).permit(:firstname, :lastname, :phone, :email, :receivedate, :progress, :progressmail, :phasemail, :lopay, :propay, :jpay, :opay, :loanofficer_id, :processor_id)
     end
 end
