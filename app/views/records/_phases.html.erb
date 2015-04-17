@@ -35,3 +35,25 @@
     <% end %>
   <% end %>  <br />
 </div>
+
+      <% aphasecomplete = true %>
+      <% @phases.each do |ph| %>
+        <% ph.progressions.each do |progression| %>
+          <% if !@steps.exists?(:record_id => @record.id, :progression_id => progression.id) %>
+            <% aphasecomplete = false %>
+          <% end %>
+        <% end %>  
+      <% end %>  
+      <% if aphasecomplete == true %>
+        <% if @record.progress != "Completed" %>
+          <%= javascript_tag do %>
+            alert("Looks like all the steps for this client are done, but this client's Progress is still set to '<%= "#{@record.progress}" %>'. Don't forget to mark this Client's Progress as 'Completed'!");
+          <% end %>
+        <% end %>
+      <% end %>
+
+
+
+
+
+
