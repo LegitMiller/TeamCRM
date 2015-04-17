@@ -47,19 +47,19 @@
 
       <div class="col-xs-4 col-sm-4">
         <div class="input-group">
-          <div class="input-group-addon">Assignment Change </div>
+          <div class="input-group-addon">New<br />Assignment </div>
           <%= f.select :assignmail, options_for_select([["don't email me", false], ['email me', true]], @profile.assignmail),{:selected => params[:assignmail]}, {:class => "input-lg form-control"} %>
         </div>
       </div>
       <div class="col-xs-4 col-sm-4">
         <div class="input-group">
-          <div class="input-group-addon">Progress Made </div>
+          <div class="input-group-addon">Progress<br />Made</div>
           <%= f.select :progressmail, options_for_select([["don't email me", false], ['email me', true]], @profile.progressmail),{:selected => params[:progressmail]}, {:class => "input-lg form-control"} %>
         </div>
       </div>
       <div class="col-xs-4 col-sm-4">
         <div class="input-group">
-          <div class="input-group-addon">Phase Completion </div>
+          <div class="input-group-addon">Phase<br />Completion</div>
           <%= f.select :phasemail, options_for_select([["don't email me", false], ['email me', true]], @profile.phasemail),{:selected => params[:phasemail]}, {:class => "input-lg form-control"} %>
         </div>
       </div>

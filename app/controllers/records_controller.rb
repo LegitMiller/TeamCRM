@@ -172,10 +172,10 @@ class RecordsController < ApplicationController
         if !@record.loanofficer_id.blank?
           #notify loan officer of all the actions the processor takes
           Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange, 0)
-          checkmailer(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange)
+      #    checkmailer(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange)
         else !recloid.blank?  
           Notification.createnotification(current_user.id, recloid, @record.id, mychange, oldchange, 0)
-          checkmailer(current_user.id, recloid, @record.id, mychange, oldchange)
+      #    checkmailer(current_user.id, recloid, @record.id, mychange, oldchange)
         end
         if !@record.processor_id.blank? 
           #notify processor of all the actions the loanofficer takes
