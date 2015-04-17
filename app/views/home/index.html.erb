@@ -1,5 +1,5 @@
-<center>
-
+      <h1>Dashboard</h1>
+<!--
   <h4>set status to </h4>
   <% if current_user.profile.status == "busy" %>
     <%= link_to "Free", {:controller => :profiles, :action => :changestatus}, :method => 'post', :class =>"btn btn-lg btn-default" %>
@@ -11,31 +11,68 @@
     <%= link_to "Free", {:controller => :profiles, :action => :changestatus}, :method => 'post', :class =>"btn btn-lg btn-default" %>
   <% end %>
 
-  <br />
-  <br />
-
+  <br />-->
   <div class="row">
-    <div class="col-xs-6 col-sm-6">
-      <%= link_to "My Clients", records_path, class: 'btn btn-default btn-lg btn-warning', "data-no-turbolink"=>"true" %>
+    <div class="col-xs-12 col-sm-12"><br />
+      <div class="pull-right"><% if current_user.profile.title == "admin" or current_user.profile.title == "master" %>
+        <%= link_to "Edit Progression Points", phases_path, class: 'btn btn-default btn-lg btn-warning', "data-no-turbolink"=>"true" %>    <% end %>
+        <%= link_to 'New Record', new_record_path, class: 'btn btn-default btn-lg btn-info', "data-no-turbolink"=>"true"  %>
+        <%= link_to "Client Search", records_path, class: 'btn btn-default btn-lg btn-warning', "data-no-turbolink"=>"true" %>
+        <%= link_to "Profile Search", profiles_path, class: 'btn btn-default btn-lg btn-warning', "data-no-turbolink"=>"true" %>
+      </div>
     </div>
-
-    <div class="clearfix visible-xs-block"></div>
-
-    <div class="col-xs-6 col-sm-6">
-      <%= link_to "Profile Search", profiles_path, class: 'btn btn-default btn-lg btn-warning', "data-no-turbolink"=>"true" %>
-    </div>
-  </div>
-
-</center>
-
+</div>
+<div class="clearfix visible-xs-block"></div>
 
 <%= render 'notifications/nlist' %>
+<br />
+
+  <h3>My Current Clients</h3>
+  <table class="table table-hover" id="records">
+    <thead>
+      <tr>
+        <th>Frist Name</th>
+        <th>Last Name</th>
+        <th>Record Age</th>
+        <th>Progress</th>       
+        <th>Loan Officer</th>
+        <th>Processor</th>
+        <th colspan="1"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% if !@records.blank? %>
+        <% @records.each do |record| %>
+          <% if record.progress != "On Hold" and record.progress != "Completed" and record.progress != "Dropped" and record.progress != "Unknown" %>
+           <!--<tr data-link="<%= edit_record_path(record) %>">-->
+            <tr> 
+              <td><%= correctlink record, record.firstname %></td>
+              <td><%= correctlink record, record.lastname %></td>
+              <td><%= time_ago_in_words record.receivedate %></td>
+              <td><%= record.progress %></td>
+              <td><%= getname record.loanofficer_id %></td>
+              <td><%= getname record.processor_id %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      <% else %>  
+        <tr> 
+
+          <td><center>No Active Records</center></td>
+
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
 
 <% if current_user.profile.title == "admin" or current_user.profile.title == "master" %>
   <br />
-  <hr />
+  <br />
+  <h3>Admins</h3>
   <table class="table">
-    <strong>Admins:</strong>
+
     <tbody>
       <% @profiles.each do |profile| %>
         <% if profile.title == "admin" %>
@@ -51,11 +88,6 @@
     <% end %> 
     </tbody>
   </table>  
-
   <!--<%= link_to "sup", "#{@mylink}" %>
   <%= link_to "sup2", @mylink %>-->
-
-  <center>
-    <%= link_to "Edit Progression Points", phases_path, class: 'btn btn-default btn-lg btn-warning', "data-no-turbolink"=>"true" %>
-  </center>
 <% end %>

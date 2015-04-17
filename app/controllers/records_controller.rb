@@ -109,6 +109,10 @@ class RecordsController < ApplicationController
   def destroy
 
     if current_user.profile.title == "admin" or current_user.profile.title == "master"
+      notificationsofdeath = Notification.where(:record_id => @record.id)
+      notificationsofdeath.destroy_all
+      @record.steps.destroy_all
+      @record.notes.destroy_all
       @record.destroy
     elsif current_user.profile.title == "processor"
       @record.update_attributes :processor_id => "0"
@@ -139,6 +143,13 @@ class RecordsController < ApplicationController
     elsif @record.progress != recordprogress.to_s
       mychange = "Progress"
       oldchange = @record.progress
+      
+      if recordprogress.to_s == "Completed"
+        @myprofs = Profile.where(:title => "admin")
+        @myprofs.each do |prof|
+          Notification.createnotification(current_user.id, prof.id, @record.id, mychange, oldchange, 0)
+        end
+      end
     elsif @record.processor_id.to_i != recproid.to_i
       mychange = "Assigned Processor"
       oldchange = @record.processor_id

@@ -26,7 +26,7 @@
 	    <table class="table table-hover">
 	      <thead>
 	        <tr>
-	          <th colspan="1"></th>
+	          <th>Client</th>
 	          <th>First Touch Time</th>
 	          <th>Successful Closing Time</th>
 	          <th>Partner on Loan</th>
@@ -71,31 +71,8 @@
 	            </td>
 	          </tr>
 	        <% end %>
-	      </tbody>
-	    </table>
-	  </div>
-	</div>
-<hr>
-
-<div class="pull-right">
-	<%= ((totalpay*100).round / 100.0) %>
-</div>
-
-	<div class="media">
-	  <div class="media-body">
-	    <table class="table table-hover">
-	      <thead>
-	        <tr>
-	          <th colspan="1"></th>
-	          <th></th>
-	          <th></th>
-	          <th></th>
-	          <th></th>
-	        </tr>
-	      </thead>
-	      <tbody>
           <tr>
-            <td>
+            <td>Totals
             </td>
             <td>
             </td>
@@ -103,12 +80,11 @@
             </td>
             <td>
             </td>
-            <td><div class="pull-right">
-              	<%= ((totalpay*100).round / 100.0) %></div>
- 			
-            </td>
-          </tr>
-      </tbody>
+	          <td><div>
+            	<%= ((totalpay*100).round / 100.0) %></div>
+  	        </td>
+    	    </tr>
+	      </tbody>
 	    </table>
 	  </div>
 	</div>

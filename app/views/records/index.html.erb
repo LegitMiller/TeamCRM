@@ -86,7 +86,7 @@
   </tbody>
 </table>
 
-<% if current_user.profile.title == "admin" %>
+<% if current_user.profile.title == "admin" || current_user.profile.title == "master" %>
   <h2>Backup</h2>
   <br />
   <div class="row">
