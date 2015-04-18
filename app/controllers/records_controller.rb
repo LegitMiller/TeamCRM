@@ -56,6 +56,34 @@ class RecordsController < ApplicationController
     @progressions = Progression.all
     @steps = Record.find(params[:id]).steps
     
+    @listoflos = [] 
+    @listofpros = []
+    @listofmars = []
+    mynewprofile = Profile.new
+    mynewprofile.id = "0"
+    mynewprofile.name = "none"
+    @listoflos.push(mynewprofile)
+    @listofpros.push(mynewprofile)
+    @listofmars.push(mynewprofile)
+    @profiles.each do |profile|  
+      @listoflos.push(profile) if profile.title == "loan officer"
+      @listofpros.push(profile) if profile.title == "processor"
+      @listofmars.push(profile) if profile.title == "loan officer"
+      @listofmars.push(profile) if profile.title == "processor"
+      @listofmars.push(profile) if profile.title == "marketer"
+    end
+
+    @profiles.each do |profile|  
+      @listoflos.push(profile) if profile.title == "admin"
+      @listofpros.push(profile) if profile.title == "admin"
+      @listofmars.push(profile) if profile.title == "admin"
+    end
+          
+
+
+
+
+
     if current_user.profile.title == "admin" or current_user.profile.title == "master"
     elsif current_user.profile.title == "processor" 
       if Record.find_by_id(params[:id]).processor_id != current_user.id
@@ -286,6 +314,6 @@ class RecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def record_params
-      params.require(:record).permit(:firstname, :lastname, :phone, :email, :receivedate, :progress, :progressmail, :phasemail, :lopay, :propay, :jpay, :opay, :loanofficer_id, :processor_id)
+      params.require(:record).permit(:firstname, :lastname, :phone, :email, :raemail, :receivedate, :progress, :progressmail, :phasemail, :lopay, :propay, :jpay, :opay, :loanofficer_id, :processor_id, :marketer_id)
     end
 end

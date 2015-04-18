@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20150409213921) do
     t.string   "lastname"
     t.string   "phone"
     t.string   "email"
+    t.string   "raemail"
     t.datetime "receivedate"
     t.string   "progress"
     t.boolean  "phasemail"
@@ -78,6 +79,7 @@ ActiveRecord::Schema.define(version: 20150409213921) do
     t.float    "opay"
     t.integer  "loanofficer_id"
     t.integer  "processor_id"
+    t.integer  "marketer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

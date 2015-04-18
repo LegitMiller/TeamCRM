@@ -16,7 +16,7 @@ class ProfilesController < ApplicationController
 
     #@recs = Records.where(processor_id: current_user.id).order(sort_column + " " + sort_direction)
     #      @records = Record.where(processor_id: current_user.id).order(sort_column + " " + sort_direction)
-    @recs = Record.where('processor_id= ? OR loanofficer_id= ?',params[:id],params[:id])
+    @recs = Record.where('processor_id= ? OR loanofficer_id= ? OR marketer_id= ?',params[:id],params[:id],params[:id])
 
     @successrate = @recs.sum(:progress)
     #do this for all of the other things you have to track (above)
@@ -47,20 +47,20 @@ class ProfilesController < ApplicationController
       @dosomethingspecial="showRams()"
     end
 
-    @listoftitles = [["Loan Officer", "loan officer"],["Processor", "processor"]]
+    @listoftitles = [["Loan Officer", "loan officer"],["Processor", "processor"],["Marketer", "marketer"]]
 
     if current_user.profile.title == "admin"
       @recs = Record.all
     end
 
     if current_user.profile.title == "master"
-      @listoftitles = [["Loan Officer", "loan officer"],["Processor", "processor"],["Admin", "admin"]]
+      @listoftitles = [["Loan Officer", "loan officer"],["Processor", "processor"],["Marketer", "marketer"],["Admin", "admin"]]
     end
       
     if Profile.find_by_id(params[:id]).user_id == current_user.id || current_user.profile.title = "master"
-      @recs = Record.where('processor_id= ? OR loanofficer_id= ?',params[:id],params[:id])
+      @recs = Record.where('processor_id= ? OR loanofficer_id= ? OR marketer_id= ?',params[:id],params[:id],params[:id])
       if @profile.email == "jordan.kay@gmail.com" and current_user.email == "jordan.kay@gmail.com"
-        @listoftitles = [["Loan Officer", "loan officer"],["Processor", "processor"],["Admin", "admin"],["Master", "master"]]
+        @listoftitles = [["Loan Officer", "loan officer"],["Processor", "processor"],["Marketer", "marketer"],["Admin", "admin"],["Master", "master"]]
         @recs = Record.all
       end
     else

@@ -5,6 +5,7 @@ class CreateRecords < ActiveRecord::Migration
       t.string :lastname
       t.string :phone
       t.string :email
+      t.string :raemail
       t.datetime :receivedate
       t.string :progress
       t.boolean :phasemail
@@ -15,6 +16,7 @@ class CreateRecords < ActiveRecord::Migration
       t.float :opay
       t.integer :loanofficer_id
       t.integer :processor_id
+      t.integer :marketer_id
 
       t.timestamps
     end

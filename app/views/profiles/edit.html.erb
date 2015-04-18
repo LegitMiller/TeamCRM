@@ -54,15 +54,22 @@
 	              	<%= getname rec.processor_id %>
 	              <% elsif rec.processor_id == @profile.id %>
 	              	<%= getname rec.loanofficer_id %>
+	              <% elsif rec.marketer_id == @profile.id %>
+	              	<%= getname rec.loanofficer_id %>
 	              <% end %>
 	            </td>
 	            <td>
 	              <% if rec.loanofficer_id == @profile.id %>
-	              	<%= rec.lopay %>
+	              	+ <%= rec.lopay %>
 	              	<% totalpay = totalpay + rec.lopay.to_f %>
-	              <% elsif rec.processor_id == @profile.id %>
-	              	<%= rec.propay %>
+	              <% end %>
+	              <% if rec.processor_id == @profile.id %>
+	              	+ <%= rec.propay %>
 	              	<% totalpay = totalpay  + rec.propay.to_f %>
+	              <% end %>
+	              <% if rec.marketer_id == @profile.id %>
+	              	+ <%= rec.opay %>
+	              	<% totalpay = totalpay  + rec.opay.to_f %>
 	              <% end %>
 	              <% if @profile.email == "jordan.kay@gmail.com" and current_user.email == "jordan.kay@gmail.com" %>
 	              	+ <%= rec.jpay%>

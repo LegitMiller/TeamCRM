@@ -33,6 +33,29 @@
         <%= f.label :receivedate %><br>
         <%= f.datetime_select :receivedate, :class => "input-lg form-control" %>
       </div>
+
+      <div class="col-xs-6 col-sm-3">
+        <div class="input-group">
+          <div class="input-group-addon">Loan Officer </div>
+          <%= f.collection_select :loanofficer_id, @listoflos, :user_id, :name, {prompt: false}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control", "required"=>"true"} %>
+        </div>
+      </div>
+      <div class="col-xs-6 col-sm-3">
+        <div class="input-group">
+          <div class="input-group-addon">Processor </div>
+          <%= f.collection_select :processor_id, @listofpros, :user_id, :name, {prompt: false}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control", "required"=>"true"} %>
+        </div>
+      </div>
+      <div class="col-xs-6 col-sm-3">
+        <div class="input-group">
+          <div class="input-group-addon">Marketer </div>
+          <%= f.collection_select :marketer_id, @listofmars, :user_id, :name, {prompt: false}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control", "required"=>"true"} %>
+        </div>
+      </div>
+      <div class="col-xs-6 col-sm-3">
+          <%= f.text_field :raemail, :class => "input-lg form-control", "placeholder" => "real. agent email"  %>
+      </div>
+
       <div class="col-xs-4 col-sm-4">
         <div class="input-group">
           <div class="input-group-addon">Progress </div>
@@ -40,44 +63,14 @@
             <%= f.select :progress, options_for_select(listofprogress, @record.progress.to_s), {prompt: true}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control", "required"=>"true"} %>
         </div>
       </div>
+
       <div class="col-xs-4 col-sm-4">
-        <div class="input-group">
-          <div class="input-group-addon">Loan Officer </div>
-          <% listoflos = [] %>
-          <% mynewprofile = Profile.new %>
-          <% mynewprofile.id = "0" %>
-          <% mynewprofile.name = "none" %>
-          <% listoflos.push(mynewprofile) %>
-
-          <% @profiles.each do |profile|  %>
-            <% listoflos.push(profile) if profile.title == "loan officer" %>
-          <% end %>
-          <%= f.collection_select :loanofficer_id, listoflos, :user_id, :name, {prompt: false}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control", "required"=>"true"} %>
-        </div>
-      </div>
-      <div class="col-xs-4 col-sm-4">
-        <div class="input-group">
-          <div class="input-group-addon">Processor </div>
-          <% listofpros = [] %>
-          <% mynewprofile = Profile.new %>
-          <% mynewprofile.id = "0" %>
-          <% mynewprofile.name = "none" %>
-          <% listofpros.push(mynewprofile) %>
-
-          <% @profiles.each do |profile|  %>
-            <% listofpros.push(profile) if profile.title == "processor" %>
-          <% end %>
-          <%= f.collection_select :processor_id, listofpros, :user_id, :name, {prompt: false}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control", "required"=>"true"} %>
-        </div>
-      </div>
-
-      <div class="col-xs-6 col-sm-6">
         <div class="input-group">
           <div class="input-group-addon">Progress<br />Made </div>
           <%= f.select :progressmail, options_for_select([["don't email notification", false], ["email notification", true]], @record.progressmail),{:selected => params[:progressmail]}, {:class => "input-lg form-control"} %>
         </div>
       </div>
-      <div class="col-xs-6 col-sm-6">
+      <div class="col-xs-4 col-sm-4">
         <div class="input-group">
           <div class="input-group-addon">Phase<br />Completion </div>
           <%= f.select :phasemail, options_for_select([["don't email notification", false], ['email notification', true]], @record.phasemail),{:selected => params[:phasemail]}, {:class => "input-lg form-control"} %>
@@ -105,7 +98,7 @@
           </div>
           <div class="col-xs-6 col-sm-6">
             <div class="input-group">
-              <div class="input-group-addon">Other<br />Pay </div>
+              <div class="input-group-addon">Marketer<br />Pay </div>
               <%= f.number_field :opay, :class => 'text_field', :step => 0.01, :class => "input-lg form-control" %>
             </div>
           </div>
