@@ -8,6 +8,7 @@ class CreateRecords < ActiveRecord::Migration
       t.string :raemail
       t.datetime :receivedate
       t.string :progress
+      t.string :detailedprogress
       t.boolean :phasemail
       t.boolean :progressmail
       t.float :lopay

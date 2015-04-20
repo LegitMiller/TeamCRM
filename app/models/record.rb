@@ -38,7 +38,7 @@ class Record < ActiveRecord::Base
     CSV.foreach(file.path, headers: true) do |row|
       record = find_by_id(row["id"]) || new
       parameters = ActionController::Parameters.new(row.to_hash)
-      record.update(parameters.permit(:firstname, :lastname, :phone, :email, :receivedate, :progress, :phasemail, :progressmail, :loanofficer_id, :processor_id))
+      record.update(parameters.permit(:firstname, :lastname, :phone, :email, :receivedate, :progress, :detailedprogress, :progressmail, :phasemail, :lopay, :propay, :jpay, :opay, :loanofficer_id, :processor_id, :marketer_id))
       record.save!
     end
   end

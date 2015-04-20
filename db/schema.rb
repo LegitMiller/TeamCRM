@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 20150409213921) do
     t.string   "raemail"
     t.datetime "receivedate"
     t.string   "progress"
+    t.string   "detailedprogress"
     t.boolean  "phasemail"
     t.boolean  "progressmail"
     t.float    "lopay"

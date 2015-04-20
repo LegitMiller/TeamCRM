@@ -14,6 +14,35 @@ module RecordsHelper
 		 	end
 		end
   end
+
+
+
+	def getpname(myid)
+		if !Progression.find_by_id(myid).blank? 
+			Progression.find_by_id(myid).name
+		end
+  end
+  def getname(myid, noclass = nil)
+  	if User.exists?(myid)
+  		if noclass == true
+				myclass = ''
+			else
+				myclass = 'btn btn-default btn-xs'	      
+      end	
+    	uprofile = User.find(myid).profile
+	    if uprofile.name.blank?
+	      link_to uprofile.email, uprofile, :class => myclass
+	    else
+	      link_to uprofile.name, uprofile, :class => myclass
+	    end
+  	else	
+  		"none"
+	  end
+  end
+
+
+
+
   def gravatar_for_rec(user,size)
     gravatar_id = Digest::MD5::hexdigest(user.email.downcase)
 		#gravatar_id = Digest::MD5::hexdigest("jordan.kay@gmail.com")

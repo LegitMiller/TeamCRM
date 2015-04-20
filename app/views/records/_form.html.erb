@@ -44,7 +44,7 @@
       <div class="field" hidden="true">
         <br>
         <%= f.label "Progress" %>&nbsp
-        <%= f.select :progress, options_for_select([["1. Not contacted", "1"]]), {:selected => params['new']}, {:class => "btn btn-default btn-lg dropdown-toggle"} %>
+        <%= f.select :progress, options_for_select([["New", "New"]]), {:selected => params['new']}, {:class => "btn btn-default btn-lg dropdown-toggle"} %>
       </div>
       <div class="field" hidden="true">
         <%= f.label :loanofficer_id %><br>

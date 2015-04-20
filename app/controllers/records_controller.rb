@@ -156,6 +156,12 @@ class RecordsController < ApplicationController
   def notificationprocess(recordid, recloid, recproid, recordprogress, mytype = nil)
     #CHECK TO SEE IF WE NEED TO MAKE A NOTIFICATION 
 
+    #FIX THIS
+
+    #Also add in the ability to Email realestate agents on every phase and progression step: @record.raemail
+
+    #might want to use Red... something or Mag...something gems
+
     @record = Record.find(recordid)
     if mytype == "phase" 
         mychange = "Phase: " + Phase.find(recordprogress).name
@@ -264,27 +270,31 @@ class RecordsController < ApplicationController
     myrecord = Record.find(params[:id])
     notificationprocess(myrecord.id, myrecord.loanofficer_id, myrecord.processor_id, params[:progression_id], "progression") 
    
+    #create step
     Step.where(record_id: params[:id], progression_id: params[:progression_id]).first_or_create
-    redirect_to edit_record_path(params[:id])
-
+    
+    #update the latest change.
+    myrecord.update(:detailedprogress => params[:progression_id])
+    
     #cycle through all the progressions and if phase is complete send another notification for phase complete - phase complete ones should trigger email.
     #put in a check box for if a client wants to recieve email updates on the client record thingy.
 
-    myprogression = Progression.find(params[:progression_id])
+    #send notification for phase complete
 
+    myprogression = Progression.find(params[:progression_id])
     myphase = myprogression.phase
 
     phasecomplete = true
-    
     myphase.progressions.each do |progression|
       if !Step.exists?(:record_id => params[:id], :progression_id => progression.id)
         phasecomplete = false
       end
     end 
     if phasecomplete == true
-      #send notification for phase complete
       notificationprocess(myrecord.id, myrecord.loanofficer_id, myrecord.processor_id, myphase.id, "phase") 
     end
+
+    redirect_to edit_record_path(params[:id])
 
   end
   
@@ -314,6 +324,6 @@ class RecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def record_params
-      params.require(:record).permit(:firstname, :lastname, :phone, :email, :raemail, :receivedate, :progress, :progressmail, :phasemail, :lopay, :propay, :jpay, :opay, :loanofficer_id, :processor_id, :marketer_id)
+      params.require(:record).permit(:firstname, :lastname, :phone, :email, :raemail, :receivedate, :progress, :detailedprogress, :progressmail, :phasemail, :lopay, :propay, :jpay, :opay, :loanofficer_id, :processor_id, :marketer_id)
     end
 end
