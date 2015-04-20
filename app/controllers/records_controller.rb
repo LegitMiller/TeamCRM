@@ -31,7 +31,7 @@ class RecordsController < ApplicationController
   end
 
   def import
-    if current_user.profile.title == "admin"
+    if current_user.profile.title == "admin" or current_user.profile.title == "master"
       Record.import(params[:file])
       redirect_to records_path, notice: "Records Imported"
     else
