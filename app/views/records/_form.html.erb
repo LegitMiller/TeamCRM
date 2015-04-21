@@ -52,7 +52,11 @@
       </div>
       <div class="field" hidden="true">
         <%= f.label :processor_id %><br>
-        <%= f.number_field :processor_id %>
+        <%= f.number_field :processor_id, "value" => current_user.id %>
+      </div>
+      <div class="field" hidden="true">
+        <%= f.label :marketer_id %><br>
+        <%= f.number_field :marketer_id, "value" => current_user.id %>
       </div>
       <div class="col-xs-12 col-sm-12">
         <div class="actions">
