@@ -1,7 +1,9 @@
 class PhasesController < ApplicationController
   before_action :set_phase, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-
+  
+  require 'csv'
+  
   # GET /phases
   # GET /phases.json
   def index
@@ -9,6 +11,19 @@ class PhasesController < ApplicationController
     @progressions = Progression.all
     @newphase = Phase.new
     @newprogression = Progression.new
+    respond_to do |format|
+      format.html
+      format.csv { send_data @phases.to_csv } #render text: @records.to_csv }
+    end
+  end
+
+  def import
+    if current_user.profile.title == "admin" or current_user.profile.title == "master"
+      Phase.import(params[:file])
+      redirect_to phases_path, notice: "Records Imported"
+    else
+      redirect_to phasess_path, notice: "No Records Imported; You are not Admin."
+    end
   end
 
   # GET /phases/1/edit

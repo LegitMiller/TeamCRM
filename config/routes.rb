@@ -2,7 +2,9 @@ Rails.application.routes.draw do
 
   resources :steps
 
-  resources :phases
+  resources :phases do
+    collection { post :import }
+  end
 
   resources :progressions
 
