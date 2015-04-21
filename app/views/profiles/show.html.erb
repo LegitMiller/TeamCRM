@@ -2,9 +2,12 @@
 <br />
 <div class="row">
   <div class="col-xs-4 col-sm-4">
-    <h1><%= @profile.name %><% if current_user.profile.title == "master" %>
-  <%= link_to "Edit", edit_profile_path(@profile), :class => "btn btn-default btn-md"%>
-<% end %></h1>
+    <h1>
+      <%= @profile.name %>
+      <% if current_user.profile.title == "master" %>
+        <%= link_to "Edit", edit_profile_path(@profile), :class => "btn btn-default btn-md"%>
+      <% end %>
+    </h1>
   </div>
   <div class="col-xs-3 col-sm-3">
     <br />
@@ -25,38 +28,6 @@
   </div>
 </div>
 
-<!--
-<div class="media">
-  <div class="media-body">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>Average First Touch Waiting Time</th>
-          <th>Average Successful Closing Time</th>
-          <th>Success Rate</th>
-          <th colspan="1"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            @firsttouch
-          </td>
-          <td>
-            @lasttouch
-          </td>
-          <td>
-            @successrate %
-          </td>
-          <td>
-            Overall Score!
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
--->
 <% if !@recs.blank? %>
 <div class="media">
   <div class="media-body">

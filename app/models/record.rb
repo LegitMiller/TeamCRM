@@ -11,7 +11,7 @@ class Record < ActiveRecord::Base
   		if !results.blank? 
   			results
   		else
-  			results = where('lastname LIKE ?', "%#{search}%")	
+  			results = where('lastname LIKE ?', search)	
     		if !results.blank? 
     			results
     		else
@@ -21,7 +21,8 @@ class Record < ActiveRecord::Base
     		end
   		end
   	else
-  		Record.all
+      Record.find_by_id("25")
+  		#Record.all
   	end
   end
 

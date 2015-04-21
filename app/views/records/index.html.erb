@@ -26,7 +26,8 @@
       <th><%= sortable "firstname", "Frist Name"%></th>
       <th><%= sortable "lastname", "Last Name" %></th>
       <th><%= sortable "receivedate", "Record Age" %></th>
-      <th><%= sortable "progress", "Progress" %></th>       
+      <th><%= sortable "progress", "Progress" %></th>
+      <th><%= sortable "detailedprogress", "Detailed Progress" %></th> 
       <th><%= sortable "loanofficer_id", "Loan Officer" %></th>
       <th><%= sortable "processor_id", "Processor" %></th>
       <% if current_user.profile.title == "master" %>
@@ -49,6 +50,7 @@
               <%= record.receivedate %>
             <% end %>
           </td>
+          <td><%= record.progress %></td>          
           <td><%= getpname record.detailedprogress %></td>
           <td><%= getname record.loanofficer_id %></td>
           <td><%= getname record.processor_id %></td>
@@ -74,6 +76,7 @@
       <th><%= sortable "firstname", "Frist Name"%></th>
       <th><%= sortable "lastname", "Last Name" %></th>
       <th><%= sortable "receivedate", "Record Age" %></th>
+      <th><%= sortable "progress", "Progress" %></th> 
       <th><%= sortable "detailedprogress", "Progress" %></th>       
       <th><%= sortable "loanofficer_id", "Loan Officer" %></th>
       <th><%= sortable "processor_id", "Processor" %></th>
@@ -95,6 +98,7 @@
               <%= record.receivedate %>
             <% end %>
           </td>
+          <td><%= record.progress %></td>      
           <td><%= getpname record.detailedprogress %></td>
           <td><%= getname record.loanofficer_id %></td>
           <td><%= getname record.processor_id %></td>

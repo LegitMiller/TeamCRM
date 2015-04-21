@@ -13,10 +13,18 @@ class RecordsController < ApplicationController
     #else
     #  #@records = Record.order(params[:sort])#.search(params[:search])
     if current_user.profile.title == "admin" or current_user.profile.title == "master"
-      @records = Record.order(sort_column + " " + sort_direction)
+      if params[:search].blank? || params[:search] ==''
+        @records = Record.order(sort_column + " " + sort_direction)
+      else
+        @records = Record.search(params[:search])
+      end
     elsif current_user.profile.title == "processor"
       #@records = Record.where('progress= ? OR progress= ? OR processor_id= ?', 'appraisal ordered','appraisal received',current_user.id).order(sort_column + " " + sort_direction)
-      @records = Record.where(processor_id: current_user.id).order(sort_column + " " + sort_direction)
+      if params[:search].blank? || params[:search] ==''
+        @records = Record.where(processor_id: current_user.id).order(sort_column + " " + sort_direction)
+      else
+        @records = Record.search(params[:search])
+      end
     else 
       if params[:search].blank? || params[:search] ==''
         @records = Record.where(loanofficer_id: current_user.id).order(sort_column + " " + sort_direction)
