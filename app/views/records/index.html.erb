@@ -29,6 +29,9 @@
       <th><%= sortable "progress", "Progress" %></th>       
       <th><%= sortable "loanofficer_id", "Loan Officer" %></th>
       <th><%= sortable "processor_id", "Processor" %></th>
+      <% if current_user.profile.title == "master" %>
+        <th colspan="1"></th>
+      <% end %>
     </tr>
   </thead>
 
@@ -39,10 +42,13 @@
           <tr> 
           <td><%= correctlink record, record.firstname %></td>
           <td><%= correctlink record, record.lastname %></td>
-          <td><%= time_ago_in_words record.receivedate %></td>
+          <td><%= record.receivedate %></td>
           <td><%= getpname record.detailedprogress %></td>
           <td><%= getname record.loanofficer_id %></td>
           <td><%= getname record.processor_id %></td>
+          <% if current_user.profile.title == "master" %>
+            <td><%= link_to 'Destroy', record, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-default btn-xs' %></td>
+          <% end %>
         </tr>
       <% end %>
     <% end %>
