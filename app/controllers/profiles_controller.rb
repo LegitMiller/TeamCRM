@@ -16,9 +16,10 @@ class ProfilesController < ApplicationController
 
     #@recs = Records.where(processor_id: current_user.id).order(sort_column + " " + sort_direction)
     #      @records = Record.where(processor_id: current_user.id).order(sort_column + " " + sort_direction)
-    @recs = Record.where('processor_id= ? OR loanofficer_id= ? OR marketer_id= ?',params[:id],params[:id],params[:id])
-
-    #@successrate = @recs.sum(:progress)
+    
+    ##@recs = Record.where('processor_id= ? OR loanofficer_id= ? OR marketer_id= ?',params[:id],params[:id],params[:id])
+    ##@successrate = @recs.sum(:progress)
+    
     #do this for all of the other things you have to track (above)
     #make sure you set watchers - if it hasn't been changed from 0 to 1  in progress before thatn fill out the first touch time. easy as that.
     #add in each statistic to the scheme then when it is triggered calculate the statistic once and fill it out. It'll be the Record Scheme because these statistics are on each record. 
