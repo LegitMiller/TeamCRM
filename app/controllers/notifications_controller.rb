@@ -1,12 +1,27 @@
 class NotificationsController < ApplicationController
   before_action :set_notification, only: [:show, :edit, :update, :destroy]
 
+  require 'csv'
   # GET /notifications
   # GET /notifications.json
   def index
     @notifications = Notification.all
     #@notifications = Notification.where(user_id: current_user.id).order("asc")
+    respond_to do |format|
+      format.html
+      format.csv { send_data @notifications.to_csv } #render text: @records.to_csv }
+    end
   end
+
+  def import
+    if current_user.profile.title == "admin" or current_user.profile.title == "master"
+      Notification.import(params[:file])
+      redirect_to notifications_path, notice: "Records Imported"
+    else
+      redirect_to notifications_path, notice: "No Records Imported; You are not Admin."
+    end
+  end
+
 
   # GET /notifications/1
   # GET /notifications/1.json

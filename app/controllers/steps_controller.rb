@@ -1,12 +1,25 @@
 class StepsController < ApplicationController
   before_action :set_step, only: [:show, :edit, :update, :destroy]
-
+require 'csv'
   # GET /steps
   # GET /steps.json
   def index
     @steps = Step.all
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @steps.to_csv } #render text: @records.to_csv }
+    end
   end
 
+  def import
+    if current_user.profile.title == "admin" or current_user.profile.title == "master"
+      Step.import(params[:file])
+      redirect_to steps_path, notice: "Records Imported"
+    else
+      redirect_to steps_path, notice: "No Records Imported; You are not Admin."
+    end
+  end
   # GET /steps/1
   # GET /steps/1.json
   def show

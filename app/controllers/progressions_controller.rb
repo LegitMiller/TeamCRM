@@ -2,9 +2,29 @@ class ProgressionsController < ApplicationController
   before_action :set_progression, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
+  require 'csv'
   # GET /progressions
   # GET /progressions.json
   
+  def index
+
+    @progressions = Progression.all
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @progressions.to_csv } #render text: @records.to_csv }
+    end
+  end
+
+  def import
+    if current_user.profile.title == "admin" or current_user.profile.title == "master"
+      Progression.import(params[:file])
+      redirect_to progressions_path, notice: "Records Imported"
+    else
+      redirect_to progressions_path, notice: "No Records Imported; You are not Admin."
+    end
+  end
+
   # GET /progressions/1/edit
   def edit
     if current_user.profile.title == "admin" or current_user.profile.title == "master"

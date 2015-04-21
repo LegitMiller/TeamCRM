@@ -12,4 +12,5 @@ class Home < ActiveRecord::Base
 #      @record.save
 #    end
 #  end
+
 end

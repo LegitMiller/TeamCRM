@@ -29,3 +29,28 @@
 <br>
 
 <%= link_to 'New Note', new_note_path %>
+
+
+<% if current_user.profile.title == "admin" || current_user.profile.title == "master" %>
+<br />
+<br />
+<br />
+<hr>
+
+  <h2>Backup</h2>
+  <br />
+  <div class="row">
+    <div class="col-xs-4 col-sm-4">
+    <h3>Export Notes</h3>
+      <%= link_to "To CSV File", notes_path(format: "csv"), :class => 'btn btn-default btn' %>
+
+    </div>
+    <div class="col-xs-4 col-sm-4">
+      <h3>Import Notes</h3>
+      <%= form_tag import_notes_path, multipart: true do %>
+        <%= file_field_tag :file, :class => 'btn btn-default btn' %><br />
+        <%= submit_tag "Import", :class => 'btn btn-default btn' %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

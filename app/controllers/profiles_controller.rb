@@ -1,10 +1,27 @@
 class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+
+    require 'csv'
+    
   # GET /profiles
   # GET /profiles.json
   def index
     @profiles = Profile.search(params[:search])
+    
+    respond_to do |format|
+      format.html
+      format.csv { send_data Profiles.all.to_csv } #render text: @records.to_csv }
+    end
+  end
+  
+  def import
+    if current_user.profile.title == "admin" or current_user.profile.title == "master"
+      Profile.import(params[:file])
+      redirect_to profiles_path, notice: "Records Imported"
+    else
+      redirect_to profiles_path, notice: "No Records Imported; You are not Admin."
+    end
   end
 
   # GET /profiles/1

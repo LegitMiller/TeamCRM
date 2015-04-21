@@ -1,14 +1,20 @@
 Rails.application.routes.draw do
 
-  resources :steps
+  resources :steps do
+    collection { post :import }
+  end
 
   resources :phases do
     collection { post :import }
   end
 
-  resources :progressions
+  resources :progressions do
+    collection { post :import }
+  end
 
-  resources :notifications
+  resources :notifications do
+    collection { post :import }
+  end
 
   get 'notes/create'
 
@@ -26,9 +32,17 @@ Rails.application.routes.draw do
   
   post "profiles_changestatus" => "profiles#changestatus"
  
-  resources :profiles
+  resources :profiles do
+    collection { post :import }
+  end
   
-  resources :home
+  resources :home do
+    collection { post :import }
+  end
+
+  resources :notes do
+    collection { post :import }
+  end
 
   #root records_path && '?direction=asc&sort=firstname'
 

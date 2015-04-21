@@ -3,3 +3,26 @@
 <%= render 'nlist' %>
 
 <br>
+
+<br />
+<br />
+<br />
+<hr>
+<% if current_user.profile.title == "admin" || current_user.profile.title == "master" %>
+  <h2>Backup</h2>
+  <br />
+  <div class="row">
+    <div class="col-xs-4 col-sm-4">
+    <h3>Export Notifications</h3>
+      <%= link_to "To CSV File", notifications_path(format: "csv"), :class => 'btn btn-default btn' %>
+
+    </div>
+    <div class="col-xs-4 col-sm-4">
+      <h3>Import Notifications</h3>
+      <%= form_tag import_notifications_path, multipart: true do %>
+        <%= file_field_tag :file, :class => 'btn btn-default btn' %><br />
+        <%= submit_tag "Import", :class => 'btn btn-default btn' %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

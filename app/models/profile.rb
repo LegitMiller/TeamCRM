@@ -23,4 +23,23 @@ class Profile < ActiveRecord::Base
     		Profile.all
     	end
     end
+    
+  def self.to_csv
+    CSV.generate do |csv|
+      csv << column_names
+      all.each do |rec|
+        csv << rec.attributes.values_at(*column_names)
+      end
+    end
+  end
+
+  def self.import(file)
+    CSV.foreach(file.path, headers: true) do |row|
+      record = find_by_id(row["id"]) || new
+      parameters = ActionController::Parameters.new(row.to_hash)
+      record.update(parameters.permit(:name, :phone, :email, :title, :bio, :assignmail, :progressmail, :phasemail, :status, :user_id))
+      record.save!
+    end
+  end
+
 end

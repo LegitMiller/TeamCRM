@@ -1,12 +1,24 @@
 class NotesController < ApplicationController
   before_action :set_note, only: [:show, :edit, :update, :destroy]
-
+  require 'csv'
   # GET /notes
   # GET /notes.json
   def index
     @notes = Note.all
+    respond_to do |format|
+      format.html
+      format.csv { send_data @notes.to_csv } #render text: @records.to_csv }
+    end
   end
 
+  def import
+    if current_user.profile.title == "admin" or current_user.profile.title == "master"
+      Note.import(params[:file])
+      redirect_to notes_path, notice: "Records Imported"
+    else
+      redirect_to notes_path, notice: "No Records Imported; You are not Admin."
+    end
+  end
   # GET /notes/1
   # GET /notes/1.json
   def show

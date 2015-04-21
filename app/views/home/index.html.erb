@@ -97,3 +97,57 @@
   <%= link_to "sup2", @mylink %>-->
 <% end %>
 
+<% if current_user.profile.title == "admin" || current_user.profile.title == "master" %>
+<br />
+<br />
+<br />
+<hr>
+  <h2>Admins Backup</h2>
+<br />
+<div class="row">
+  <div class="col-xs-3 col-sm-3">
+    <%= link_to "Phases", phases_path, class: 'btn btn-default btn-lg', "data-no-turbolink"=>"true" %>
+  </div>
+  <div class="col-xs-3 col-sm-3">
+    <%= link_to "Progressions", progressions_path, class: 'btn btn-default btn-lg', "data-no-turbolink"=>"true" %>
+  </div>
+  <div class="col-xs-3 col-sm-3">
+    <%= link_to "Steps", steps_path, class: 'btn btn-default btn-lg', "data-no-turbolink"=>"true" %>
+  </div>
+  <div class="col-xs-3 col-sm-3">
+    <%= link_to "Records", records_path, class: 'btn btn-default btn-lg', "data-no-turbolink"=>"true" %>
+  </div>
+  <div class="col-xs-3 col-sm-3">
+    <%= link_to "Notifications", notifications_path, class: 'btn btn-default btn-lg', "data-no-turbolink"=>"true" %>
+  </div>
+  <div class="col-xs-3 col-sm-3">
+    <%= link_to "Profiles", profiles_path, class: 'btn btn-default btn-lg', "data-no-turbolink"=>"true" %>
+  </div>
+  <div class="col-xs-3 col-sm-3">
+    <%= link_to "Notes", notes_path, class: 'btn btn-default btn-lg', "data-no-turbolink"=>"true" %>
+  </div>
+
+</div>
+
+<br />
+<br />
+<br />
+<hr>
+
+  <h2>Users Backup</h2>
+  <br />
+  <div class="row">
+    <div class="col-xs-4 col-sm-4">
+    <h3>Export Users</h3>
+      <%= link_to "To CSV File", root_path(format: "csv"), :class => 'btn btn-default' %>
+
+    </div>
+    <div class="col-xs-4 col-sm-4">
+      <h3>Import Users</h3>
+      <%= form_tag url_for(:controller => 'home', :action => 'import'), multipart: true do %>
+        <%= file_field_tag :file, :class => 'btn btn-default btn' %><br />
+        <%= submit_tag "Import", :class => 'btn btn-default btn' %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
