@@ -11,7 +11,7 @@ class ProfilesController < ApplicationController
     
     respond_to do |format|
       format.html
-      format.csv { send_data Profiles.all.to_csv } #render text: @records.to_csv }
+      format.csv { send_data Profile.all.to_csv } #render text: @records.to_csv }
     end
   end
   
