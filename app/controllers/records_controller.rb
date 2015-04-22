@@ -55,6 +55,30 @@ class RecordsController < ApplicationController
   # GET /records/new
   def new
     @record = Record.new
+        @profiles= Profile.all
+        @listoflos = [] 
+    @listofpros = []
+    @listofmars = []
+    mynewprofile = Profile.new
+    mynewprofile.id = "0"
+    mynewprofile.name = "none"
+    @listoflos.push(mynewprofile)
+    @listofpros.push(mynewprofile)
+    @listofmars.push(mynewprofile)
+    @profiles.each do |profile|  
+      @listoflos.push(profile) if profile.title == "loan officer"
+      @listofpros.push(profile) if profile.title == "processor"
+      @listofmars.push(profile) if profile.title == "loan officer"
+      @listofmars.push(profile) if profile.title == "processor"
+      @listofmars.push(profile) if profile.title == "marketer"
+    end
+
+    @profiles.each do |profile|  
+      @listoflos.push(profile) if profile.title == "admin"
+      @listofpros.push(profile) if profile.title == "admin"
+      @listofmars.push(profile) if profile.title == "admin"
+    end
+
   end
 
   # GET /records/1/edit

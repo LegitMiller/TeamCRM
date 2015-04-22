@@ -46,17 +46,26 @@
         <%= f.label "Progress" %>&nbsp
         <%= f.select :progress, options_for_select([["New", "New"]]), {:selected => params['new']}, {:class => "btn btn-default btn-lg dropdown-toggle"} %>
       </div>
-      <div class="field" hidden="true">
-        <%= f.label :loanofficer_id %><br>
-        <%= f.number_field :loanofficer_id, "value" => current_user.id %>
+      <div class="col-xs-6 col-sm-3">
+        <div class="input-group">
+          <div class="input-group-addon">Loan Officer </div>
+          <%= f.collection_select :loanofficer_id, @listoflos, :user_id, :name, {prompt: false}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control"} %>
+        </div>
       </div>
-      <div class="field" hidden="true">
-        <%= f.label :processor_id %><br>
-        <%= f.number_field :processor_id, "value" => current_user.id %>
+      <div class="col-xs-6 col-sm-3">
+        <div class="input-group">
+          <div class="input-group-addon">Processor </div>
+          <%= f.collection_select :processor_id, @listofpros, :user_id, :name, {prompt: false}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control"} %>
+        </div>
       </div>
-      <div class="field" hidden="true">
-        <%= f.label :marketer_id %><br>
-        <%= f.number_field :marketer_id, "value" => current_user.id %>
+      <div class="col-xs-6 col-sm-3">
+        <div class="input-group">
+          <div class="input-group-addon">Marketer </div>
+          <%= f.collection_select :marketer_id, @listofmars, :user_id, :name, {prompt: false}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control"} %>
+        </div>
+      </div>
+      <div class="col-xs-6 col-sm-3">
+          <%= f.text_field :raemail, :class => "input-lg form-control", "placeholder" => "real. agent email"  %>
       </div>
       <div class="col-xs-12 col-sm-12">
         <div class="actions">
