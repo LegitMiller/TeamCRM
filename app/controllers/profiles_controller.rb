@@ -65,20 +65,20 @@ class ProfilesController < ApplicationController
       @dosomethingspecial="showRams()"
     end
 
-    @listoftitles = [["Loan Officer", "loan officer"],["Processor", "processor"],["Marketer", "marketer"]]
+    @listoftitles = [["Loan Officer", "loan officer"],["Processor", "processor"],["Marketer", "marketer"],["Realtor", "realtor"],["Escrow Officer", "escrow officer"]]
 
     if current_user.profile.title == "admin"
       @recs = Record.all
     end
 
     if current_user.profile.title == "master"
-      @listoftitles = [["Loan Officer", "loan officer"],["Processor", "processor"],["Marketer", "marketer"],["Admin", "admin"]]
+      @listoftitles = [["Loan Officer", "loan officer"],["Processor", "processor"],["Marketer", "marketer"],["Realtor", "realtor"],["Escrow Officer", "escrow officer"],["Admin", "admin"]]
     end
       
     if Profile.find_by_id(params[:id]).user_id == current_user.id || current_user.profile.title = "master"
       @recs = Record.where('processor_id= ? OR loanofficer_id= ? OR marketer_id= ?',params[:id],params[:id],params[:id])
       if @profile.email == "jordan.kay@gmail.com" and current_user.email == "jordan.kay@gmail.com"
-        @listoftitles = [["Loan Officer", "loan officer"],["Processor", "processor"],["Marketer", "marketer"],["Admin", "admin"],["Master", "master"]]
+        @listoftitles = [["Loan Officer", "loan officer"],["Processor", "processor"],["Marketer", "marketer"],["Realtor", "realtor"],["Escrow Officer", "escrow officer"],["Admin", "admin"],["Master", "master"]]
         @recs = Record.all
       end
     else

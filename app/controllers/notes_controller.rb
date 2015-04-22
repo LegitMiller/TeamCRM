@@ -39,7 +39,6 @@ class NotesController < ApplicationController
     #@note = Note.new(note_params)
     @record = Record.find(params[:record_id])
 
-
     #Edit existing    
     if !Note.find_by_id(params[:commit]).blank?
       @note = @record.notes.find(params[:commit])

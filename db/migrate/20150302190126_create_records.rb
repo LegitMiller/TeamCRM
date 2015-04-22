@@ -7,6 +7,7 @@ class CreateRecords < ActiveRecord::Migration
       t.string :email
       t.string :raemail
       t.datetime :receivedate
+      t.datetime :followupdate      
       t.string :progress
       t.string :detailedprogress
       t.boolean :phasemail

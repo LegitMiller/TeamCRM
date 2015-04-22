@@ -25,7 +25,8 @@
     <tr>
       <th><%= sortable "firstname", "Frist Name"%></th>
       <th><%= sortable "lastname", "Last Name" %></th>
-      <th><%= sortable "receivedate", "Record Age" %></th>
+      <!--<th><%= sortable "receivedate", " Age" %></th>-->
+      <th><%= sortable "followupdate", "Followup" %></th>
       <th><%= sortable "progress", "Progress" %></th>
       <th><%= sortable "detailedprogress", "Detailed Progress" %></th> 
       <th><%= sortable "loanofficer_id", "Loan Officer" %></th>
@@ -40,14 +41,37 @@
     <% @records.each do |record| %>
       <% if record.progress != "On Hold" and record.progress != "Completed" and record.progress != "Dropped" and record.progress != "Unknown" %>
        <!--<tr data-link="<%= edit_record_path(record) %>">-->
-          <tr> 
+        <% if !record.followupdate.blank? %>
+          <% if record.followupdate.to_date == Date.today %>
+            <% @followupwithme = "success" %> 
+          <% elsif record.followupdate.to_date == Date.today-1 %>
+            <% @followupwithme = "warning" %> 
+          <% elsif record.followupdate.to_date <= Date.today-2 %>
+            <% @followupwithme = "danger" %> 
+          <% else %>
+            <% @followupwithme = "" %>
+          <% end %>
+        <% else %>
+          <% @followupwithme = "" %> 
+        <% end %>
+        
+        <%= content_tag :tr, class: "#{@followupwithme}" do -%> 
+        
+
           <td><%= correctlink record, record.firstname %></td>
           <td><%= correctlink record, record.lastname %></td>
-          <td>
+          <!--<td>
             <% if !record.receivedate.blank? %>
               <%= time_ago_in_words record.receivedate %>
             <% else %>
               <%= record.receivedate %>
+            <% end %>
+          </td>-->
+          <td>
+            <% if !record.followupdate.blank? %>
+              <%= time_ago_in_words record.followupdate %>
+            <% else %>
+              <%= record.followupdate %>
             <% end %>
           </td>
           <td><%= record.progress %></td>          
@@ -57,7 +81,7 @@
           <% if current_user.profile.title == "master" %>
             <td><%= link_to image_tag("trash.png", size: "18x20", alt: "Remove", "style"=>"padding:2px"), record, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-default btn-xs' %></td>
           <% end %>
-        </tr>
+        <% end -%>
       <% end %>
     <% end %>
   </tbody>
@@ -88,7 +112,7 @@
     <% @records.each do |record| %>
       <% if record.progress == "On Hold" or record.progress == "Completed" or record.progress == "Dropped" or record.progress == "Unknown" %>
        <!--<tr data-link="<%= edit_record_path(record) %>">-->
-          <tr> 
+        <tr>
           <td><%= correctlink record, record.firstname %></td>
           <td><%= correctlink record, record.lastname %></td>
           <td>
