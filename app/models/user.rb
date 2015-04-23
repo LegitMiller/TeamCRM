@@ -30,9 +30,15 @@ class User < ActiveRecord::Base
 
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
+      hash = {}
+      if find_by_id(row["id"]).blank?
+        hash[:password] = "defaultpass"
+        hash[:password_confirmation] = "defaultpass"
+      end
       record = find_by_id(row["id"]) || new
       parameters = ActionController::Parameters.new(row.to_hash)
-      record.update(parameters.permit(:email, :encrypted_password, :reset_password_token, :reset_password_send_at, :remember_created_at, :sign_in_count, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip))
+      parameters = parameters.merge(hash)
+      record.update(parameters.permit(:email, :encrypted_password, :reset_password_token, :reset_password_send_at, :remember_created_at, :sign_in_count, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip, :password, :password_confirmation))
       record.save!
     end
   end
