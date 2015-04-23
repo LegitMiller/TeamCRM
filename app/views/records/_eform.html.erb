@@ -100,7 +100,7 @@
       <div class="clearfix visible-xs-block"></div>
 
 
-      <div class="col-xs-9 col-sm-9">
+      <div class="col-xs-8 col-sm-8">
         <div class="input-group">
           <div class="input-group-addon">Followup Date</div>
           <div class = 'btn btn-default btn'>
@@ -109,18 +109,12 @@
         </div>
       </div>
       
-      <div class="col-xs-1 col-sm-1">
-        <div class="text-left">
+      <div class="col-xs-4 col-sm-4">
+        <div class="text-right">
           <div class="actions">
             <% if current_user.profile.title == "admin" || current_user.profile.title == "master" || current_user.id == @record.loanofficer_id || current_user.id == @record.processor_id %>
               <%= link_to(image_tag("trash.png", size: "18x20", alt: "Remove", "style"=>"padding:2px"), @record, method: :delete, data: { confirm: 'Are you sure you want to permanently destroy this client record?' }, :class => 'btn btn-default btn-lg') %>
               <% end %>
-          </div>
-        </div>
-      </div>
-      <div class="col-xs-2 col-sm-2">
-        <div class="text-right">
-          <div class="actions">
               <%= f.submit "Submit", :class=> "btn btn-info btn-lg", :onClick=> @mylink %>
           </div>
         </div>
