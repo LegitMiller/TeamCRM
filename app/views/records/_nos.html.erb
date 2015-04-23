@@ -16,18 +16,19 @@
                 <div class="input-group">
                   <% if !note.comment.blank? %>
                     <td>
-                      <div>
-                        <%= getname(note.user_id) %> said <%= time_ago_in_words note.updated_at %> ago
-                      </div>
                       <%= f.text_field :user_id, "value"=> current_user.id, "placeholder" => "cost", "style"=>"width:45px", "type"=>"number", "hidden"=>"true" %>
                       <p>
                         <%= f.text_area :comment, "value" => note.comment,"placeholder" => "notes", "style"=>"width:100%", :class => "input-lg form-control", "onkeyup"=>"textAreaAdjust(this)", "onclick"=>"textAreaAdjust(this)" %>
                       </p>
+                      <div class="col-xs-6 col-sm-6">
 
-                      <div class="text-right">                  
+                        <%= getname(note.user_id) %> said on <%= note.updated_at.to_formatted_s(:long) %>
+                      </div>  
+                      <div class="col-xs-6 col-sm-6 text-right">               
                         <%= link_to(image_tag("trash.png", size: "18x20", alt: "Remove", "style"=>"padding:2px"), record_note_path(@record, note), method: :delete, :class => "btn btn-default btn-sm") %>
 
                         <%= f.submit "Submit", :class=> "btn btn-info btn-sm", :onclick=> "value=#{note.id}" %>
+                      </div>                      
                     </td>
                   <% end %>
                 </div>
