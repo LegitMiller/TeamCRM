@@ -75,6 +75,7 @@ class ProgressionsController < ApplicationController
   # DELETE /progressions/1.json
   def destroy
     if current_user.profile.title == "admin" or current_user.profile.title == "master"
+      @progressions.steps.destroy_all
       @progression.destroy
       respond_to do |format|
         format.html { redirect_to phases_path, notice: 'Progression was successfully destroyed.' }
