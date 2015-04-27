@@ -55,19 +55,26 @@ class RecordsController < ApplicationController
   # GET /records/new
   def new
     @record = Record.new
-        @profiles= Profile.all
-        @listoflos = [] 
+    @profiles= Profile.all
+    
+    @listoflos = [] 
     @listofpros = []
     @listofmars = []
+    @listofRA = []
+    @listofEO = []
     mynewprofile = Profile.new
     mynewprofile.id = "0"
     mynewprofile.name = "none"
     @listoflos.push(mynewprofile)
     @listofpros.push(mynewprofile)
     @listofmars.push(mynewprofile)
+    @listofRA.push(mynewprofile)
+    @listofEO.push(mynewprofile)
     @profiles.each do |profile|  
       @listoflos.push(profile) if profile.title == "loan officer"
       @listofpros.push(profile) if profile.title == "processor"
+      @listofRA.push(profile) if profile.title == "realtor"
+      @listofEO.push(profile) if profile.title == "escrow officer"
       @listofmars.push(profile) if profile.title == "loan officer"
       @listofmars.push(profile) if profile.title == "processor"
       @listofmars.push(profile) if profile.title == "marketer"
@@ -91,15 +98,21 @@ class RecordsController < ApplicationController
     @listoflos = [] 
     @listofpros = []
     @listofmars = []
+    @listofRA = []
+    @listofEO = []
     mynewprofile = Profile.new
     mynewprofile.id = "0"
     mynewprofile.name = "none"
     @listoflos.push(mynewprofile)
     @listofpros.push(mynewprofile)
     @listofmars.push(mynewprofile)
+    @listofRA.push(mynewprofile)
+    @listofEO.push(mynewprofile)
     @profiles.each do |profile|  
       @listoflos.push(profile) if profile.title == "loan officer"
       @listofpros.push(profile) if profile.title == "processor"
+      @listofRA.push(profile) if profile.title == "realtor"
+      @listofEO.push(profile) if profile.title == "escrow officer"
       @listofmars.push(profile) if profile.title == "loan officer"
       @listofmars.push(profile) if profile.title == "processor"
       @listofmars.push(profile) if profile.title == "marketer"
@@ -356,6 +369,6 @@ class RecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def record_params
-      params.require(:record).permit(:firstname, :lastname, :phone, :email, :raemail, :receivedate, :followupdate, :progress, :detailedprogress, :progressmail, :phasemail, :lopay, :propay, :jpay, :opay, :loanofficer_id, :processor_id, :marketer_id)
+      params.require(:record).permit(:firstname, :lastname, :phone, :email, :raemail, :receivedate, :followupdate, :progress, :detailedprogress, :progressmail, :phasemail, :lopay, :propay, :jpay, :opay, :loanofficer_id, :processor_id, :marketer_id, :real_id, :escrow_id)
     end
 end

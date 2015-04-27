@@ -82,6 +82,8 @@ ActiveRecord::Schema.define(version: 20150409213921) do
     t.integer  "loanofficer_id"
     t.integer  "processor_id"
     t.integer  "marketer_id"
+    t.integer  "real_id"
+    t.integer  "escrow_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

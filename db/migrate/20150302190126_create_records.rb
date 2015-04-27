@@ -19,7 +19,9 @@ class CreateRecords < ActiveRecord::Migration
       t.integer :loanofficer_id
       t.integer :processor_id
       t.integer :marketer_id
-
+      t.integer :real_id
+      t.integer :escrow_id
+      
       t.timestamps
     end
   end
