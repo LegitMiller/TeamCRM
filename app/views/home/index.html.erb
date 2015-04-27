@@ -1,17 +1,21 @@
       <h1>Dashboard</h1>
-<!--
-  <h4>set status to </h4>
-  <% if current_user.profile.status == "busy" %>
-    <%= link_to "Free", {:controller => :profiles, :action => :changestatus}, :method => 'post', :class =>"btn btn-lg btn-default" %>
-    <%= link_to "Busy", root_path, :class =>"btn btn-lg btn-success active" %>
-  <% elsif current_user.profile.status == "free"  %>
-    <%= link_to "Free", root_path, :class =>"btn btn-lg btn-success active" %>
-    <%= link_to "Busy", {:controller => :profiles, :action => :changestatus}, :method => 'post', :class =>"btn btn-lg btn-default" %>
-  <% else %>
-    <%= link_to "Free", {:controller => :profiles, :action => :changestatus}, :method => 'post', :class =>"btn btn-lg btn-default" %>
-  <% end %>
+  <% if current_user.profile.status == "master" %>
 
-  <br />-->
+    <h4>set status to </h4>
+    <% if current_user.profile.status == "busy" %>
+      <%= link_to "Free", {:controller => :profiles, :action => :changestatus}, :method => 'post', :class =>"btn btn-lg btn-default" %>
+      <%= link_to "Busy", root_path, :class =>"btn btn-lg btn-success active" %>
+    <% elsif current_user.profile.status == "free"  %>
+      <%= link_to "Free", root_path, :class =>"btn btn-lg btn-success active" %>
+      <%= link_to "Busy", {:controller => :profiles, :action => :changestatus}, :method => 'post', :class =>"btn btn-lg btn-default" %>
+    <% else %>
+      <%= link_to "Free", {:controller => :profiles, :action => :changestatus}, :method => 'post', :class =>"btn btn-lg btn-default" %>
+    <% end %>
+    <br />
+
+  <% end %>
+  
+
   <div class="row">
     <div class="col-xs-12 col-sm-12"><br />
       <div class="pull-right"><% if current_user.profile.title == "admin" or current_user.profile.title == "master" %>
