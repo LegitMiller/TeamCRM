@@ -139,7 +139,21 @@ class ProfilesController < ApplicationController
   end
 
 
-
+  def resetpassword
+    if current_user.profile.title == "master"
+      user = User.find_by_id(params[:id])
+     if user
+        #user.password = "password123"
+        #user.password_confirmation = "password123"
+        #user.save
+        if user.update(:password => "password123", :password_confirmation => "password123")
+          redirect_to root_path, notice: 'Password was successfully updated.'
+        end
+      else
+        redirect_to root_path, notice: 'Password was not successfully updated.'
+      end
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

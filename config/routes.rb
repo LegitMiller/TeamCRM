@@ -31,7 +31,9 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => { :registrations => "registrations" }
   
   post "profiles_changestatus" => "profiles#changestatus"
- 
+
+  post "profiles_resetpassword" => "profiles#resetpassword"
+
   resources :profiles do
     collection { post :import }
   end
