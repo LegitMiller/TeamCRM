@@ -25,12 +25,30 @@ class RecordsController < ApplicationController
       else
         @records = Record.search(params[:search])
       end
-    else 
+    elsif current_user.profile.title == "marketer" 
+      if params[:search].blank? || params[:search] ==''
+        @records = Record.where(marketer_id: current_user.id).order(sort_column + " " + sort_direction)
+      else
+        @records = Record.search(params[:search])
+      end
+    elsif current_user.profile.title == "realtor"
+      if params[:search].blank? || params[:search] ==''
+        @records = Record.where(real_id: current_user.id).order(sort_column + " " + sort_direction)
+      else
+        @records = Record.search(params[:search])
+      end
+    elsif current_user.profile.title == "escrow officer"
+      if params[:search].blank? || params[:search] ==''
+        @records = Record.where(escrow_id: current_user.id).order(sort_column + " " + sort_direction)
+      else
+        @records = Record.search(params[:search])
+      end
+    else
       if params[:search].blank? || params[:search] ==''
         @records = Record.where(loanofficer_id: current_user.id).order(sort_column + " " + sort_direction)
       else
         @records = Record.search(params[:search])
-      end
+      end                  
     end
     respond_to do |format|
       format.html

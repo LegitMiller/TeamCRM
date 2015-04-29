@@ -11,6 +11,15 @@ class HomeController < ApplicationController
     elsif current_user.profile.title == "processor"
       #@records = Record.where('progress= ? OR progress= ? OR processor_id= ?', 'appraisal ordered','appraisal received',current_user.id).order(sort_column + " " + sort_direction)
       @records = Record.where(processor_id: current_user.id)
+    elsif current_user.profile.title == "realtor"
+      #@records = Record.where('progress= ? OR progress= ? OR processor_id= ?', 'appraisal ordered','appraisal received',current_user.id).order(sort_column + " " + sort_direction)
+      @records = Record.where(real_id: current_user.id)
+    elsif current_user.profile.title == "marketer"
+      #@records = Record.where('progress= ? OR progress= ? OR processor_id= ?', 'appraisal ordered','appraisal received',current_user.id).order(sort_column + " " + sort_direction)
+      @records = Record.where(marketer_id: current_user.id)
+    elsif current_user.profile.title == "escrow officer"
+      #@records = Record.where('progress= ? OR progress= ? OR processor_id= ?', 'appraisal ordered','appraisal received',current_user.id).order(sort_column + " " + sort_direction)
+      @records = Record.where(escrow_id: current_user.id)
     else 
       @records = Record.where(loanofficer_id: current_user.id)
     end
