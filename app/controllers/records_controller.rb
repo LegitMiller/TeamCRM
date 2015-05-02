@@ -152,10 +152,16 @@ class RecordsController < ApplicationController
       if Record.find_by_id(params[:id]).processor_id != current_user.id
         redirect_to records_path, notice: 'Unable to edit unowned record.'
       end
-    else 
+    elsif current_user.profile.title == "loan officer"  
       if Record.find_by_id(params[:id]).loanofficer_id != current_user.id
         redirect_to records_path, notice: 'Unable to edit unowned record.'
       end
+    elsif current_user.profile.title == "marketer"  
+      if Record.find_by_id(params[:id]).marketer_id != current_user.id
+        redirect_to records_path, notice: 'Unable to edit unowned record.'
+      end
+    else  
+        redirect_to records_path, notice: 'Unable to edit unowned record.'
     end
 
   end
