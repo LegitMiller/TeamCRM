@@ -215,6 +215,8 @@ class RecordsController < ApplicationController
       @record.update_attributes :processor_id => "0"
     elsif current_user.profile.title == "loan officer"
       @record.update_attributes :loanofficer_id => "0"
+    elsif current_user.profile.title == "marketer"
+      @record.update_attributes :marketer_id => "0"
     end
     respond_to do |format|
       format.html { redirect_to records_path, notice: 'Record was successfully destroyed.' }
