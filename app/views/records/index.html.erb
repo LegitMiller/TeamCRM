@@ -37,7 +37,7 @@
     </tr>
   </thead>
 
-  <tbody>
+  <tbody> 
     <% @records.each do |record| %>
       <% if record.progress != "On Hold" and record.progress != "Completed" and record.progress != "Dropped" and record.progress != "Unknown" %>
        <!--<tr data-link="<%= edit_record_path(record) %>">-->

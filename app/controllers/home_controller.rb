@@ -7,21 +7,21 @@ class HomeController < ApplicationController
 		@mylink = records_path
 
 		if current_user.profile.title == "admin" or current_user.profile.title == "master"
-      @records = Record.all
+      @records = Record.all.order("lastname" + " " + "asc")
     elsif current_user.profile.title == "processor"
       #@records = Record.where('progress= ? OR progress= ? OR processor_id= ?', 'appraisal ordered','appraisal received',current_user.id).order(sort_column + " " + sort_direction)
-      @records = Record.where(processor_id: current_user.id)
+      @records = Record.where(processor_id: current_user.id).order("lastname" + " " + "asc")
     elsif current_user.profile.title == "realtor"
       #@records = Record.where('progress= ? OR progress= ? OR processor_id= ?', 'appraisal ordered','appraisal received',current_user.id).order(sort_column + " " + sort_direction)
-      @records = Record.where(real_id: current_user.id)
+      @records = Record.where(real_id: current_user.id).order("lastname" + " " + "asc")
     elsif current_user.profile.title == "marketer"
       #@records = Record.where('progress= ? OR progress= ? OR processor_id= ?', 'appraisal ordered','appraisal received',current_user.id).order(sort_column + " " + sort_direction)
-      @records = Record.where(marketer_id: current_user.id)
+      @records = Record.where(marketer_id: current_user.id).order("lastname" + " " + "asc")
     elsif current_user.profile.title == "escrow officer"
       #@records = Record.where('progress= ? OR progress= ? OR processor_id= ?', 'appraisal ordered','appraisal received',current_user.id).order(sort_column + " " + sort_direction)
-      @records = Record.where(escrow_id: current_user.id)
+      @records = Record.where(escrow_id: current_user.id).order("lastname" + " " + "asc")
     else 
-      @records = Record.where(loanofficer_id: current_user.id)
+      @records = Record.where(loanofficer_id: current_user.id).order("lastname" + " " + "asc")
     end
 
     if current_user.profile.title == "master"
