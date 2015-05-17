@@ -18,7 +18,7 @@
                     <td>
                       <%= f.text_field :user_id, "value"=> current_user.id, "placeholder" => "cost", "style"=>"width:45px", "type"=>"number", "hidden"=>"true" %>
                       <p>
-                        <%= f.text_area :comment, "value" => note.comment,"placeholder" => "notes", "style"=>"width:100%", :class => "input-lg form-control", "onkeyup"=>"textAreaAdjust(this)", "onclick"=>"textAreaAdjust(this)" %>
+                        <%= f.text_area :comment, "value" => note.comment,"placeholder" => "notes","maxlength"=>"254", "style"=>"width:100%", :class => "input-lg form-control", "onkeyup"=>"textAreaAdjust(this)", "onclick"=>"textAreaAdjust(this)" %>
                       </p>
                       <div class="col-xs-6 col-sm-6">
 
