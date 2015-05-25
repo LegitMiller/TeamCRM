@@ -42,6 +42,6 @@ class UserMailer < ActionMailer::Base
 		#  :to => name + " <" + address + ">",
 		#  :subject => subject,
 		#  :text => message
-	  end
+	  #end
 	end
 end

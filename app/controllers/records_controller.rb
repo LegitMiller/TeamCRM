@@ -369,7 +369,7 @@ class RecordsController < ApplicationController
       end
 
       if (mychange[0,5] == "Phase" && profile.phasemail == true) || (mychange[0,16] == "Progression Step" && profile.progressmail == true)
-        if oldchange = "'Done'"
+        if oldchange == "'Done'"
           newname = "'Not Done'"
         else
           newname = "'Done'"
@@ -425,7 +425,7 @@ class RecordsController < ApplicationController
 
       if (mychange[0,5] == "Phase" && record.phasemail == true) || (mychange[0,16] == "Progression Step" && record.progressmail == true)
 
-        if oldchange = "'Done'"
+        if oldchange == "'Done'"
           newname = "'Not Done'"
         else
           newname = "'Done'"
