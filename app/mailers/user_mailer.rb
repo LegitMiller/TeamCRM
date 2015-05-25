@@ -1,5 +1,6 @@
 class UserMailer < ActionMailer::Base
   helper MailerHelper
+  #require "restclient"  
   default :from => "shadrak.kay@gmail.com"
 
   def welcome_email(profile)
@@ -24,4 +25,23 @@ class UserMailer < ActionMailer::Base
 	  mail(to: @eto.email, subject: 'Record changed: '+ @record.firstname + " " + @record.lastname )
 	end
 
+	def send_simple_message
+	  RestClient.post "https://api:key-b60921c9cf56556674d5741dc09de536"\
+	  "@api.mailgun.net/v3/sandboxa8ea094b71f240bbadecf69c14fe8456.mailgun.org/messages",
+	  :from => "SuperiorLendingCRM <postmaster@sandboxa8ea094b71f240bbadecf69c14fe8456.mailgun.org>",
+	  :to => "Jordan Miller <jordan.kay@gmail.com>",
+	  :subject => "Hello John Johnson",
+	  :text => "Congratulations John Johnson, you just sent an email with Mailgun!  You are truly awesome!  You can see a record of this email in your logs: https://mailgun.com/cp/log .  You can send up to 300 emails/day from this sandbox server.  Next, you should add your own domain so you can send 10,000 emails/month for free."
+	end
+
+	def send_simple(name, address, subject, message)
+		if !address.blank?
+		  RestClient.post "https://api:key-b60921c9cf56556674d5741dc09de536"\
+		  "@api.mailgun.net/v3/sandboxa8ea094b71f240bbadecf69c14fe8456.mailgun.org/messages",
+		  :from => "SuperiorLendingCRM <postmaster@sandboxa8ea094b71f240bbadecf69c14fe8456.mailgun.org>",
+		  :to => name + " <" + address + ">",
+		  :subject => subject,
+		  :text => message
+	  end
+	end
 end

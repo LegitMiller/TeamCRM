@@ -68,6 +68,40 @@ class RecordsController < ApplicationController
   # GET /records/1
   # GET /records/1.json
   def show
+    @profiles= Profile.all
+    @phases = Phase.all
+    @progressions = Progression.all
+    @steps = Record.find(params[:id]).steps
+    
+    @listoflos = [] 
+    @listofpros = []
+    @listofmars = []
+    @listofRA = []
+    @listofEO = []
+    mynewprofile = Profile.new
+    mynewprofile.id = "0"
+    mynewprofile.name = "none"
+    @listoflos.push(mynewprofile)
+    @listofpros.push(mynewprofile)
+    @listofmars.push(mynewprofile)
+    @listofRA.push(mynewprofile)
+    @listofEO.push(mynewprofile)
+    @profiles.each do |profile|  
+      @listoflos.push(profile) if profile.title == "loan officer"
+      @listofpros.push(profile) if profile.title == "processor"
+      @listofRA.push(profile) if profile.title == "realtor"
+      @listofEO.push(profile) if profile.title == "escrow officer"
+      @listofmars.push(profile) if profile.title == "loan officer"
+      @listofmars.push(profile) if profile.title == "processor"
+      @listofmars.push(profile) if profile.title == "marketer"
+    end
+
+    @profiles.each do |profile|  
+      @listoflos.push(profile) if profile.title == "admin"
+      @listofpros.push(profile) if profile.title == "admin"
+      @listofmars.push(profile) if profile.title == "admin"
+    end
+
   end
 
   # GET /records/new
@@ -188,7 +222,8 @@ class RecordsController < ApplicationController
   def update
     #rparams = params[:record]
     #testme = rparams[:progress]
-    notificationprocess(@record.id, params[:record][:loanofficer_id], params[:record][:processor_id], params[:record][:progress]) 
+
+    notificationprocess(@record.id, params[:record][:loanofficer_id], params[:record][:processor_id], params[:record][:marketer_id], params[:record][:real_id], params[:record][:escrow_id], params[:record][:progress]) 
 
     respond_to do |format|
       if @record.update(record_params)
@@ -224,122 +259,191 @@ class RecordsController < ApplicationController
     end
   end
 
-  def notificationprocess(recordid, recloid, recproid, recordprogress, mytype = nil)
+  def notificationprocess(recordid, recloid, recproid, recmark, recreal, recescrow, recordprogress, mytype = nil)
     #CHECK TO SEE IF WE NEED TO MAKE A NOTIFICATION 
-
-    #FIX THIS
-
-    #Also add in the ability to Email realestate agents on every phase and progression step: @record.raemail
-
-    #might want to use Red... something or Mag...something gems
+    #make a list of new people (people who are assigned currently. they may also be old people.)
+    #for the list of new people produce every notification about every change, but only do it for people other than the current user.
+    #for each notification made in this process - check to see if we should make a email notification
+    #for each of the first "new" people's notification made in this process - check to see if we need to make a notification for the client.
 
     @record = Record.find(recordid)
-    if mytype == "phase" 
+    
+    listofnewpeeps = []
+    
+    listofnewpeeps.push(Profile.find_by_id(recloid)) if !Profile.find_by_id(recloid).blank? 
+    listofnewpeeps.push(Profile.find_by_id(recproid)) if !Profile.find_by_id(recproid).blank? 
+    listofnewpeeps.push(Profile.find_by_id(recmark)) if !Profile.find_by_id(recmark).blank? 
+    listofnewpeeps.push(Profile.find_by_id(recreal)) if !Profile.find_by_id(recreal).blank? 
+    listofnewpeeps.push(Profile.find_by_id(recescrow)) if !Profile.find_by_id(recescrow).blank? 
+
+    Profile.where(:title => "admin").each do |prof|
+      listofnewpeeps.push(prof)
+    end
+
+    senttoclient = false
+
+    listofnewpeeps.each do |peep|
+      
+      if mytype == "phase" 
         mychange = "Phase: " + Phase.find(recordprogress).name
         oldchange = "'Not Done'"
-    elsif mytype == "progression"# and recordprogress.to_i.is_a? Integer
-      if Step.exists?(:record_id => recordid, :progression_id => recordprogress)
-        mychange = "Progression Step: " + Progression.find(recordprogress).name
-        oldchange = "'Done'"
-      else
-        mychange = "Progression Step: " + Progression.find(recordprogress).name
-        oldchange = "'Not Done'"
-      end
-    elsif @record.progress != recordprogress.to_s
-      mychange = "Progress"
-      oldchange = @record.progress
-      
-      if recordprogress.to_s == "Completed"
-        @myprofs = Profile.where(:title => "admin")
-        @myprofs.each do |prof|
-          Notification.createnotification(current_user.id, prof.id, @record.id, mychange, oldchange, 0)
+      elsif mytype == "progression"# and recordprogress.to_i.is_a? Integer
+        if Step.exists?(:record_id => recordid, :progression_id => recordprogress)
+          mychange = "Progression Step: " + Progression.find(recordprogress).name
+          oldchange = "'Done'"
+        else
+          mychange = "Progression Step: " + Progression.find(recordprogress).name
+          oldchange = "'Not Done'"
+        end
+      elsif @record.progress != recordprogress.to_s
+        mychange = "Progress"
+        oldchange = @record.progress
+        if recordprogress.to_s == "Completed" and peep.title == "admin"
+          Notification.createnotification(current_user.id, peep.id, @record.id, mychange, oldchange, 0)
+          #checkmailer(current_user.id, peep.id, @record.id, mychange, oldchange, 0)
         end
       end
-    elsif @record.processor_id.to_i != recproid.to_i
-      mychange = "Assigned Processor"
-      oldchange = @record.processor_id
-    elsif @record.loanofficer_id != recloid.to_i
+
+      #now that we've determined aspects of the notification, create the full notification.
+      if !mychange.blank? and current_user.id != peep.id  
+        Notification.createnotification(current_user.id, peep.id, @record.id, mychange, oldchange, 0)
+        checkmailer(current_user.id, peep.id, @record.id, mychange, oldchange, recordprogress || "" )
+
+        if senttoclient == false
+          checkclientmailer(current_user.id, peep.id, @record.id, mychange, oldchange)
+          senttoclient = true
+        end
+      end
+
+    end
+
+    #Send out Notifications to those who were removed from a record. Also send them an email automatically.
+    if @record.loanofficer_id != recloid.to_i and current_user.id != @record.loanofficer_id  
       mychange = "Assigned Loan Officer"
       oldchange = @record.loanofficer_id
+      Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange, 0)
+      checkmailer(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange, recloid)
     end
-    
-    #USER REQUIREMENTS 
-    if !mychange.blank?
-      if current_user.id == @record.processor_id  
-        if !@record.loanofficer_id.blank?
-          #notify loan officer of all the actions the processor takes
-          Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange, 0)
-          #checkmailer(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange)
-        else !recloid.blank?  
-          Notification.createnotification(current_user.id, recloid, @record.id, mychange, oldchange, 0)
-          #checkmailer(current_user.id, recloid, @record.id, mychange, oldchange)
-        end
-      elsif current_user.id == @record.loanofficer_id 
-        if !@record.processor_id.blank? 
-          #notify processor of all the actions the loanofficer takes
-          Notification.createnotification(current_user.id, @record.processor_id, @record.id, mychange, oldchange, 0)
-          #checkmailer(current_user.id, @record.processor_id, @record.id, mychange, oldchange)
-        else !recproid.blank?  
-          Notification.createnotification(current_user.id, recproid, @record.id, mychange, oldchange, 0)
-          #checkmailer(current_user.id, recproid, @record.id, mychange, oldchange)
-        end
-      else #if the admin changed something tell both the processor and the loan officer.
-
-        if !@record.loanofficer_id.blank?
-          #notify loan officer of all the actions the processor takes
-          Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange, 0)
-      #    checkmailer(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange)
-        else !recloid.blank?  
-          Notification.createnotification(current_user.id, recloid, @record.id, mychange, oldchange, 0)
-      #    checkmailer(current_user.id, recloid, @record.id, mychange, oldchange)
-        end
-        if !@record.processor_id.blank? 
-          #notify processor of all the actions the loanofficer takes
-          Notification.createnotification(current_user.id, @record.processor_id, @record.id, mychange, oldchange, 0)
-      #    checkmailer(current_user.id, @record.processor_id, @record.id, mychange, oldchange)
-        else !recproid.blank?  
-          Notification.createnotification(current_user.id, recproid, @record.id, mychange, oldchange, 0)
-      #    checkmailer(current_user.id, recproid, @record.id, mychange, oldchange)
-        end
-
-
-        #  Notification.createnotification(current_user.id, @record.processor_id, @record.id, mychange, oldchange, 0)
-        #  Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange, 0)
-          #checkmailer(current_user.id, @record.processor_id, @record.id, mychange, oldchange)
-          #checkmailer(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange)
-      end
+    if @record.processor_id.to_i != recproid.to_i and current_user.id != @record.processor_id  
+      mychange = "Assigned Processor"
+      oldchange = @record.processor_id
+      Notification.createnotification(current_user.id, @record.processor_id, @record.id, mychange, oldchange, 0)
+      checkmailer(current_user.id, @record.processor_id, @record.id, mychange, oldchange, recproid)
+      asdfa sdfas
     end
+    if @record.marketer_id != recmark.to_i and current_user.id != @record.marketer_id
+      mychange = "Assigned Marketer"
+      oldchange = @record.marketer_id
+      Notification.createnotification(current_user.id, @record.marketer_id, @record.id, mychange, oldchange, 0)
+      checkmailer(current_user.id, @record.marketer_id, @record.id, mychange, oldchange, recmark)
+    end
+    if @record.real_id != recreal.to_i  and current_user.id != @record.real_id
+      mychange = "Assigned Realtor"
+      oldchange = @record.real_id
+      Notification.createnotification(current_user.id, @record.real_id, @record.id, mychange, oldchange, 0)
+      checkmailer(current_user.id, @record.real_id, @record.id, mychange, oldchange, recreal)
+    end
+    if @record.escrow_id != recescrow.to_i  and current_user.id != @record.escrow_id
+      mychange = "Assigned Escrow Agent"
+      oldchange = @record.escrow_id
+      Notification.createnotification(current_user.id, @record.escrow_id, @record.id, mychange, oldchange, 0)
+      checkmailer(current_user.id, @record.escrow_id, @record.id, mychange, oldchange, recescrow)
+    end
+  
   end
 
-  def checkmailer(efrom, eto, recordid, mychange, oldchange)
+  def checkmailer(efrom, eto, recordid, mychange, oldchange, newchange = nil)
     if !eto.blank?
+      temptime = Time.now
       record = Record.find(recordid)
       profile = Profile.find(eto)
-      if mychange[0,5] == "Phase" 
-        if record.phasemail == true
-          UserMailer.record_email(efrom, eto, recordid, mychange, oldchange).deliver#phase_record_email(efrom, eto, recordid, mychange, oldchange).deliver
+      if User.exists?(efrom)
+        uprofile = User.find(efrom).profile
+        if uprofile.name.blank?
+          fromname = uprofile.email
+        else
+          fromname = uprofile.name
         end
-        if profile.phasemail == true
-          UserMailer.profile_email(efrom, eto, recordid, mychange, oldchange).deliver#phase_profile_email(efrom, eto, recordid, mychange, oldchange).deliver
+      else  
+        fromname = "Unknown"
+      end
+
+      if (mychange[0,5] == "Phase" && profile.phasemail == true) || (mychange[0,16] == "Progression Step" && profile.progressmail == true)
+        if oldchange = "'Done'"
+          newname = "'Not Done'"
+        else
+          newname = "'Done'"
         end
-      elsif mychange[0,16] == "Progression Step"
-        if record.progressmail == true 
-          UserMailer.record_email(efrom, eto, recordid, mychange, oldchange).deliver#progression_record_email(efrom, eto, recordid, mychange, oldchange).deliver
-        end
-        if profile.progressmail == true
-          UserMailer.profile_email(efrom, eto, recordid, mychange, oldchange).deliver#progression_profile_email(efrom, eto, recordid, mychange, oldchange).deliver
-        end
+        subject = "Progress made on " and record.firstname and " " and record.lastname and "'s Loan"
+        message = fromname + " changed " + record.firstname + " " + record.lastname + "'s " + mychange + " from " + oldchange + " to " +  newname + " "+ temptime.strftime("on %m/%d/%Y") + " " + temptime.strftime("at %l:%M%p") +"."
       else #progress or assignment 
-        if profile.assignmail == true
-          UserMailer.profile_email(efrom, eto, recordid, mychange, oldchange).deliver#profile_email(efrom, eto, recordid, mychange, oldchange).deliver
+        if mychange == "Progress"
+          subject = "Progress Update"
+          message = fromname + " changed " + record.firstname + " " + record.lastname + "'s " + mychange + " from " + record.progress + " to " +  newchange + " "+ temptime.strftime("on %m/%d/%Y") + " " + temptime.strftime("at %l:%M%p") +"."
+        else
+          if profile.assignmail == true
+            if mychange == "Assigned Loan Officer"
+              subject = "Assignment Change"
+              message = fromname + " changed " + record.firstname + " " + record.lastname + "'s " + mychange + " from " + record.loanofficer_id + " to " +  newchange + " "+ temptime.strftime("on %m/%d/%Y") + " " + temptime.strftime("at %l:%M%p") +"."
+            elsif mychange == "Assigned Processor"
+              subject = "Assignment Change"
+              message = fromname + " changed " + record.firstname + " " + record.lastname + "'s " + mychange + " from " + record.processor_id + " to " +  newchange + " "+ temptime.strftime("on %m/%d/%Y") + " " + temptime.strftime("at %l:%M%p") +"."
+            elsif mychange == "Assigned Marketer"
+              subject = "Assignment Change"
+              message = fromname + " changed " + record.firstname + " " + record.lastname + "'s " + mychange + " from " + record.marketer_id + " to " +  newchange + " "+ temptime.strftime("on %m/%d/%Y") + " " + temptime.strftime("at %l:%M%p") +"."
+            elsif mychange == "Assigned Realtor"
+              subject = "Assignment Change"
+              message = fromname + " changed " + record.firstname + " " + record.lastname + "'s " + mychange + " from " + record.real_id + " to " +  newchange + " "+ temptime.strftime("on %m/%d/%Y") + " " + temptime.strftime("at %l:%M%p") +"."
+            elsif mychange == "Assigned Escrow Agent"
+              subject = "Assignment Change"
+              message = fromname + " changed " + record.firstname + " " + record.lastname + "'s " + mychange + " from " + record.escrow_id + " to " +  newchange + " "+ temptime.strftime("on %m/%d/%Y") + " " + temptime.strftime("at %l:%M%p") +"."
+            end
+          end
         end
+      end
+      if !subject.blank? && !message.blank?
+        UserMailer.send_simple(profile.name, profile.email, subject, message)
       end
     end
   end
+  
+
+  def checkclientmailer(efrom, eto, recordid, mychange, oldchange, newchange = nil)
+    if !recordid.blank?
+      record = Record.find(recordid)
+      profile = Profile.find(eto)
+      if User.exists?(efrom)
+        uprofile = User.find(efrom).profile
+        if uprofile.name.blank?
+          fromname = uprofile.email
+        else
+          fromname = uprofile.name
+        end
+      else  
+        fromname = "Unknown"
+      end
+
+      if (mychange[0,5] == "Phase" && record.phasemail == true) || (mychange[0,16] == "Progression Step" && record.progressmail == true)
+
+        if oldchange = "'Done'"
+          newname = "'Not Done'"
+        else
+          newname = "'Done'"
+        end
+        temptime = Time.now
+        subject = "Progress has been made on " and record.firstname and " " and record.lastname and "'s Loan" #progress made on your loan!
+        message = fromname + " changed " + record.firstname + " " + record.lastname + "'s " + mychange + " from " + newname + " to " + oldchange + " "+ temptime.strftime("on %m/%d/%Y") + " " + temptime.strftime("at %l:%M%p") +"."
+        UserMailer.send_simple(record.firstname + " " + record.lastname, record.email, subject, message)
+      else #progress or assignment 
+      end
+
+    end
+  end
+
 
   def addstep
     myrecord = Record.find(params[:id])
-    notificationprocess(myrecord.id, myrecord.loanofficer_id, myrecord.processor_id, params[:progression_id], "progression") 
+    notificationprocess(myrecord.id, myrecord.loanofficer_id, myrecord.processor_id, myrecord.marketer_id, myrecord.real_id, myrecord.escrow_id, params[:progression_id], "progression") 
    
     #create step
     Step.where(record_id: params[:id], progression_id: params[:progression_id]).first_or_create
@@ -362,7 +466,7 @@ class RecordsController < ApplicationController
       end
     end 
     if phasecomplete == true
-      notificationprocess(myrecord.id, myrecord.loanofficer_id, myrecord.processor_id, myphase.id, "phase") 
+      notificationprocess(myrecord.id, myrecord.loanofficer_id, myrecord.processor_id, myrecord.marketer_id, myrecord.real_id, myrecord.escrow_id, myphase.id, "phase") 
     end
 
     redirect_to edit_record_path(params[:id])
@@ -371,7 +475,7 @@ class RecordsController < ApplicationController
   
   def removestep
     myrecord = Record.find(params[:id])
-    notificationprocess(myrecord.id, myrecord.loanofficer_id, myrecord.processor_id, params[:progression_id]) 
+    notificationprocess(myrecord.id, myrecord.loanofficer_id, myrecord.processor_id, myrecord.marketer_id, myrecord.real_id, myrecord.escrow_id, params[:progression_id]) 
    
     Step.where(record_id: params[:id], progression_id: params[:progression_id]).destroy_all
     redirect_to edit_record_path(params[:id])

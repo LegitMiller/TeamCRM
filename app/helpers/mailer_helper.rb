@@ -1,5 +1,5 @@
 module MailerHelper
-	 def getname(myid, noclass = nil)
+	def getname(myid, noclass = nil)
   	if User.exists?(myid)
   		if noclass == true
 				myclass = ''
@@ -16,11 +16,11 @@ module MailerHelper
   		"none"
 	  end
   end
-	 def gettextname(myid)
-  	if User.exists?(myid)
+	def gettextname(myid)
+		if User.exists?(myid)
     	uprofile = User.find(myid).profile
 	    if uprofile.name.blank?
-	      profile.email
+	      uprofile.email
 	    else
 	      uprofile.name
 	    end

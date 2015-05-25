@@ -19,12 +19,21 @@
                 <% if notification.changetype == "Progress" %>
                   <% oldname = notification.change %>
                   <% newname = Record.find(notification.record_id).progress %>
+                <% elsif notification.changetype == "Assigned Loan Officer" %>
+                  <% oldname = getname notification.change %>
+                  <% newname = getname Record.find(notification.record_id).loanofficer_id %>                
                 <% elsif notification.changetype == "Assigned Processor" %>
                   <% oldname = getname notification.change %>
                   <% newname = getname Record.find(notification.record_id).processor_id %>
-                <% elsif notification.changetype == "Assigned Loan Officer" %>
+                <% elsif notification.changetype == "Assigned Marketer" %>
                   <% oldname = getname notification.change %>
-                  <% newname = getname Record.find(notification.record_id).loanofficer_id %>
+                  <% newname = getname Record.find(notification.record_id).marketer_id %>
+                <% elsif notification.changetype == "Assigned Realtor" %>
+                  <% oldname = getname notification.change %>
+                  <% newname = getname Record.find(notification.record_id).real_id %>
+                <% elsif notification.changetype == "Assigned Escrow Agent" %>
+                  <% oldname = getname notification.change %>
+                  <% newname = getname Record.find(notification.record_id).escrow_id %>
                 <% else %>
                   <% oldname = notification.change %>
                   <% if oldname == "'Done'" %>

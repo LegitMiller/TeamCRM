@@ -26,7 +26,7 @@
       <th><%= sortable "firstname", "Frist Name"%></th>
       <th><%= sortable "lastname", "Last Name" %></th>
       <!--<th><%= sortable "receivedate", " Age" %></th>-->
-      <th><%= sortable "followupdate", "Followup" %></th>
+      <th><%= sortable "updated_at", "Updated" %></th>
       <th><%= sortable "progress", "Progress" %></th>
       <th><%= sortable "detailedprogress", "Detailed Progress" %></th> 
       <th><%= sortable "loanofficer_id", "Loan Officer" %></th>
@@ -40,13 +40,13 @@
   <tbody> 
     <% @records.each do |record| %>
       <% if record.progress != "On Hold" and record.progress != "Completed" and record.progress != "Dropped" and record.progress != "Unknown" %>
-       <!--<tr data-link="<%= edit_record_path(record) %>">-->
-        <% if !record.followupdate.blank? %>
-          <% if record.followupdate.to_date == Date.today %>
+      <% myrecdate = getupdated(record) || nil %>
+        <% if !myrecdate.blank? %>
+          <% if myrecdate.to_date >= Date.today-2 %>
             <% @followupwithme = "success" %> 
-          <% elsif record.followupdate.to_date == Date.today-1 %>
+          <% elsif myrecdate.to_date >= Date.today-6 %>
             <% @followupwithme = "warning" %> 
-          <% elsif record.followupdate.to_date <= Date.today-2 %>
+          <% elsif myrecdate.to_date <= Date.today-7 %>
             <% @followupwithme = "danger" %> 
           <% else %>
             <% @followupwithme = "" %>
@@ -56,23 +56,11 @@
         <% end %>
         
         <%= content_tag :tr, class: "#{@followupwithme}" do -%> 
-        
 
           <td><%= correctlink record, record.firstname %></td>
           <td><%= correctlink record, record.lastname %></td>
-          <!--<td>
-            <% if !record.receivedate.blank? %>
-              <%= time_ago_in_words record.receivedate %>
-            <% else %>
-              <%= record.receivedate %>
-            <% end %>
-          </td>-->
           <td>
-            <% if !record.followupdate.blank? %>
-              <%= time_ago_in_words record.followupdate %>
-            <% else %>
-              <%= record.followupdate %>
-            <% end %>
+            <%= time_ago_in_words(myrecdate) %>
           </td>
           <td><%= record.progress %></td>          
           <td><%= getpname record.detailedprogress %></td>
@@ -99,7 +87,7 @@
     <tr>
       <th><%= sortable "firstname", "Frist Name"%></th>
       <th><%= sortable "lastname", "Last Name" %></th>
-      <th><%= sortable "receivedate", "Record Age" %></th>
+      <th><%= sortable "updated_at", "updated_at" %></th>
       <th><%= sortable "progress", "Progress" %></th> 
       <th><%= sortable "detailedprogress", "Progress" %></th>       
       <th><%= sortable "loanofficer_id", "Loan Officer" %></th>
@@ -115,13 +103,7 @@
         <tr>
           <td><%= correctlink record, record.firstname %></td>
           <td><%= correctlink record, record.lastname %></td>
-          <td>
-            <% if !record.receivedate.blank? %>
-              <%= time_ago_in_words record.receivedate %>
-            <% else %>
-              <%= record.receivedate %>
-            <% end %>
-          </td>
+          <td><%= time_ago_in_words(getupdated record) %></td>
           <td><%= record.progress %></td>      
           <td><%= getpname record.detailedprogress %></td>
           <td><%= getname record.loanofficer_id %></td>

@@ -133,11 +133,26 @@ class ProfilesController < ApplicationController
       current_user.profile.update_attributes :status => "free"
     end
     
-   UserMailer.welcome_email(current_user.profile).deliver
-    
+   #UserMailer.welcome_email(current_user.profile).deliver
+
+      if User.exists?(1)
+        uprofile = User.find(1).profile
+        if uprofile.name.blank?
+          fromname = uprofile.email
+        else
+          fromname = uprofile.name
+        end
+      else  
+        fromname = "none"
+      end
+
+    temptime = Time.now
+    subject = "Progress made on " + Record.find(1).firstname + " " + Record.find(1).lastname + "'s Loan"
+    message = fromname + " changed " + Record.find(1).firstname + " " + Record.find(1).lastname + "'s " + "progression step 1" + " from " + "'Not Done'" + " to " +  "'Done'" + " "+ temptime.strftime("on %m/%d/%Y") + " " + temptime.strftime("at %l:%M%p") +"."
+    #UserMailer.send_simple("Jordan Miller", "jordan.kay@gmail.com", subject, message) 
+    UserMailer.send_simple_message
     redirect_to root_path
   end
-
 
   def resetpassword
     if current_user.profile.title == "master"

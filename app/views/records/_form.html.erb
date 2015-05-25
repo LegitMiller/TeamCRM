@@ -46,40 +46,39 @@
         <%= f.label "Progress" %>&nbsp
         <%= f.select :progress, options_for_select([["New", "New"]]), {:selected => params['new']}, {:class => "btn btn-default btn-lg dropdown-toggle"} %>
       </div>
-      <div class="col-xs-6 col-sm-3">
+      <div class="col-xs-6 col-sm-4">
         <div class="input-group">
           <div class="input-group-addon">Loan Officer </div>
           <%= f.collection_select :loanofficer_id, @listoflos, :user_id, :name, {prompt: false}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control"} %>
         </div>
       </div>
-      <div class="col-xs-6 col-sm-3">
+      <div class="col-xs-6 col-sm-4">
         <div class="input-group">
           <div class="input-group-addon">Processor </div>
           <%= f.collection_select :processor_id, @listofpros, :user_id, :name, {prompt: false}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control"} %>
         </div>
       </div>
-      <div class="col-xs-6 col-sm-3">
+      <div class="col-xs-6 col-sm-4">
         <div class="input-group">
           <div class="input-group-addon">Marketer </div>
           <%= f.collection_select :marketer_id, @listofmars, :user_id, :name, {prompt: false}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control"} %>
         </div>
       </div>
-      <div class="col-xs-6 col-sm-3">
+      <div class="col-xs-6 col-sm-4">
         <div class="input-group">
           <div class="input-group-addon">Realtor </div>
           <%= f.collection_select :real_id, @listofRA, :user_id, :name, {prompt: false}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control"} %>
         </div>
       </div>
-      <div class="col-xs-6 col-sm-3">
+      <div class="col-xs-6 col-sm-4">
         <div class="input-group">
           <div class="input-group-addon">Escrow Officer </div>
           <%= f.collection_select :escrow_id, @listofEO, :user_id, :name, {prompt: false}, { :class => "btn btn-default btn-lg dropdown-toggle btn-lg input-lg form-control"} %>
         </div>
       </div>
 
-      <div class="col-xs-12 col-sm-12">
+      <div class="col-xs-12 col-sm-4">
         <div class="actions">
-          <br />
           <%= f.submit "Submit", :class=> "btn btn-info btn-lg pull-right" %>
         </div>
       </div>

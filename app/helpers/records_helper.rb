@@ -3,7 +3,7 @@ module RecordsHelper
 		if rec.nil?
 		 	nil
 		 else
-		 	if current_user.id == record.loanofficer_id or current_user.id == record.processor_id or current_user.profile.title == "admin" or current_user.profile.title == "master" or current_user.id == record.real_id or current_user.id == record.escrow_id or current_user.id == record.marketer_id
+		 	if current_user.id == record.loanofficer_id or current_user.id == record.processor_id or current_user.profile.title == "admin" or current_user.profile.title == "master" or current_user.id == record.marketer_id
 		 		if record.firstname == rec
 		 			link_to	rec, edit_record_path(record), :class => 'btn btn-default btn-xs'
 		 		else

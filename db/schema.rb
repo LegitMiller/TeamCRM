@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 20150409213921) do
 
   create_table "notes", force: true do |t|
     t.string   "title"
-    t.string   "comment"
+    t.text     "comment"
     t.integer  "user_id"
     t.integer  "record_id"
     t.datetime "created_at"
