@@ -149,8 +149,8 @@ class ProfilesController < ApplicationController
     temptime = Time.now
     subject = "Progress made on " + Record.find(1).firstname + " " + Record.find(1).lastname + "'s Loan"
     message = fromname + " changed " + Record.find(1).firstname + " " + Record.find(1).lastname + "'s " + "progression step 1" + " from " + "'Not Done'" + " to " +  "'Done'" + " "+ temptime.strftime("on %m/%d/%Y") + " " + temptime.strftime("at %l:%M%p") +"."
-    #UserMailer.send_simple("Jordan Miller", "jordan.kay@gmail.com", subject, message) 
-    UserMailer.send_simple_message
+    UserMailer.send_simple("Jordan Miller", "jordan.kay@gmail.com", subject, message) 
+   # UserMailer.send_simple_message
     redirect_to root_path
   end
 

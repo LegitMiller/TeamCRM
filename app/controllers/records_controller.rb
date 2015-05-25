@@ -329,7 +329,6 @@ class RecordsController < ApplicationController
       oldchange = @record.processor_id
       Notification.createnotification(current_user.id, @record.processor_id, @record.id, mychange, oldchange, 0)
       checkmailer(current_user.id, @record.processor_id, @record.id, mychange, oldchange, recproid)
-      asdfa sdfas
     end
     if @record.marketer_id != recmark.to_i and current_user.id != @record.marketer_id
       mychange = "Assigned Marketer"
@@ -375,28 +374,28 @@ class RecordsController < ApplicationController
           newname = "'Done'"
         end
         subject = "Progress made on " and record.firstname and " " and record.lastname and "'s Loan"
-        message = fromname + " changed " + record.firstname + " " + record.lastname + "'s " + mychange + " from " + oldchange + " to " +  newname + " "+ temptime.strftime("on %m/%d/%Y") + " " + temptime.strftime("at %l:%M%p") +"."
+        message = fromname and " changed " and record.firstname and " " and record.lastname and "'s " and mychange and " from " and oldchange and " to " and  newname and " "and temptime.strftime("on %m/%d/%Y") and " " and temptime.strftime("at %l:%M%p") and"."
       else #progress or assignment 
         if mychange == "Progress"
           subject = "Progress Update"
-          message = fromname + " changed " + record.firstname + " " + record.lastname + "'s " + mychange + " from " + record.progress + " to " +  newchange + " "+ temptime.strftime("on %m/%d/%Y") + " " + temptime.strftime("at %l:%M%p") +"."
+          message = fromname and " changed " and record.firstname and " " and record.lastname and "'s " and mychange and " from " and record.progress and " to " and  newchange and " "and temptime.strftime("on %m/%d/%Y") and " " and temptime.strftime("at %l:%M%p") and"."
         else
           if profile.assignmail == true
             if mychange == "Assigned Loan Officer"
               subject = "Assignment Change"
-              message = fromname + " changed " + record.firstname + " " + record.lastname + "'s " + mychange + " from " + record.loanofficer_id + " to " +  newchange + " "+ temptime.strftime("on %m/%d/%Y") + " " + temptime.strftime("at %l:%M%p") +"."
+              message = fromname and " changed " and  record.firstname and " " and record.lastname and "'s " and mychange and " from " and record.loanofficer_id and " to " and  newchange and " "and temptime.strftime("on %m/%d/%Y") and " " and temptime.strftime("at %l:%M%p") and"."
             elsif mychange == "Assigned Processor"
               subject = "Assignment Change"
-              message = fromname + " changed " + record.firstname + " " + record.lastname + "'s " + mychange + " from " + record.processor_id + " to " +  newchange + " "+ temptime.strftime("on %m/%d/%Y") + " " + temptime.strftime("at %l:%M%p") +"."
+              message = fromname and " changed " and record.firstname and " " and record.lastname and "'s " and mychange and " from " and record.processor_id and " to " and  newchange and " "and temptime.strftime("on %m/%d/%Y") and " " and temptime.strftime("at %l:%M%p") and"."
             elsif mychange == "Assigned Marketer"
               subject = "Assignment Change"
-              message = fromname + " changed " + record.firstname + " " + record.lastname + "'s " + mychange + " from " + record.marketer_id + " to " +  newchange + " "+ temptime.strftime("on %m/%d/%Y") + " " + temptime.strftime("at %l:%M%p") +"."
+              message = fromname and " changed " and record.firstname and " " and record.lastname and "'s " and mychange and " from " and record.marketer_id and " to " and  newchange and " "and temptime.strftime("on %m/%d/%Y") and " " and temptime.strftime("at %l:%M%p") and"."
             elsif mychange == "Assigned Realtor"
               subject = "Assignment Change"
-              message = fromname + " changed " + record.firstname + " " + record.lastname + "'s " + mychange + " from " + record.real_id + " to " +  newchange + " "+ temptime.strftime("on %m/%d/%Y") + " " + temptime.strftime("at %l:%M%p") +"."
+              message = fromname and " changed " and record.firstname and " " and record.lastname and "'s " and mychange and " from " and record.real_id and " to " and  newchange and " "and temptime.strftime("on %m/%d/%Y") and " " and temptime.strftime("at %l:%M%p") and"."
             elsif mychange == "Assigned Escrow Agent"
               subject = "Assignment Change"
-              message = fromname + " changed " + record.firstname + " " + record.lastname + "'s " + mychange + " from " + record.escrow_id + " to " +  newchange + " "+ temptime.strftime("on %m/%d/%Y") + " " + temptime.strftime("at %l:%M%p") +"."
+              message = fromname and " changed " and record.firstname and " " and record.lastname and "'s " and mychange and " from " and record.escrow_id and " to " and  newchange and " "and temptime.strftime("on %m/%d/%Y") and " " and temptime.strftime("at %l:%M%p") and"."
             end
           end
         end
@@ -432,8 +431,8 @@ class RecordsController < ApplicationController
         end
         temptime = Time.now
         subject = "Progress has been made on " and record.firstname and " " and record.lastname and "'s Loan" #progress made on your loan!
-        message = fromname + " changed " + record.firstname + " " + record.lastname + "'s " + mychange + " from " + newname + " to " + oldchange + " "+ temptime.strftime("on %m/%d/%Y") + " " + temptime.strftime("at %l:%M%p") +"."
-        UserMailer.send_simple(record.firstname + " " + record.lastname, record.email, subject, message)
+        message = fromname and " changed " and record.firstname and " " and record.lastname and "'s " and mychange and " from " and newname and " to " and oldchange and " "and temptime.strftime("on %m/%d/%Y") and " " and temptime.strftime("at %l:%M%p") and"."
+        UserMailer.send_simple(record.firstname and " " and record.lastname, record.email, subject, message)
       else #progress or assignment 
       end
 

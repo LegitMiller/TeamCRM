@@ -35,13 +35,13 @@ class UserMailer < ActionMailer::Base
 	end
 
 	def send_simple(name, address, subject, message)
-		#if !address.blank?
-		#  RestClient.post "https://api:key-b60921c9cf56556674d5741dc09de536"\
-		#  "@api.mailgun.net/v3/sandboxa8ea094b71f240bbadecf69c14fe8456.mailgun.org/messages",
-		#  :from => "SuperiorLendingCRM <postmaster@sandboxa8ea094b71f240bbadecf69c14fe8456.mailgun.org>",
-		#  :to => name + " <" + address + ">",
-		#  :subject => subject,
-		#  :text => message
-	  #end
+		if !address.blank? && !name.blank? && !subject.blank? && !message.blank? && address =~ /^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$/
+		  RestClient.post "https://api:key-b60921c9cf56556674d5741dc09de536"\
+		  "@api.mailgun.net/v3/sandboxa8ea094b71f240bbadecf69c14fe8456.mailgun.org/messages",
+		  :from => "SuperiorLendingCRM <postmaster@sandboxa8ea094b71f240bbadecf69c14fe8456.mailgun.org>",
+		  :to => name + " <" + address + ">",
+		  :subject => subject,
+		  :text => message
+	  end
 	end
 end
