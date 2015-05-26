@@ -208,7 +208,7 @@ class RecordsController < ApplicationController
     respond_to do |format|
       if @record.save
         #format.html { redirect_to @record, notice: 'Record was successfully created.' }
-        format.html { redirect_to records_path, notice: 'Record was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Record was successfully created.' }
         #format.json { render :show, status: :created, location: @record }
       else
         format.html { render :new }
@@ -227,7 +227,7 @@ class RecordsController < ApplicationController
 
     respond_to do |format|
       if @record.update(record_params)
-        format.html { redirect_to records_path, notice: 'Record was successfully updated.' }
+        format.html { redirect_to root_path, notice: 'Record was successfully updated.' }#records_path
         format.json { render :show, status: :ok, location: @record }
       else
         format.html { render :edit }
@@ -254,7 +254,7 @@ class RecordsController < ApplicationController
       @record.update_attributes :marketer_id => "0"
     end
     respond_to do |format|
-      format.html { redirect_to records_path, notice: 'Record was successfully destroyed.' }
+      format.html { redirect_to root_path, notice: 'Record was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

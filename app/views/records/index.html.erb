@@ -31,6 +31,7 @@
       <th><%= sortable "detailedprogress", "Detailed Progress" %></th> 
       <th><%= sortable "loanofficer_id", "Loan Officer" %></th>
       <th><%= sortable "processor_id", "Processor" %></th>
+      <th><%= sortable "real_id", "Realtor" %></th>
       <% if current_user.profile.title == "master" %>
         <th colspan="1"></th>
       <% end %>
@@ -66,6 +67,7 @@
           <td><%= getpname record.detailedprogress %></td>
           <td><%= getname record.loanofficer_id %></td>
           <td><%= getname record.processor_id %></td>
+          <td><%= getname record.real_id %></td>  
           <% if current_user.profile.title == "master" %>
             <td><%= link_to image_tag("trash.png", size: "18x20", alt: "Remove", "style"=>"padding:2px"), record, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-default btn-xs' %></td>
           <% end %>
@@ -92,7 +94,10 @@
       <th><%= sortable "detailedprogress", "Progress" %></th>       
       <th><%= sortable "loanofficer_id", "Loan Officer" %></th>
       <th><%= sortable "processor_id", "Processor" %></th>
-      <th colspan="1"></th>
+      <th><%= sortable "real_id", "Realtor" %></th>
+      <% if current_user.profile.title == "master" || current_user.profile.title == "admin" %>
+        <th colspan="1"></th>
+      <% end %>
     </tr>
   </thead>
 
@@ -108,7 +113,8 @@
           <td><%= getpname record.detailedprogress %></td>
           <td><%= getname record.loanofficer_id %></td>
           <td><%= getname record.processor_id %></td>
-          <% if current_user.profile.title == "admin" || current_user.id == record.loanofficer_id || current_user.id == record.processor_id %>
+          <td><%= getname record.real_id %></td>  
+          <% if current_user.profile.title == "admin" || current_user.id == record.loanofficer_id || current_user.id == record.processor_id || current_user.profile.title == "master" %>
             <td><%= link_to 'Destroy', record, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-default btn-xs' %></td>
           <% end %>
         </tr>
