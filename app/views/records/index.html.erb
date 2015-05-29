@@ -44,10 +44,12 @@
       <% myrecdate = getupdated(record) || nil %>
         <% if !myrecdate.blank? %>
           <% if myrecdate.to_date >= Date.today-2 %>
-            <% @followupwithme = "success" %> 
+            <% @followupwithme = "" %> 
           <% elsif myrecdate.to_date >= Date.today-6 %>
+            <% @followupwithme = "success" %> 
+          <% elsif myrecdate.to_date >= Date.today-10 %>
             <% @followupwithme = "warning" %> 
-          <% elsif myrecdate.to_date <= Date.today-7 %>
+          <% elsif myrecdate.to_date <= Date.today-11 %>
             <% @followupwithme = "danger" %> 
           <% else %>
             <% @followupwithme = "" %>
