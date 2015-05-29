@@ -1,17 +1,29 @@
 module RecordsHelper
-	def correctlink(record, rec = nil)
+	def correctlink(record, rec = nil, recl = nil)
 		if rec.nil?
 		 	nil
-		 else
+		else
 		 	if current_user.id == record.loanofficer_id or current_user.id == record.processor_id or current_user.profile.title == "admin" or current_user.profile.title == "master" or current_user.id == record.marketer_id
 		 		if record.firstname == rec
-		 			link_to	rec, edit_record_path(record), :class => 'btn btn-default btn-xs'
+		 			if !recl.nil?
+		 				link_to	rec + " " + recl, edit_record_path(record), :class => 'btn btn-default btn-xs'  
+	 				else
+	 					link_to rec, edit_record_path(record), :class => 'btn btn-default btn-xs'
+		 			end
 		 		else
-					link_to	rec, edit_record_path(record)
+			 		if !recl.nil?
+			 			link_to	rec + " " + recl, edit_record_path(record) 
+		 			else
+		 				link_to rec, edit_record_path(record)
+					end
 				end
 		 	else
-		 		link_to	rec, record
-		 	end
+			 	if !recl.nil? 
+			 		link_to	rec + " " + recl, record
+			 	else
+			 		link_to	rec, record
+			 	end
+			end
 		end
   end
 
