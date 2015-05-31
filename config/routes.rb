@@ -53,6 +53,10 @@ Rails.application.routes.draw do
   get "records_addstep" => "records#addstep"
 
   get "records_removestep" => "records#removestep"
+  
+  get "inactive_content" => "records#inactive_content"
+
+  #get 'records/inactive'
 
   root 'home#index'
 

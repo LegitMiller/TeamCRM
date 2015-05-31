@@ -17,11 +17,7 @@
 <br />
 <br />
 <hr />
-<% if @record.notes.count >= 50 %>
-  <%= link_to "See Notes History", recrod_path(@record), class: 'btn btn-lg btn-default', "data-no-turbolink"=>"true" %>
-<% else %>
-  <%= render 'nos' %>
-<% end %>
+<%= render 'nos' %>
 <script>
 function textAreaAdjust(o) {
     o.style.height = "1px";

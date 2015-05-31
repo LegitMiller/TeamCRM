@@ -1,5 +1,5 @@
 <h1>Progress</h1>
-
+    <h4>Total Phases: <%= @phases.count %></h4>
 <br />
 <% @phases.order(:phase_id).each do |phase| %>
   <%= render partial: "phase", locals: { phase: phase } %>

@@ -79,51 +79,15 @@
   </tbody>
 </table>
 
+
+
 <br />
 <br />
 <br />
 <hr />
-<p onclick="showClosedTable()", class="btn btn-default btn-lg"> Inactive Client List</p>
-<br>
-
-<table class="table table-hover" id="deadrecords" style="visibility:hidden">
-  <thead>
-    <tr>
-      <th><%= sortable "firstname", "Frist Name"%></th>
-      <th><%= sortable "lastname", "Last Name" %></th>
-      <th><%= sortable "updated_at", "updated_at" %></th>
-      <th><%= sortable "progress", "Progress" %></th> 
-      <th><%= sortable "detailedprogress", "Progress" %></th>       
-      <th><%= sortable "loanofficer_id", "Loan Officer" %></th>
-      <th><%= sortable "processor_id", "Processor" %></th>
-      <th><%= sortable "real_id", "Realtor" %></th>
-      <% if current_user.profile.title == "master" || current_user.profile.title == "admin" %>
-        <th colspan="1"></th>
-      <% end %>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @records.each do |record| %>
-      <% if record.progress == "On Hold" or record.progress == "Completed" or record.progress == "Dropped" or record.progress == "Unknown" %>
-       <!--<tr data-link="<%= edit_record_path(record) %>">-->
-        <tr>
-          <td><%= correctlink record, record.firstname %></td>
-          <td><%= correctlink record, record.lastname %></td>
-          <td><%= time_ago_in_words(getupdated record) %></td>
-          <td><%= record.progress %></td>      
-          <td><%= getpname record.detailedprogress %></td>
-          <td><%= getname record.loanofficer_id %></td>
-          <td><%= getname record.processor_id %></td>
-          <td><%= getname record.real_id %></td>  
-          <% if current_user.profile.title == "admin" || current_user.id == record.loanofficer_id || current_user.id == record.processor_id || current_user.profile.title == "master" %>
-            <td><%= link_to 'Destroy', record, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-default btn-xs' %></td>
-          <% end %>
-        </tr>
-      <% end %>
-    <% end %>
-  </tbody>
-</table>
+<div id = "ShowInactive">
+<%= link_to "Show Inactive Clients", inactive_content_path, :remote => true, :class => "btn btn-default btn-lg" %>
+</div>
 
 <% if current_user.profile.title == "admin" || current_user.profile.title == "master" %>
 <br />
@@ -148,6 +112,7 @@
     </div>
   </div>
 <% end %>
+
 
 <script>
 function showClosedTable() {

@@ -55,13 +55,27 @@
 	              <%= distance_of_time_in_words(rec.created_at, Time.now) %>
 	            </td>
 	            <td>
-	              <% if rec.loanofficer_id == @profile.id %>
-	              	<%= getname rec.processor_id %>
-	              <% elsif rec.processor_id == @profile.id %>
-	              	<%= getname rec.loanofficer_id %>
-	              <% elsif rec.marketer_id == @profile.id %>
-	              	<%= getname rec.loanofficer_id %>
-	              <% end %>
+	            	<% if @profile.email == "john@superiorlending.net" %>
+	              	<% if rec.splitpay %>
+		              	Split with Halvor
+		              <% else %>
+		              	<%= getname rec.processor_id %>
+		              <% end %>
+		            <% elsif @profile.email == "halvor@superiorlending.net" %>
+	              	<% if rec.splitpay %>
+		              	Split with John
+		              <% else %>
+		              	<%= getname rec.processor_id %>
+		              <% end %>
+		            <% else %>
+		              <% if rec.loanofficer_id == @profile.id %>
+		              	<%= getname rec.processor_id %>
+		              <% elsif rec.processor_id == @profile.id %>
+		              	<%= getname rec.loanofficer_id %>
+		              <% elsif rec.marketer_id == @profile.id %>
+		              	<%= getname rec.loanofficer_id %>
+		              <% end %>
+                <% end %>
 	            </td>
 	            <td>
 	              <% if rec.loanofficer_id == @profile.id %>

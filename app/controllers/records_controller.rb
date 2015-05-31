@@ -55,7 +55,11 @@ class RecordsController < ApplicationController
       format.csv { send_data @records.to_csv } #render text: @records.to_csv }
     end
   end
-
+  
+  def inactive
+    @records = Record.order(sort_column + " " + sort_direction)
+  end
+  
   def import
     if current_user.profile.title == "admin" or current_user.profile.title == "master"
       Record.import(params[:file])
@@ -480,15 +484,22 @@ class RecordsController < ApplicationController
     redirect_to edit_record_path(params[:id])
   end
 
+  def inactive_content
+    @records = Record.all
+    respond_to do |format|               
+      format.js
+    end        
+  end 
+  
   private
 
-  def sort_column
-    Record.column_names.include?(params[:sort]) ? params[:sort] : "firstname"
-  end
-  
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-  end
+    def sort_column
+      Record.column_names.include?(params[:sort]) ? params[:sort] : "firstname"
+    end
+    
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
 
 
     # Use callbacks to share common setup or constraints between actions.
@@ -498,6 +509,6 @@ class RecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def record_params
-      params.require(:record).permit(:firstname, :lastname, :phone, :email, :raemail, :receivedate, :followupdate, :progress, :detailedprogress, :progressmail, :phasemail, :lopay, :propay, :jpay, :opay, :loanofficer_id, :processor_id, :marketer_id, :real_id, :escrow_id)
+      params.require(:record).permit(:firstname, :lastname, :phone, :email, :raemail, :receivedate, :followupdate, :progress, :detailedprogress, :progressmail, :phasemail, :lopay, :propay, :jpay, :opay, :splitpay, :loanofficer_id, :processor_id, :marketer_id, :real_id, :escrow_id)
     end
 end

@@ -106,6 +106,14 @@
               <%= f.number_field :opay, :class => 'text_field', :step => 0.01, :class => "input-lg form-control" %>
             </div>
           </div>
+          <div class="col-xs-8 col-sm-8">
+            <div class="input-group">
+              <label>
+                <%= f.check_box :splitpay, {:value => params[:splitpay], :class => "input-lg form-control"} %>
+                Team Deal?
+              </label>
+            </div>
+          </div>          
         <% end %>
       <% end %>
       <div class="clearfix visible-xs-block"></div>

@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 20150409213921) do
     t.float    "propay"
     t.float    "jpay"
     t.float    "opay"
+    t.boolean  "splitpay"
     t.integer  "loanofficer_id"
     t.integer  "processor_id"
     t.integer  "marketer_id"

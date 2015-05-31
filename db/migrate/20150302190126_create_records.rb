@@ -16,6 +16,7 @@ class CreateRecords < ActiveRecord::Migration
       t.float :propay
       t.float :jpay
       t.float :opay
+      t.boolean :splitpay      
       t.integer :loanofficer_id
       t.integer :processor_id
       t.integer :marketer_id
