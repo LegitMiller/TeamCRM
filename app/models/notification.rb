@@ -24,7 +24,7 @@ has_one :user
     CSV.foreach(file.path, headers: true) do |row|
       record = find_by_id(row["id"]) || new
       parameters = ActionController::Parameters.new(row.to_hash)
-      record.update(parameters.permit(:maker_id, :user_id, :thirdparty_id, :record_id, :changetype, :change))
+      record.update(parameters.permit(:maker_id, :user_id, :thirdparty_id, :record_id, :changetype, :change, :updated_at))
       record.save!
     end
   end

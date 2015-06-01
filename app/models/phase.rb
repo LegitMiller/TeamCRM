@@ -15,7 +15,7 @@ class Phase < ActiveRecord::Base
     CSV.foreach(file.path, headers: true) do |row|
       record = find_by_id(row["id"]) || new
       parameters = ActionController::Parameters.new(row.to_hash)
-      record.update(parameters.permit(:name, :phase_id))
+      record.update(parameters.permit(:name, :phase_id, :updated_at))
       record.save!
     end
   end

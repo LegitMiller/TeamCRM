@@ -15,7 +15,7 @@ class Step < ActiveRecord::Base
     CSV.foreach(file.path, headers: true) do |row|
       record = find_by_id(row["id"]) || new
       parameters = ActionController::Parameters.new(row.to_hash)
-      record.update(parameters.permit(:record_id, :progression_id))
+      record.update(parameters.permit(:record_id, :progression_id, :updated_at))
       record.save!
     end
   end
