@@ -16,46 +16,49 @@
           <tr>
             <td>
               <center>
-                <% if notification.changetype == "Progress" %>
-                  <% oldname = notification.change %>
-                  <% newname = Record.find(notification.record_id).progress %>
-                <% elsif notification.changetype == "Assigned Loan Officer" %>
-                  <% oldname = getname notification.change %>
-                  <% newname = getname Record.find(notification.record_id).loanofficer_id %>                
-                <% elsif notification.changetype == "Assigned Processor" %>
-                  <% oldname = getname notification.change %>
-                  <% newname = getname Record.find(notification.record_id).processor_id %>
-                <% elsif notification.changetype == "Assigned Marketer" %>
-                  <% oldname = getname notification.change %>
-                  <% newname = getname Record.find(notification.record_id).marketer_id %>
-                <% elsif notification.changetype == "Assigned Realtor" %>
-                  <% oldname = getname notification.change %>
-                  <% newname = getname Record.find(notification.record_id).real_id %>
-                <% elsif notification.changetype == "Assigned Escrow Agent" %>
-                  <% oldname = getname notification.change %>
-                  <% newname = getname Record.find(notification.record_id).escrow_id %>
-                <% else %>
-                  <% oldname = notification.change %>
-                  <% if oldname == "'Done'" %>
-                    <% newname = "'Not Done'" %>
-                  <% else %>
-                    <% newname = "'Done'" %>
-                  <% end %>
-                <% end %>
+                <% if !Record.where(:id => notification.record_id).blank? %>
 
-                <%= getname notification.maker_id, true %>
-                changed <%= link_to Record.find(notification.record_id).firstname + " " + Record.find(notification.record_id).lastname + "'s" , edit_record_path(notification.record_id), :class => 'btn btn-default btn-xs' %> <%= notification.changetype %>
-                from <%= oldname %>
-                to <%= newname %>
-                <!--<%= time_ago_in_words notification.created_at %> ago -->
-                <% temptime = notification.created_at-6.hours %>
-                <%= temptime.strftime("on %m/%d/%Y") %>
-                <%= temptime.strftime("at %l:%M%p")%>
+                  <% if notification.changetype == "Progress" %>
+                    <% oldname = notification.change %>
+                    <% newname = Record.find(notification.record_id).progress %>
+                  <% elsif notification.changetype == "Assigned Loan Officer" %>
+                    <% oldname = getname notification.change %>
+                    <% newname = getname Record.find(notification.record_id).loanofficer_id %>                
+                  <% elsif notification.changetype == "Assigned Processor" %>
+                    <% oldname = getname notification.change %>
+                    <% newname = getname Record.find(notification.record_id).processor_id %>
+                  <% elsif notification.changetype == "Assigned Marketer" %>
+                    <% oldname = getname notification.change %>
+                    <% newname = getname Record.find(notification.record_id).marketer_id %>
+                  <% elsif notification.changetype == "Assigned Realtor" %>
+                    <% oldname = getname notification.change %>
+                    <% newname = getname Record.find(notification.record_id).real_id %>
+                  <% elsif notification.changetype == "Assigned Escrow Agent" %>
+                    <% oldname = getname notification.change %>
+                    <% newname = getname Record.find(notification.record_id).escrow_id %>
+                  <% else %>
+                    <% oldname = notification.change %>
+                    <% if oldname == "'Done'" %>
+                      <% newname = "'Not Done'" %>
+                    <% else %>
+                      <% newname = "'Done'" %>
+                    <% end %>
+                  <% end %>
+
+                  <%= getname notification.maker_id, true %>
+                  changed <%= link_to Record.find(notification.record_id).firstname + " " + Record.find(notification.record_id).lastname + "'s" , edit_record_path(notification.record_id), :class => 'btn btn-default btn-xs' %> <%= notification.changetype %>
+                  from <%= oldname %>
+                  to <%= newname %>
+                  <!--<%= time_ago_in_words notification.created_at %> ago -->
+                  <% temptime = notification.created_at-6.hours %>
+                  <%= temptime.strftime("on %m/%d/%Y") %>
+                  <%= temptime.strftime("at %l:%M%p")%>
+                <% end %>
               </center>
             </td>
             <td>
               <center>
-                <%= link_to(image_tag("trash.png", size: "18x20", alt: "Remove", "style"=>"padding:2px"), notification, method: :delete, :class => "btn btn-default btn-xs", data: { confirm: 'Are you sure?' } ) %>
+                <%= link_to(image_tag("trash.png", size: "18x20", alt: "Remove", "style"=>"padding:2px"), notification, method: :delete, :class => "btn btn-default btn-xs") %>
               </center>
             </td>
           </tr>
