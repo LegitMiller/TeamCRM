@@ -231,7 +231,7 @@ class RecordsController < ApplicationController
 
     respond_to do |format|
       if @record.update(record_params)
-        format.html { redirect_to root_path, notice: 'Record was successfully updated.' }#records_path
+        format.html { redirect_to edit_record_path(@record), notice: 'Record was successfully updated.' }#records_path
         format.json { render :show, status: :ok, location: @record }
       else
         format.html { render :edit }

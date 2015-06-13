@@ -69,6 +69,7 @@ class ProfilesController < ApplicationController
 
     if current_user.profile.title == "admin"
       @recs = Record.all
+      @listoftitles.push(["Admin","admin"])
     end
 
     if current_user.profile.title == "master"

@@ -4,7 +4,7 @@
   <div class="col-xs-4 col-sm-4">
     <h1>
       <%= @profile.name %>
-      <% if current_user.profile.title == "master" %>
+      <% if current_user.profile.title == "master" || current_user.profile.title == "admin" %>
         <%= link_to "Edit", edit_profile_path(@profile), :class => "btn btn-default btn-md"%>
       <% end %>
     </h1>
