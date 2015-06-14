@@ -127,7 +127,7 @@ class ProfilesController < ApplicationController
     end
   end
 
-  def changestatus
+  def changestatus2
     if current_user.profile.status == "free"
       current_user.profile.update_attributes :status => "busy" #params[:id]#Profile.find(params[:id]).user_id)
     else
@@ -153,6 +153,36 @@ class ProfilesController < ApplicationController
     UserMailer.send_simple("Jordan Miller", "jordan.kay@gmail.com", subject, message) 
    # UserMailer.send_simple_message
     redirect_to root_path
+  end
+  
+  def changestatus
+    if current_user.profile.status == "free"
+      current_user.profile.update_attributes :status => "busy" #params[:id]#Profile.find(params[:id]).user_id)
+    else
+      current_user.profile.update_attributes :status => "free"
+    end
+    @record = Record.find(72)
+    
+    listofnewpeeps = []
+    
+    listofnewpeeps.push(Profile.find_by_id(@record.loanofficer_id)) if !Profile.find_by_id(@record.loanofficer_id).blank? 
+    listofnewpeeps.push(Profile.find_by_id(@record.processor_id)) if !Profile.find_by_id(@record.processor_id).blank? 
+    listofnewpeeps.push(Profile.find_by_id(@record.marketer_id)) if !Profile.find_by_id(@record.marketer_id).blank? 
+    listofnewpeeps.push(Profile.find_by_id(@record.real_id)) if !Profile.find_by_id(@record.real_id).blank? 
+    listofnewpeeps.push(Profile.find_by_id(@record.escrow_id)) if !Profile.find_by_id(@record.escrow_id).blank? 
+
+    Profile.where(:title => "admin").each do |prof|
+      listofnewpeeps.push(prof)
+    end
+    mytext = "listofnewpeeps"
+    listofnewpeeps.each do |peep|
+      if !peep.blank?
+        mytext = mytext + ":" + peep.id.to_s
+      end
+    end
+
+
+    redirect_to root_path, notice: mytext
   end
 
   def resetpassword

@@ -287,7 +287,7 @@ class RecordsController < ApplicationController
     senttoclient = false
 
     listofnewpeeps.each do |peep|
-      
+ 
       if mytype == "phase" 
         mychange = "Phase: " + Phase.find(recordprogress).name
         oldchange = "'Not Done'"
@@ -310,6 +310,7 @@ class RecordsController < ApplicationController
 
       #now that we've determined aspects of the notification, create the full notification.
       if !mychange.blank? and current_user.id != peep.id  
+
         Notification.createnotification(current_user.id, peep.id, @record.id, mychange, oldchange, 0)
         checkmailer(current_user.id, peep.id, @record.id, mychange, oldchange, recordprogress || "" )
 
@@ -322,37 +323,81 @@ class RecordsController < ApplicationController
     end
 
     #Send out Notifications to those who were removed from a record. Also send them an email automatically.
-    if @record.loanofficer_id != recloid.to_i and current_user.id != @record.loanofficer_id  
+
+    if @record.loanofficer_id != recloid.to_i and current_user.id != @record.loanofficer_id and !recloid.blank?
       mychange = "Assigned Loan Officer"
       oldchange = @record.loanofficer_id
-      Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange, 0)
+      newchange = recloid
+      Notification.createnotification(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange, newchange)
       checkmailer(current_user.id, @record.loanofficer_id, @record.id, mychange, oldchange, recloid)
     end
-    if @record.processor_id.to_i != recproid.to_i and current_user.id != @record.processor_id  
+    if @record.processor_id.to_i != recproid.to_i and current_user.id != @record.processor_id and current_user.id != recproid.to_i and !recproid.blank?
       mychange = "Assigned Processor"
       oldchange = @record.processor_id
-      Notification.createnotification(current_user.id, @record.processor_id, @record.id, mychange, oldchange, 0)
+      newchange = recproid
+      Notification.createnotification(current_user.id, @record.processor_id, @record.id, mychange, oldchange, newchange)
       checkmailer(current_user.id, @record.processor_id, @record.id, mychange, oldchange, recproid)
     end
-    if @record.marketer_id != recmark.to_i and current_user.id != @record.marketer_id
+    if @record.marketer_id != recmark.to_i and current_user.id != recmark.to_i and current_user.id != @record.marketer_id and !recmark.blank?
       mychange = "Assigned Marketer"
       oldchange = @record.marketer_id
-      Notification.createnotification(current_user.id, @record.marketer_id, @record.id, mychange, oldchange, 0)
+      newchange = recmark
+      Notification.createnotification(current_user.id, @record.marketer_id, @record.id, mychange, oldchange, newchange)
       checkmailer(current_user.id, @record.marketer_id, @record.id, mychange, oldchange, recmark)
     end
-    if @record.real_id != recreal.to_i  and current_user.id != @record.real_id
+    if @record.real_id != recreal.to_i and current_user.id != recreal.to_i and current_user.id != @record.real_id and !recreal.blank?
       mychange = "Assigned Realtor"
       oldchange = @record.real_id
-      Notification.createnotification(current_user.id, @record.real_id, @record.id, mychange, oldchange, 0)
+      newchange = recreal
+      Notification.createnotification(current_user.id, @record.real_id, @record.id, mychange, oldchange, newchange)
       checkmailer(current_user.id, @record.real_id, @record.id, mychange, oldchange, recreal)
     end
-    if @record.escrow_id != recescrow.to_i  and current_user.id != @record.escrow_id
+    if @record.escrow_id != recescrow.to_i and current_user.id != recescrow.to_i and current_user.id != @record.escrow_id and !recescrow.blank?
       mychange = "Assigned Escrow Agent"
       oldchange = @record.escrow_id
-      Notification.createnotification(current_user.id, @record.escrow_id, @record.id, mychange, oldchange, 0)
+      newchange = recescrow
+      Notification.createnotification(current_user.id, @record.escrow_id, @record.id, mychange, oldchange, newchange)
       checkmailer(current_user.id, @record.escrow_id, @record.id, mychange, oldchange, recescrow)
     end
-  
+    
+    #also notify the people who have been assigned to things.
+    if @record.loanofficer_id != recloid.to_i and current_user.id != recloid.to_i and !recloid.blank?
+      mychange = "Assigned Loan Officer"
+      oldchange = @record.loanofficer_id
+      newchange = recloid
+      Notification.createnotification(current_user.id, recloid, @record.id, mychange, oldchange, newchange)
+      checkmailer(current_user.id, recloid, @record.id, mychange, oldchange, recloid)
+    end
+    if @record.processor_id.to_i != recproid.to_i and current_user.id != @record.processor_id  and current_user.id != recproid.to_i and !recproid.blank?
+      mychange = "Assigned Processor"
+      oldchange = @record.processor_id
+      newchange = recproid
+      Notification.createnotification(current_user.id, recproid, @record.id, mychange, oldchange, newchange)
+      checkmailer(current_user.id, recproid, @record.id, mychange, oldchange, recproid)
+    end
+    if @record.marketer_id != recmark.to_i and current_user.id != @record.marketer_id and current_user.id != recmark.to_i and !recmark.blank?
+      mychange = "Assigned Marketer"
+      oldchange = @record.marketer_id
+      newchange = recmark
+      Notification.createnotification(current_user.id, recmark, @record.id, mychange, oldchange, newchange)
+      checkmailer(current_user.id, recmark, @record.id, mychange, oldchange, recmark)
+    end
+    if @record.real_id != recreal.to_i and current_user.id != @record.real_id and current_user.id != recreal.to_i and !recreal.blank?
+      mychange = "Assigned Realtor"
+      oldchange = @record.real_id
+      newchange = recreal
+      Notification.createnotification(current_user.id, recreal, @record.id, mychange, oldchange, newchange)
+      checkmailer(current_user.id, recreal, @record.id, mychange, oldchange, recreal)
+    end
+    if @record.escrow_id != recescrow.to_i and current_user.id != @record.escrow_id and current_user.id != recescrow.to_i and !recescrow.blank?
+      mychange = "Assigned Escrow Agent"
+      oldchange = @record.escrow_id
+      newchange = recescrow
+      Notification.createnotification(current_user.id,recescrow, @record.id, mychange, oldchange, newchange)
+      checkmailer(current_user.id, recescrow, @record.id, mychange, oldchange, recescrow)
+    end
+
+
   end
 
   def checkmailer(efrom, eto, recordid, mychange, oldchange, newchange = nil)
@@ -387,7 +432,7 @@ class RecordsController < ApplicationController
           if profile.assignmail == true
             if mychange == "Assigned Loan Officer"
               subject = "Assignment Change"
-              message = fromname + " changed " +  record.firstname + " " + record.lastname + "'s " + mychange + " from " + record.loanofficer_id.to_s + " to " +  newchange.to_s + " "+ temptime.strftime("on %m/%d/%Y") + " " + temptime.strftime("at %l:%M%p") +"."
+              message = fromname + " changed " +  record.firstname + " " + record.lastname + "'s " + mychange + " from " + getname(record.loanofficer_id) + " to " +  getname(newchange) + " "+ temptime.strftime("on %m/%d/%Y") + " " + temptime.strftime("at %l:%M%p") +"."
             elsif mychange == "Assigned Processor"
               subject = "Assignment Change"
               message = fromname + " changed " + record.firstname + " " + record.lastname + "'s " + mychange + " from " + record.processor_id.to_s + " to " +  newchange.to_s + " "+ temptime.strftime("on %m/%d/%Y") + " " + temptime.strftime("at %l:%M%p") +"."
