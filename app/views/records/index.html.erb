@@ -1,5 +1,26 @@
-<h1>Clients</h1>
-<br />
+<div class="row">
+  <div class="col-xs-3 col-sm-3">
+    <h1>Clients</h1>
+  </div>
+  <div class="col-xs-9 col-sm-9">
+    <div class="pull-right"><br />
+      <table class="table table-hover" id="records">
+        <tbody>
+          <tr> Color Key:
+            <% i = 0 %>
+            <% @phases.order(:phase_id).each do |phase| %>
+              <td class=<%="#{@listofcolors[i]}"%> ><center><%= phase.name %></center></td>
+              <% i = i + 1 %>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
 <div class="row">
   <div class="col-xs-6 col-sm-6">
     <%= form_tag records_path, :method => 'get', :class => "form-inline" do %>
@@ -42,22 +63,22 @@
   <tbody> 
     <% @records.each do |record| %>
       <% if record.progress != "On Hold" and record.progress != "Completed" and record.progress != "Dropped" and record.progress != "Unknown" %>
-      <% myrecdate = getupdated(record) || nil %>
-        <% if !myrecdate.blank? %>
-          <% if myrecdate.to_date >= Date.today-2 %>
-            <% @followupwithme = "" %> 
-          <% elsif myrecdate.to_date >= Date.today-6 %>
-            <% @followupwithme = "success" %> 
-          <% elsif myrecdate.to_date >= Date.today-10 %>
-            <% @followupwithme = "warning" %> 
-          <% elsif myrecdate.to_date <= Date.today-11 %>
-            <% @followupwithme = "danger" %> 
-          <% else %>
-            <% @followupwithme = "" %>
+        <% i = 1 %>
+        <% @followupwithme = "" %>
+        <% @phases.order(:phase_id).each do |phase| %>
+          <% phasecomplete = true %>
+            <% phase.progressions.each do |progression| %>
+            <% if !record.steps.exists?(:record_id => record.id, :progression_id => progression.id) %>
+              <% phasecomplete = false %>
+            <% end %>
+          <% end %>  
+          <% if phasecomplete == true %>
+            <% @followupwithme = @listofcolors[i] %>
           <% end %>
-        <% else %>
-          <% @followupwithme = "" %> 
-        <% end %>
+          <% i = i + 1 %>
+        <% end %>  
+        <% myrecdate = getupdated(record) || nil %>
+
         
         <%= content_tag :tr, class: "#{@followupwithme}" do -%> 
 

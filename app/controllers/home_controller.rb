@@ -23,6 +23,12 @@ class HomeController < ApplicationController
     else 
       @records = Record.where(loanofficer_id: current_user.id).order("lastname" + " " + "asc")
     end
+    
+    @listofcolors = { 0=> "default", 1=> "danger", 2=> "warning", 3=> "success", 4=> "info", 5=> "active", 6=> "active"}
+    #@listofcolors = ["default", "danger", "warning", "success", "primary", "info"]
+    
+    @phases = Phase.all
+    @progressions = Progression.all
 
     if current_user.profile.title == "master"
       @allusers = User.all

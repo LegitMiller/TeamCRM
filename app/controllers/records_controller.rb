@@ -12,6 +12,12 @@ class RecordsController < ApplicationController
     #  @records = Record.all
     #else
     #  #@records = Record.order(params[:sort])#.search(params[:search])
+
+
+    @listofcolors = { 0=> "default", 1=> "danger", 2=> "warning", 3=> "success", 4=> "info", 5=> "active", 6=> "active"}
+    @phases = Phase.all
+    @progressions = Progression.all
+
     if current_user.profile.title == "admin" or current_user.profile.title == "master"
       if params[:search].blank? || params[:search] ==''
         @records = Record.order(sort_column + " " + sort_direction)
