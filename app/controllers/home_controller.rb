@@ -2,9 +2,9 @@ class HomeController < ApplicationController
   before_action :authenticate_user!
  require 'csv'
   def index
-#    @groups = Group.all
-		@profiles = Profile.all
-		@mylink = records_path
+#   @groups = Group.all
+	@profiles = Profile.all
+	@mylink = records_path
 
 		if current_user.profile.title == "admin" or current_user.profile.title == "master"
       @records = Record.all.order("lastname" + " " + "asc")
