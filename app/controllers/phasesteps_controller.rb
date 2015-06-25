@@ -1,10 +1,15 @@
 class PhasestepsController < ApplicationController
   before_action :set_phasestep, only: [:show, :edit, :update, :destroy]
-
+require 'csv'
   # GET /phasesteps
   # GET /phasesteps.json
   def index
     @phasesteps = Phasestep.all
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @phasesteps.to_csv } #render text: @records.to_csv }
+    end
   end
 
   # GET /phasesteps/1
@@ -69,6 +74,6 @@ class PhasestepsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def phasestep_params
-      params.require(:phasestep).permit(:finishedtime, :record_id, :phase_id)
+      params.require(:phasestep).permit(:finishedtime, :record_id, :phase_id, :updated_at, :created_at)
     end
 end

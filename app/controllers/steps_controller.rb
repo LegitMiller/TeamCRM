@@ -82,6 +82,6 @@ require 'csv'
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def step_params
-      params.require(:step).permit(:record_id, :progression_id)
+      params.require(:step).permit(:record_id, :progression_id, :updated_at, :created_at)
     end
 end
