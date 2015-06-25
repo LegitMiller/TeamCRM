@@ -537,7 +537,7 @@ class RecordsController < ApplicationController
       addphasestep(myrecord.id, myphase.id)
       if Phasestep.exists?(:record_id => myrecord.id, :phase_id => myphase.id) 
         #create step
-        Phasestep.where(record_id: recid, phase_id: myphaseid).first.update(:finishedtime => Time.now)
+        Phasestep.where(:record_id => myrecord.id, :phase_id => myphase.id).first.update(:finishedtime => Time.now)
       end
     end
 
