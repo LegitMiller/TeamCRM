@@ -217,6 +217,7 @@ class RecordsController < ApplicationController
 
     respond_to do |format|
       if @record.save
+        addphasestep(params[:id], 0)
         #format.html { redirect_to @record, notice: 'Record was successfully created.' }
         format.html { redirect_to root_path, notice: 'Record was successfully created.' }
         #format.json { render :show, status: :created, location: @record }
@@ -254,6 +255,7 @@ class RecordsController < ApplicationController
       notificationsofdeath = Notification.where(:record_id => @record.id)
       notificationsofdeath.destroy_all
       @record.steps.destroy_all
+      @record.phasesteps.destroy_all
       @record.notes.destroy_all
       @record.destroy
     elsif current_user.profile.title == "processor"
@@ -514,7 +516,7 @@ class RecordsController < ApplicationController
     Step.where(record_id: params[:id], progression_id: params[:progression_id]).first_or_create
     
     #update the latest change.
-    myrecord.update(:detailedprogress => params[:progression_id])
+    #myrecord.update(:detailedprogress => params[:progression_id])
     
     #cycle through all the progressions and if phase is complete send another notification for phase complete - phase complete ones should trigger email.
     #put in a check box for if a client wants to recieve email updates on the client record thingy.
@@ -532,6 +534,11 @@ class RecordsController < ApplicationController
     end 
     if phasecomplete == true
       notificationprocess(myrecord.id, myrecord.loanofficer_id, myrecord.processor_id, myrecord.marketer_id, myrecord.real_id, myrecord.escrow_id, myphase.id, "phase") 
+      addphasestep(myrecord.id, myphase.id)
+      if Phasestep.exists?(:record_id => myrecord.id, :phase_id => myphase.id) 
+        #create step
+        Phasestep.where(record_id: recid, phase_id: myphaseid).first.update(:finishedtime => Time.now)
+      end
     end
 
     redirect_to edit_record_path(params[:id])
@@ -544,6 +551,17 @@ class RecordsController < ApplicationController
    
     Step.where(record_id: params[:id], progression_id: params[:progression_id]).destroy_all
     redirect_to edit_record_path(params[:id])
+  end
+
+  def addphasestep(recid, myphaseid)
+    myphaseid= myphaseid + 1
+    if Phase.exists?(:phase_id => myphaseid) 
+      #create step
+      Phasestep.where(record_id: recid, phase_id: myphaseid).first_or_create
+      #update the latest change.
+      myrecord = Record.find(recid)
+      myrecord.update(:detailedprogress => myphaseid)
+    end
   end
 
   def inactive_content

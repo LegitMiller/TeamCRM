@@ -1,0 +1,29 @@
+<%= form_for(@phasestep) do |f| %>
+  <% if @phasestep.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@phasestep.errors.count, "error") %> prohibited this phasestep from being saved:</h2>
+
+      <ul>
+      <% @phasestep.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :finishedtime %><br>
+    <%= f.datetime_select :finishedtime %>
+  </div>
+  <div class="field">
+    <%= f.label :record_id %><br>
+    <%= f.number_field :record_id %>
+  </div>
+  <div class="field">
+    <%= f.label :phase_id %><br>
+    <%= f.number_field :phase_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

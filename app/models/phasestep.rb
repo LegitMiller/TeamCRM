@@ -1,6 +1,6 @@
-class Step < ActiveRecord::Base
+class Phasestep < ActiveRecord::Base
 	belongs_to :record
-	belongs_to :progression
+	belongs_to :phase
   
   def self.to_csv
     CSV.generate do |csv|
@@ -15,7 +15,7 @@ class Step < ActiveRecord::Base
     CSV.foreach(file.path, headers: true) do |row|
       record = find_by_id(row["id"]) || new
       parameters = ActionController::Parameters.new(row.to_hash)
-      record.update(parameters.permit(:record_id, :progression_id, :updated_at, :created_at))
+      record.update(parameters.permit(:finishedtime, :record_id, :phase_id, :updated_at, :created_at))
       record.save!
     end
   end

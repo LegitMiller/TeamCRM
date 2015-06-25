@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  finishedtime: 2015-06-24 12:31:50
+  record_id: 1
+  phase_id: 1
+
+two:
+  finishedtime: 2015-06-24 12:31:50
+  record_id: 1
+  phase_id: 1

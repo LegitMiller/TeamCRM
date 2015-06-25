@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Finishedtime:</strong>
+  <%= @phasestep.finishedtime %>
+</p>
+
+<p>
+  <strong>Record:</strong>
+  <%= @phasestep.record_id %>
+</p>
+
+<p>
+  <strong>Phase:</strong>
+  <%= @phasestep.phase_id %>
+</p>
+
+<%= link_to 'Edit', edit_phasestep_path(@phasestep) %> |
+<%= link_to 'Back', phasesteps_path %>

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :phasesteps
+
   resources :steps do
     collection { post :import }
   end

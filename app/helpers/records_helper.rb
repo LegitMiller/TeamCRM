@@ -30,10 +30,20 @@ module RecordsHelper
 
 
 	def getpname(myid)
-		if !Progression.find_by_id(myid).blank? 
-			Progression.find_by_id(myid).name
+		if !Phase.find_by_id(myid).blank? 
+			Phase.find_by_id(myid).name
 		end
-  end
+  	end
+
+  	def getpname2(recid, myid)
+		if !Phasestep.where(record_id: recid, phase_id: myid).blank? #used to be Progression
+			#Phase.find_by_id(myid).name #should be how much time they've been in this state
+			distance_of_time_in_words_to_now(Phasestep.where(record_id: recid, phase_id: myid).first.created_at)
+		else
+			getpname(myid)
+		end
+  	end
+
   def getname(myid, noclass = nil)
   	if User.exists?(myid)
   		if noclass == true

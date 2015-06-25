@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150409213921) do
+ActiveRecord::Schema.define(version: 20150624183150) do
 
   create_table "notes", force: true do |t|
     t.string   "title"
@@ -36,6 +36,14 @@ ActiveRecord::Schema.define(version: 20150409213921) do
 
   create_table "phases", force: true do |t|
     t.string   "name"
+    t.integer  "phase_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "phasesteps", force: true do |t|
+    t.datetime "finishedtime"
+    t.integer  "record_id"
     t.integer  "phase_id"
     t.datetime "created_at"
     t.datetime "updated_at"

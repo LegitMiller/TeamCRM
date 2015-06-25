@@ -3,6 +3,9 @@ class Record < ActiveRecord::Base
   
   has_many :steps
   has_many :progressions, through: :steps
+  
+  has_many :phasesteps
+  has_many :phases, through: :phasesteps
 
   def self.search(search)
 		if search

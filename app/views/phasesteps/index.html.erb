@@ -1,0 +1,29 @@
+<h1>Listing phasesteps</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Finishedtime</th>
+      <th>Record</th>
+      <th>Phase</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @phasesteps.each do |phasestep| %>
+      <tr>
+        <td><%= phasestep.finishedtime %></td>
+        <td><%= phasestep.record_id %></td>
+        <td><%= phasestep.phase_id %></td>
+        <td><%= link_to 'Show', phasestep %></td>
+        <td><%= link_to 'Edit', edit_phasestep_path(phasestep) %></td>
+        <td><%= link_to 'Destroy', phasestep, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Phasestep', new_phasestep_path %>

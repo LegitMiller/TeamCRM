@@ -20,30 +20,12 @@ pre {
 
 a {
   color: #000;
-  &.btn-warning {
-    color: #fff;
-    &:visited {
-      color: #fff;
-    }
-  }
-  &.btn-info {
-    color: #fff;
-    &:visited {
-      color: #fff;
-    }
-  }
-  &.btn-success {
-    color: #fff;
-    &:visited {
-      color: #fff;
-    }
-  }
   &:visited {
     color: #666;
   }
   &:hover {
     color: #fff;
-    background-color: #fff;
+    background-color: #000;
   }
 }
 
