@@ -63,6 +63,7 @@
         <th>Loan Officer</th>
         <th>Processor</th>
         <th>Realtor</th>
+        <th>Marketer</th>
       </tr>
     </thead>
 
@@ -95,7 +96,8 @@
               <td><%= getpname2 record.id, record.detailedprogress  %></td>
               <td><%= getname record.loanofficer_id %></td>
               <td><%= getname record.processor_id %></td>
-              <td><%= getname record.real_id %></td>              
+              <td><%= getname record.real_id %></td>   
+              <td><%= getname record.marketer_id %></td>                          
             <% end -%>
           <% end %>
         <% end %>
