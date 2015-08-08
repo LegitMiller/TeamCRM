@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Intro:</strong>
+  <%= @messg.intro %>
+</p>
+
+<p>
+  <strong>Message:</strong>
+  <%= @messg.message %>
+</p>
+
+<p>
+  <strong>Closing:</strong>
+  <%= @messg.closing %>
+</p>
+
+<p>
+  <strong>Progression:</strong>
+  <%= @messg.progression_id %>
+</p>
+
+<%= link_to 'Edit', edit_messg_path(@messg) %> |
+<%= link_to 'Back', messgs_path %>

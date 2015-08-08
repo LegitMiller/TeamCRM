@@ -2,7 +2,8 @@ class Phase < ActiveRecord::Base
 		has_one :phase
 		belongs_to :phase
 		has_many :progressions
-  def self.to_csv
+
+	def self.to_csv
     CSV.generate do |csv|
       csv << column_names
       all.each do |rec|
@@ -19,5 +20,5 @@ class Phase < ActiveRecord::Base
       record.save!
     end
   end
-  
+
 end

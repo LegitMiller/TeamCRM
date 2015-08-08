@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :messgs do
+    collection { post :import }
+  end
+
   resources :phasesteps do
     collection { post :import }
   end
@@ -13,6 +17,7 @@ Rails.application.routes.draw do
   end
 
   resources :progressions do
+    resources :messgs
     collection { post :import }
   end
 
@@ -33,7 +38,7 @@ Rails.application.routes.draw do
 
   #devise_for :users
   devise_for :users, :controllers => { :registrations => "registrations" }
-  
+
   post "profiles_changestatus" => "profiles#changestatus"
 
   post "profiles_resetpassword" => "profiles#resetpassword"
@@ -41,7 +46,7 @@ Rails.application.routes.draw do
   resources :profiles do
     collection { post :import }
   end
-  
+
   resources :home do
     collection { post :import }
   end
@@ -53,11 +58,11 @@ Rails.application.routes.draw do
   #root records_path && '?direction=asc&sort=firstname'
 
   #root 'records#index\?direction=asc&sort=firstname'
-  
+
   get "records_addstep" => "records#addstep"
 
   get "records_removestep" => "records#removestep"
-  
+
   get "inactive_content" => "records#inactive_content"
 
   #get 'records/inactive'

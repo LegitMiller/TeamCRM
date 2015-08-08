@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  intro: MyString
+  message: MyString
+  closing: MyString
+  progression_id: 1
+
+two:
+  intro: MyString
+  message: MyString
+  closing: MyString
+  progression_id: 1

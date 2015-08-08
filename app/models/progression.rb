@@ -1,5 +1,6 @@
 class Progression < ActiveRecord::Base
 		belongs_to :phase
+		has_one :messg
 
   def self.to_csv
     CSV.generate do |csv|

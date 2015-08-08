@@ -30,11 +30,11 @@
     <br />
 
   <% end %>
-  
-  
+
+
   <div class="row">
     <div class="col-xs-3 col-sm-3">
-      <h2>My Current Clients</h2> 
+      <h2>My Current Clients</h2>
     </div>
     <div class="col-xs-9 col-sm-9">
       <div class="pull-right">
@@ -59,7 +59,7 @@
       <tr>
         <th>Frist Name</th>
         <th>Updated</th>
-        <th>Progress</th>       
+        <th>Progress</th>
         <th>Loan Officer</th>
         <th>Processor</th>
         <th>Realtor</th>
@@ -72,21 +72,21 @@
         <% @records.each do |record| %>
           <% if record.progress != "On Hold" and record.progress != "Completed" and record.progress != "Dropped" and record.progress != "Unknown" %>
                    <!--<tr data-link="<%= edit_record_path(record) %>">-->
-            <!-- i = 0 
-            @followupwithme = "" 
-            @phases.order(:phase_id).each do |phase| 
-               if record.phasesteps.exists?(:record_id => record.id, :phase_id => phase.id) 
-                 i = phase.phase_id 
-               end 
-                 @followupwithme = @listofcolors[i-1] 
-            end --> 
-                
+            <!-- i = 0
+            @followupwithme = ""
+            @phases.order(:phase_id).each do |phase|
+               if record.phasesteps.exists?(:record_id => record.id, :phase_id => phase.id)
+                 i = phase.phase_id
+               end
+                 @followupwithme = @listofcolors[i-1]
+            end -->
+
 
             <% @followupwithme = @listofcolors[record.detailedprogress.to_i-1] %>
 
            <% myrecdate = getupdated(record) || nil %>
-            
-            <%= content_tag :tr, class: "#{@followupwithme}" do -%> 
+
+            <%= content_tag :tr, class: "#{@followupwithme}" do -%>
 
               <td><%= correctlink record, record.firstname, record.lastname %></td>
               <td>
@@ -96,13 +96,13 @@
               <td><%= getpname2 record.id, record.detailedprogress  %></td>
               <td><%= getname record.loanofficer_id %></td>
               <td><%= getname record.processor_id %></td>
-              <td><%= getname record.real_id %></td>   
-              <td><%= getname record.marketer_id %></td>                          
+              <td><%= getname record.real_id %></td>
+              <td><%= getname record.marketer_id %></td>
             <% end -%>
           <% end %>
         <% end %>
-      <% else %>  
-        <tr> 
+      <% else %>
+        <tr>
 
           <td><center>No Active Records</center></td>
 
@@ -123,16 +123,16 @@
         <% if profile.title == "admin" %>
       <tr>
         <td>
-          <%= getname profile.user_id%> 
+          <%= getname profile.user_id%>
         </td>
         <td>
           joined <%= time_ago_in_words profile.created_at %> ago
         </td>
       </tr>
       <% end %>
-    <% end %> 
+    <% end %>
     </tbody>
-  </table>  
+  </table>
   <!--<%= link_to "sup", "#{@mylink}" %>
   <%= link_to "sup2", @mylink %>-->
 <% end %>
@@ -169,7 +169,9 @@
   <div class="col-xs-3 col-sm-3">
     <%= link_to "PhaseSteps", phasesteps_path, class: 'btn btn-default btn-lg', "data-no-turbolink"=>"true" %>
   </div>
-
+  <div class="col-xs-3 col-sm-3">
+    <%= link_to "Messgs", messgs_path, class: 'btn btn-default btn-lg', "data-no-turbolink"=>"true" %>
+  </div>
 </div>
 
 <br />

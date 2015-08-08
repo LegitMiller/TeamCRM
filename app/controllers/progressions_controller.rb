@@ -5,7 +5,7 @@ class ProgressionsController < ApplicationController
   require 'csv'
   # GET /progressions
   # GET /progressions.json
-  
+
   def index
 
     @progressions = Progression.all
@@ -68,7 +68,7 @@ class ProgressionsController < ApplicationController
       end
     else
       redirect_to root_path, notice: 'Nothing updated, you are not Admin.'
-    end      
+    end
   end
 
   # DELETE /progressions/1
