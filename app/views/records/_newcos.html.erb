@@ -1,0 +1,54 @@
+<div class="row">
+<%= form_for [@record, @record.contacts.build] do |f| %>
+  <div class="col-xs-3 col-sm-2">
+    <div class="input-group">
+      <div class="input-group-addon form-control">Use Contact
+        <%= f.check_box :useme, :class => "input-lg form-control" %></div>
+    </div>
+  </div>
+
+
+  <div class="col-xs-3 col-sm-2">
+    <div class="input-group">
+      <div class="input-group-addon">Type </div>
+      <% listofcontacttypes = [["Borrower", "borrower"],["Coborrower", "coborrower"],["Realtor", "realtor"],["Escrow Officer", "escrowofficer"],["Loan Officer", "loanofficer"],["Marketer", "marketer"],["Processor", "processor"], ["Other","other"]] %>
+        <%= f.select :contacttype, options_for_select(listofcontacttypes), {prompt: true}, { :class => "btn btn-default btn-lg dropdown-toggle input-lg form-control"} %>
+    </div>
+  </div>
+
+  <div class="col-xs-3 col-sm-4"><!--firstname-->
+    <br>
+    <%= f.text_field :firstname, :class => "input-lg form-control", "placeholder" => "first name"  %>
+  </div>
+  <div class="col-xs-3 col-sm-4"><!--lastname-->
+    <br>
+    <%= f.text_field :lastname, :class => "input-lg form-control", "placeholder" => "last name"  %>
+  </div>
+
+  <div class="col-xs-6 col-sm-2"><!--useemail-->
+    <div class="input-group">
+      <div class="input-group-addon form-control">Send Emails
+        <%= f.check_box :useemail, :class => "input-lg form-control" %></div>
+    </div>
+  </div>
+  <div class="col-xs-6 col-sm-3"><!--email-->
+    <br>
+    <%= f.text_field :email, :class => "input-lg form-control", "placeholder" => "email"  %>
+  </div>
+  <div class="col-xs-4 col-sm-2"><!--usephone-->
+    <div class="input-group">
+      <div class="input-group-addon form-control">Send Texts
+        <%= f.check_box :usephone, :class => "input-lg form-control" %></div>
+    </div>
+  </div>
+  <div class="col-xs-4 col-sm-3"><!--phone-->
+    <br>
+    <%= f.text_field :phone, :class => "input-lg form-control", "placeholder" => "8015551234"  %>
+  </div>
+  <div class="col-xs-4 col-sm-2"><!--submit-->
+    <br>
+    <%= f.submit "Create", :class=> "btn btn-info btn-lg pull-right" %>
+  </div>
+
+<% end %>
+</div>

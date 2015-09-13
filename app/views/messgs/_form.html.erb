@@ -1,33 +1,112 @@
-<%= form_for(@messg) do |f| %>
-  <% if @messg.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@messg.errors.count, "error") %> prohibited this messg from being saved:</h2>
+<br>
+<div class="row">
 
-      <ul>
-      <% @messg.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+  <%= form_for(@messg) do |f| %>
+    <% if @messg.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@messg.errors.count, "error") %> prohibited this messg from being saved:</h2>
+
+        <ul>
+        <% @messg.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <!--<div class="input-group">
+        <% f.text_area :intro, "placeholder" => "Introduction", "style"=>"width:100%", :class => "input-lg form-control", "onkeyup"=>"textAreaAdjust(this)", "onclick"=>"textAreaAdjust(this)" %>
+      </div>-->
+      <div class="col-xs-12 col-sm-4">
+        <%= f.text_area :message, "placeholder" => "Email Message", "style"=>"width:100%", :class => "input-lg form-control", "onkeyup"=>"textAreaAdjust(this)", "onclick"=>"textAreaAdjust(this)" %>
+        <br />
+        <%= f.text_area :intro, "placeholder" => "Text Message", "style"=>"width:100%", :maxlength=>"144", :class => "input-lg form-control", "onkeyup"=>"textAreaAdjust(this)", "onclick"=>"textAreaAdjust(this)" %>
+      </div>
+      <!--<div class="col-xs-12 col-sm-6">
+        <% f.text_area :closing, "placeholder" => "Closing", "style"=>"width:100%", :class => "input-lg form-control", "onkeyup"=>"textAreaAdjust(this)", "onclick"=>"textAreaAdjust(this)" %>
+      </div>-->
+      <center>
+        <div class="col-xs-6 col-sm-2">
+          <div class="input-group">
+            <div class="input-group-addon form-control">
+              <%= f.label :admin %>
+              <%= f.check_box :admin, :class => "form-control" %>
+            </div>
+          </div>
+          <br />
+          <br />
+          <div class="input-group">
+            <div class="input-group-addon form-control">
+              <%= f.label :marketer %>
+              <%= f.check_box :marketer, :class => "form-control"  %>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-2">
+          <div class="input-group">
+            <div class="input-group-addon form-control">
+              <%= f.label :borrower %>
+              <%= f.check_box :borrower, :class => "form-control"  %>
+            </div>
+          </div>
+          <br />
+          <br />
+          <div class="input-group">
+            <div class="input-group-addon form-control">
+              <%= f.label :coborrower %>
+              <%= f.check_box :coborrower, :class => "form-control"  %>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-2">
+          <div class="input-group">
+            <div class="input-group-addon form-control">
+              <%= f.label :realtor %>
+              <%= f.check_box :realtor, :class => "form-control"  %>
+            </div>
+          </div>
+
+          <br />
+          <br />
+          <div class="input-group">
+            <div class="input-group-addon form-control">
+              <%= f.label "Escrow officer" %>
+              <%= f.check_box :escrowofficer, :class => "form-control"  %>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-2">
+          <div class="input-group">
+            <div class="input-group-addon form-control">
+              <%= f.label "Loan officer" %>
+              <%= f.check_box :loanofficer, :class => "form-control"  %>
+            </div>
+          </div>
+          <br />
+          <br />
+          <div class="input-group">
+            <div class="input-group-addon form-control">
+              <%= f.label :processor %>
+              <%= f.check_box :processor, :class => "form-control"  %>
+            </div>
+          </div>
+        </div>
+      </center>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group">
+      <div class="col-xs-6 col-sm-12 text-left">
+        <%= f.submit "Clear", :class=> "btn btn-sm", :type => "reset" %>
+      </div>
+      <div class="col-xs-6 col-sm-12 text-right">
+        <%= f.submit "Submit", :class=> "btn btn-info btn-sm" %>
+      </div>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :intro %><br>
-    <%= f.text_field :intro %>
-  </div>
-  <div class="field">
-    <%= f.label :message %><br>
-    <%= f.text_field :message %>
-  </div>
-  <div class="field">
-    <%= f.label :closing %><br>
-    <%= f.text_field :closing %>
-  </div>
-<!--  <div class="field">
-    <%= f.label :progression_id %><br>
-    <%= f.number_field :progression_id %>
-  </div>-->
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>

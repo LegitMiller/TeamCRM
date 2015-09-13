@@ -1,24 +1,149 @@
+<h1>Send Message</h1>
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Intro:</strong>
-  <%= @messg.intro %>
-</p>
+<!--Put a form here to edit the data we're sending to the sendemail function-->
 
-<p>
-  <strong>Message:</strong>
-  <%= @messg.message %>
-</p>
+<!--Make sure the submit button directs to that specific def in records controller or messgs controller-->
 
-<p>
-  <strong>Closing:</strong>
-  <%= @messg.closing %>
-</p>
+<!--link_to image_tag("checkoff.png", size: "48x48", alt: "Done", "style"=>"padding:2px"), { :controller => :records, :action => :addstep, :id=>@record.id, :progression_id => progression.id }-->
+<!-- f.submit "Submit", :class=> "btn btn-info btn-lg", :onClick=> @mylink-->
 
-<p>
-  <strong>Progression:</strong>
-  <%= @messg.progression_id %>
-</p>
+<%= form_for(@messg) do |f| %>
+  <% if @messg.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@messg.errors.count, "error") %> prohibited this messg from being saved:</h2>
 
-<%= link_to 'Edit', edit_messg_path(@messg) %> |
-<%= link_to 'Back', messgs_path %>
+      <ul>
+      <% @messg.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <div class="col-xs-12 col-sm-4"> <!--; height:150px        and 107-->
+      <%= f.text_area :message, "placeholder" => "Message", "style"=>"width:100%", :class => "input-lg form-control", "onkeyup"=>"textAreaAdjust(this)", "onclick"=>"textAreaAdjust(this)" %>
+      <br />
+      <%= f.text_area :intro, "placeholder" => "Text Message", "style"=>"width:100%", :maxlength=>"144", :class => "input-lg form-control", "onkeyup"=>"textAreaAdjust(this)", "onclick"=>"textAreaAdjust(this)" %>
+      <br />
+      <% if !@myrecord.blank? %>
+        <div class="input-group"><div class="input-group-addon">
+            <%= f.label "Client Record ID" %></div>
+            <%= f.text_field :recordid, :value => @myrecord.id, :class => "form-control",:readonly => true%>
+        </div>
+      <% end %>
+    </div>
+    <center>
+      <div class="col-xs-6 col-sm-2">
+        <div class="input-group">
+          <div class="input-group-addon form-control">
+            <%= f.label :admin %>
+            <%= f.check_box :admin, :class => "form-control" %>
+          </div>
+        </div>
+        <br />
+        <br />
+        <div class="input-group">
+          <div class="input-group-addon form-control">
+            <%= f.label :marketer %>
+            <%= f.check_box :marketer, :class => "form-control"  %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-sm-2">
+        <div class="input-group">
+          <div class="input-group-addon form-control">
+            <%= f.label :borrower %>
+            <%= f.check_box :borrower, :class => "form-control"  %>
+          </div>
+        </div>
+        <br />
+        <br />
+        <div class="input-group">
+          <div class="input-group-addon form-control">
+            <%= f.label :coborrower %>
+            <%= f.check_box :coborrower, :class => "form-control"  %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-sm-2">
+        <div class="input-group">
+          <div class="input-group-addon form-control">
+            <%= f.label :realtor %>
+            <%= f.check_box :realtor, :class => "form-control"  %>
+          </div>
+        </div>
+
+        <br />
+        <br />
+        <div class="input-group">
+          <div class="input-group-addon form-control">
+            <%= f.label "Escrow Officer" %>
+            <%= f.check_box :escrowofficer, :class => "form-control"  %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-sm-2">
+        <div class="input-group">
+          <div class="input-group-addon form-control">
+            <%= f.label "Loan Officer" %>
+            <%= f.check_box :loanofficer, :class => "form-control"  %>
+          </div>
+        </div>
+        <br />
+        <br />
+        <div class="input-group">
+          <div class="input-group-addon form-control">
+            <%= f.label :processor %>
+            <%= f.check_box :processor, :class => "form-control"  %>
+          </div>
+        </div>
+      </div>
+    </center>
+
+  <div class="row">
+    <div class="form-group">
+      <div class="col-xs-6 col-sm-12 text-left">
+        <%= f.submit "Clear", :class=> "btn btn", :type => "reset" %>
+      </div>
+      <% if !@myrecord.blank? %>
+        <div class="col-xs-6 col-sm-12 text-right">
+          <%= f.submit "Send", :class=> "btn btn-info btn-sm" %>
+          <!-- button_to "Acknowledged", { :controller => 'messgs', :action => "sendcustom", :id => @messg.id} -->
+        </div>
+      <% else %>
+        <div class="col-xs-6 col-sm-12 text-right">
+          <%= f.submit "Submit", :class=> "btn btn-info btn-sm" %>
+          <!-- button_to "Acknowledged", { :controller => 'messgs', :action => "sendcustom", :id => @messg.id} -->
+        </div>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
+</div>
+
+
+
+
+
+<% if !@myrecord.blank? %>
+  <%= link_to 'Back to Record', edit_record_path(@myrecord.id), :class=> "btn btn-default btn-sm" %>
+<% else %>
+  <%= link_to 'Back to Messages', messgs_path, :class=> "btn btn-default btn-sm" %>
+<% end %>
+
+
+
+
+
+
+<script>
+function textAreaAdjust(o) {
+    o.style.height = "1px";
+    o.style.height = (25+o.scrollHeight)+"px";
+}
+</script>

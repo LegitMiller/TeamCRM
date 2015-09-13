@@ -1,26 +1,60 @@
-<h1>Listing messgs</h1>
+<h1>Update Messages</h1>
+    <h4>Total Messages: <%= @messgs.count %></h4>
 
-<table>
+    <% if !@myrecord.blank? %>
+      <div class="form-group">
+        <div class="input-group"><div class="input-group-addon">
+
+            <%= "Client Record ID" %></div>
+            <%= @myrecord.id %>
+
+        </div>
+      </div>
+    <% end %>
+
+<table class="table table-hover">
   <thead>
     <tr>
-      <th>Intro</th>
-      <th>Message</th>
-      <th>Closing</th>
-      <th>Progression</th>
-      <th colspan="3"></th>
+      <th>Email Message</th>
+      <th>Text Message</th>
+      <!--<th>Closing</th>
+      <th>Progression</th>-->
+      <th>Borrower</th>
+      <th>Coborrower</th>
+      <th>Realtor</th>
+      <th>Loan Officer</th>
+      <th>Escrow Officer</th>
+      <th>Marketer</th>
+      <th>Processor</th>
+      <th>Admin</th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @messgs.each do |messg| %>
       <tr>
-        <td><%= messg.intro %></td>
-        <td><%= messg.message %></td>
-        <td><%= messg.closing %></td>
-        <td><%= messg.progression_id %></td>
-        <td><%= link_to 'Show', messg %></td>
-        <td><%= link_to 'Edit', edit_messg_path(messg) %></td>
-        <td><%= link_to 'Destroy', messg, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if messg.progression_id.blank? %>
+          <td><%= messg.intro %></td>
+          <td><%= messg.message %></td>
+        <!--  <td><%= messg.closing %></td>
+          <td><%= messg.progression_id %></td>-->
+          <td><%= returnsend messg.borrower %></td>
+          <td><%= returnsend messg.coborrower %></td>
+          <td><%= returnsend messg.realtor %></td>
+          <td><%= returnsend messg.loanofficer %></td>
+          <td><%= returnsend messg.escrowofficer %></td>
+          <td><%= returnsend messg.marketer %></td>
+          <td><%= returnsend messg.processor %></td>
+          <td><%= returnsend messg.admin %></td>
+          <% if !@myrecord.blank? %>
+            <td><%= link_to 'Edit', {:controller => :messgs, :action => :show, :recordid=>@myrecord.id, :id => messg.id }, class: 'btn btn-default btn-lg btn-warning' %></td>
+          <% else %>
+            <td><%= link_to 'Edit', messg, class: 'btn btn-default btn-lg btn-warning' %></td>
+          <% end %>
+          <!--<td><%= link_to 'Edit', edit_messg_path(messg) %></td>-->
+          <td><%= link_to(image_tag("trash.png", size: "18x20", alt: "Remove", "style"=>"padding:2px"), messg, method: :delete, :class => "btn btn-default btn-lg", data: { confirm: 'Are you sure?' }) %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -28,7 +62,7 @@
 
 <br>
 
-<%= link_to 'New Messg', new_messg_path %>
+<%= link_to 'New Messg', new_messg_path, class: 'btn btn-default btn-lg btn-info', "data-no-turbolink"=>"true" %>
 
 <br>
 

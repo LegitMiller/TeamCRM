@@ -40,7 +40,7 @@
               </td>
               <td>
                   <% megid = Messg.where(progression_id: progression.id).first_or_create.id %>
-                  <%= link_to(image_tag("message.png", size: "18x20", alt: "Make message", "style"=>"padding:2px"), edit_messg_path(megid), :class => "btn btn-default btn-sm") %>
+                  <%= link_to(image_tag("message.png", size: "18x20", alt: "Make message", "style"=>"padding:2px"), edit_messg_path(megid), :class => "btn btn-default btn-sm", "data-no-turbolink"=>"true") %>
               </td>
               <td>
                 <div class="text-right">

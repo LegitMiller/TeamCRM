@@ -59,6 +59,7 @@ gem 'jquery-datatables-rails', '~> 3.1.1'
 
 gem 'rest-client'
 
+gem 'twilio-ruby'
 #group :assets do
 #	gem 'jquery-ui-rails'
 #end

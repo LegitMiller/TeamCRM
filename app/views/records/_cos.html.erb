@@ -1,0 +1,62 @@
+<% @record.contacts.order(:created_at).each do |contact|%>
+  <%= form_for [@record, @record.contacts.build] do |f| %>
+    <% if !contact.firstname.blank? %>
+      <div class="row">
+        <div class="col-xs-3 col-sm-2">
+          <div class="input-group">
+            <div class="input-group-addon form-control">Use Contact
+              <%= f.check_box :useme, {:checked => contact.useme, :class => "input-lg form-control"} %></div>
+          </div>
+        </div>
+
+        <div class="col-xs-3 col-sm-2">
+          <div class="input-group">
+            <div class="input-group-addon">Type </div>
+            <% listofcontacttypes = [["Borrower", "borrower"],["Coborrower", "coborrower"],["Realtor", "realtor"],["Escrow Officer", "escrowofficer"],["Loan Officer", "loanofficer"],["Marketer", "marketer"],["Processor", "processor"], ["Other","other"]] %>
+              <%= f.select :contacttype, options_for_select(listofcontacttypes, contact.contacttype.to_s), {prompt: true}, { :class => "btn btn-default btn-lg dropdown-toggle input-lg form-control"} %>
+          </div>
+        </div>
+
+
+        <div class="col-xs-3 col-sm-4"><!--firstname-->
+          <br>
+          <%= f.text_field :firstname, "value" => contact.firstname, :class => "input-lg form-control", "placeholder" => "first name"  %>
+        </div>
+        <div class="col-xs-3 col-sm-4"><!--lastname-->
+          <br>
+          <%= f.text_field :lastname, "value" => contact.lastname, :class => "input-lg form-control", "placeholder" => "last name"  %>
+        </div>
+
+        <div class="col-xs-6 col-sm-2"><!--useemail-->
+          <div class="input-group">
+            <div class="input-group-addon form-control">Send Emails
+              <%= f.check_box :useemail, {:checked => contact.useemail, :class => "input-lg form-control"} %></div>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-3"><!--email-->
+          <br>
+          <%= f.text_field :email, "value" => contact.email, :class => "input-lg form-control", "placeholder" => "email"  %>
+        </div>
+        <div class="col-xs-4 col-sm-2"><!--usephone-->
+          <div class="input-group">
+            <div class="input-group-addon form-control">Send Texts
+              <%= f.check_box :usephone, {:checked => contact.usephone, :class => "input-lg form-control"} %></div>
+          </div>
+        </div>
+        <div class="col-xs-4 col-sm-2"><!--phone-->
+          <br>
+          <%= f.text_field :phone, "value" => contact.phone, :class => "input-lg form-control", "placeholder" => "8015551234"  %>
+        </div>
+        <div class="col-xs-4 col-sm-1"><!--delete-->
+          <br>
+          <%= link_to(image_tag("trash.png", size: "18x20", alt: "Remove", "style"=>"padding:2px"), record_contact_path(@record, contact), method: :delete, :class => "btn btn-default btn-sm pull-right", data: { confirm: 'Are you sure you want to permanently destroy this contact information?' } ) %>
+        </div>
+        <div class="col-xs-4 col-sm-2"><!--submit-->
+          <br>
+          <%= f.submit "Update", :class=> "btn btn-info btn-lg pull-right", :onclick=> "value=#{contact.id}" %>
+        </div>
+      </div>
+      <hr />
+    <% end %>
+  <% end %>
+<% end %>

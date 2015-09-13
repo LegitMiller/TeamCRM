@@ -12,6 +12,14 @@ require 'csv'
     end
   end
 
+  def import
+    if current_user.profile.title == "admin" or current_user.profile.title == "master"
+      Phasestep.import(params[:file])
+      redirect_to phasesteps_path, notice: "Records Imported"
+    else
+      redirect_to phasesteps_path, notice: "No Records Imported; You are not Admin."
+    end
+  end
   # GET /phasesteps/1
   # GET /phasesteps/1.json
   def show

@@ -11,12 +11,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150808175256) do
+ActiveRecord::Schema.define(version: 20150816174625) do
+
+  create_table "contacts", force: true do |t|
+    t.boolean  "useme"
+    t.string   "contacttype"
+    t.string   "firstname"
+    t.string   "lastname"
+    t.boolean  "useemail"
+    t.string   "email"
+    t.boolean  "usephone"
+    t.string   "phone"
+    t.string   "other"
+    t.integer  "record_id"
+    t.integer  "profile_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "messgs", force: true do |t|
-    t.string   "intro"
-    t.string   "message"
-    t.string   "closing"
+    t.text     "intro"
+    t.text     "message"
+    t.text     "closing"
+    t.boolean  "admin"
+    t.boolean  "master"
+    t.boolean  "coborrower"
+    t.boolean  "borrower"
+    t.boolean  "processor"
+    t.boolean  "realtor"
+    t.boolean  "loanofficer"
+    t.boolean  "escrowofficer"
+    t.boolean  "marketer"
     t.integer  "progression_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -97,6 +122,15 @@ ActiveRecord::Schema.define(version: 20150808175256) do
     t.float    "jpay"
     t.float    "opay"
     t.boolean  "splitpay"
+    t.string   "loantype"
+    t.float    "loanquote"
+    t.float    "ratelock"
+    t.date     "ratelockexp"
+    t.date     "purchasesigned"
+    t.date     "contractexp"
+    t.date     "appraisaldue"
+    t.date     "closingdue"
+    t.date     "loanapprovaldue"
     t.integer  "loanofficer_id"
     t.integer  "processor_id"
     t.integer  "marketer_id"
@@ -107,6 +141,7 @@ ActiveRecord::Schema.define(version: 20150808175256) do
   end
 
   create_table "steps", force: true do |t|
+    t.integer  "profile_id"
     t.integer  "record_id"
     t.integer  "progression_id"
     t.datetime "created_at"

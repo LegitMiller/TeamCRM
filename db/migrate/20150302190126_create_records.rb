@@ -7,7 +7,7 @@ class CreateRecords < ActiveRecord::Migration
       t.string :email
       t.string :raemail
       t.datetime :receivedate
-      t.datetime :followupdate      
+      t.datetime :followupdate
       t.string :progress
       t.string :detailedprogress
       t.boolean :phasemail
@@ -16,13 +16,22 @@ class CreateRecords < ActiveRecord::Migration
       t.float :propay
       t.float :jpay
       t.float :opay
-      t.boolean :splitpay      
+      t.boolean :splitpay
+      t.string :loantype
+      t.float :loanquote
+      t.float :ratelock
+      t.date :ratelockexp
+      t.date :purchasesigned
+      t.date :contractexp
+      t.date :appraisaldue
+      t.date :closingdue
+      t.date :loanapprovaldue
       t.integer :loanofficer_id
       t.integer :processor_id
       t.integer :marketer_id
       t.integer :real_id
       t.integer :escrow_id
-      
+
       t.timestamps
     end
   end

@@ -8,7 +8,7 @@
         <% if !@steps.exists?(:record_id => @record.id, :progression_id => progression.id) %>
           <% phasecomplete = false %>
         <% end %>
-      <% end %>  
+      <% end %>
       <h3>
         <% if phasecomplete == true %>
           <%= image_tag("justcheckon.png", size: "64x64", alt: "Done", "style"=>"padding:2px") %>
@@ -23,14 +23,18 @@
       <div class="col-xs-6 col-sm-6">
         <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <% if @steps.exists?(:record_id => @record.id, :progression_id => progression.id) %>
+          <% mystep = Step.where(:record_id => @record.id, :progression_id => progression.id).first %>
           <%= link_to image_tag("checkon.png", size: "48x48", alt: "Done", "style"=>"padding:2px"), { :controller => :records, :action => :removestep, :id=>@record.id, :progression_id => progression.id } %>
           <!--<%= link_to "Mark Undone", { :controller => :records, :action => :removestep, :id=>@record.id, :progression_id => progression.id }, :class =>"btn btn-lg btn-success" %>-->
         <% else %>
-        <%= link_to image_tag("checkoff.png", size: "48x48", alt: "Done", "style"=>"padding:2px"), { :controller => :records, :action => :addstep, :id=>@record.id, :progression_id => progression.id } %>
-          
+        <%= link_to image_tag("checkoff.png", size: "48x48", alt: "Done", "style"=>"padding:2px"), { :controller => :records, :action => :addstep, :id=>@record.id, :progression_id => progression.id, :profile_id => current_user.profile.id } %>
+
           <!--<%= link_to "Mark Done", { :controller => :records, :action => :addstep, :id=>@record.id, :progression_id => progression.id }, :class =>"btn btn-lg btn-default" %>-->
         <% end %>
-        <%= progression.name %></h4>
+        <%= progression.name %>
+        <% if !mystep.blank? %>
+          <p style="font-size: 10px; text-indent: 80px;">(<%= getname(mystep.profile_id, true) %>)</p>
+        <% end %></h4>
       </div>
     <% end %>
   <% end %>  <br />
@@ -43,8 +47,8 @@
             <% aphasecomplete = false %>
           <% end %>
           <% phasecomplete = true %>
-        <% end %>  
-      <% end %>  
+        <% end %>
+      <% end %>
       <% if aphasecomplete == true  and phasecomplete == true %>
         <% if @record.progress != "Completed" %>
           <%= javascript_tag do %>
@@ -52,9 +56,3 @@
           <% end %>
         <% end %>
       <% end %>
-
-
-
-
-
-

@@ -1,7 +1,10 @@
 class UserMailer < ActionMailer::Base
   helper MailerHelper
-  #require "restclient"  
-  default :from => "shadrak.kay@gmail.com"
+  #require "restclient"
+  default :from => "john@Superiorlending.com"
+
+  require 'rubygems' # not necessary with ruby 1.9 but included for completeness
+  require 'twilio-ruby'
 
   def welcome_email(profile)
     mail(:to => profile.email, :subject => 'Welcome to My Awesome Site')
@@ -41,7 +44,21 @@ class UserMailer < ActionMailer::Base
 		  :from => "SuperiorLendingCRM <postmaster@sandboxa8ea094b71f240bbadecf69c14fe8456.mailgun.org>",
 		  :to => name + " <" + address + ">",
 		  :subject => subject,
-		  :text => message
+		  :text => name + ", "+ message + " Please contact us if there are any further questions. Superior Lending: 801-235-0929"
 	  end
 	end
+
+  def send_phone(name, address, message)
+    # put your own credentials here
+    account_sid = 'AC56c471e13ee6660cd2dfbe5b39088498'
+    auth_token = 'ee24d5ac278a24beb6ce4f54d6c96e77'
+    # set up a client to talk to the Twilio REST API
+    @client = Twilio::REST::Client.new account_sid, auth_token
+    @client.account.messages.create({
+      :from => '+14155992671', #THIS NEEDS TO BE REPLACED WITH JOHN's NUMBER ON TWILLIO.com john.massageenvy@gmail.com rams2000!
+      :to => '+1' + address,
+      :body => message,
+    })
+	end
+
 end

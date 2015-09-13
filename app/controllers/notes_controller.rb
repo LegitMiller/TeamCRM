@@ -36,10 +36,10 @@ class NotesController < ApplicationController
   # POST /notes
   # POST /notes.json
   def create
-    #@note = Note.new(note_params)
+    ##@note# = Note.new(note_params)
     @record = Record.find(params[:record_id])
 
-    #Edit existing    
+    #Edit existing
     if !Note.find_by_id(params[:commit]).blank?
       @note = @record.notes.find(params[:commit])
       if @note.update(note_params)

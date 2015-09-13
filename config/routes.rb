@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :contacts do
+    collection { post :import }
+  end
+
   resources :messgs do
     collection { post :import }
   end
@@ -29,8 +33,13 @@ Rails.application.routes.draw do
 
   get 'notes/destroy'
 
+  get 'contacts/create'
+
+  get 'contacts/destroy'
+
   resources :records do
     resources :notes
+    resources :contacts
     collection { post :import }
   end
 
@@ -44,6 +53,7 @@ Rails.application.routes.draw do
   post "profiles_resetpassword" => "profiles#resetpassword"
 
   resources :profiles do
+    resources :contacts
     collection { post :import }
   end
 
@@ -65,9 +75,13 @@ Rails.application.routes.draw do
 
   get "inactive_content" => "records#inactive_content"
 
+  get "messgs_sendcustom" => "messgs#sendcustom"
+
+  get "messgs_sendupdate" => "messgs#sendupdate"
   #get 'records/inactive'
 
   root 'home#index'
+
 
   #get 'events/create'
 

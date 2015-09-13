@@ -19,10 +19,21 @@
     <br />
 
   <% end %>
-  
+
 
 <%= render 'form' %>
+<br />
+<hr>
+<h3>Automated Contact Information</h3>
+<br />
+<%= render 'cos' %>
+<br />
+<%= render 'newcos' %>
 
+<br />
+<hr>
+<h3>Payment History</h3>
+<br />
 </div>
 <% totalpay = 0.0 %>
 <% if !@recs.blank? %>
@@ -122,4 +133,3 @@ function showRams() {
   return false;
 }
 </script>
-

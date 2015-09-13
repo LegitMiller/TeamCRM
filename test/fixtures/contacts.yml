@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  useme: false
+  coborrower: false
+  firstname: MyString
+  lastname: MyString
+  useemail: false
+  email: MyString
+  usephone: false
+  phone: MyString
+  other: MyString
+  record_id: 1
+  profile_id: 1
+
+two:
+  useme: false
+  coborrower: false
+  firstname: MyString
+  lastname: MyString
+  useemail: false
+  email: MyString
+  usephone: false
+  phone: MyString
+  other: MyString
+  record_id: 1
+  profile_id: 1

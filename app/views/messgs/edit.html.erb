@@ -1,6 +1,17 @@
-<h1>Editing messg</h1>
+<h1>Editing Message</h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @messg %> |
-<%= link_to 'Back', messgs_path %>
+<% link_to 'Show', @messg %>
+<% link_to 'Back', messgs_path %>
+<% link_to 'Destroy', @messg, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+<%= link_to "Back to Progression Points", phases_path, class: 'btn btn-default btn-lg btn-warning', "data-no-turbolink"=>"true" %>  
+
+
+<script>
+function textAreaAdjust(o) {
+    o.style.height = "1px";
+    o.style.height = (25+o.scrollHeight)+"px";
+}
+</script>

@@ -1,0 +1,39 @@
+<div class="row">
+<%= form_for [@profile, @profile.contacts.build] do |f| %>
+  <div class="col-xs-3 col-sm-2">
+    <div class="input-group">
+      <div class="input-group-addon form-control">Use Contact
+        <%= f.check_box :useme, :class => "input-lg form-control" %></div>
+    </div>
+  </div>
+  <div class="col-xs-3 col-sm-4" hidden="true"><!--firstname-->
+    <br>
+    <%= f.text_field :firstname, :class => "input-lg form-control", "placeholder" => "first name", "value" => @profile.name %>
+  </div>
+  <div class="col-xs-3 col-sm-2"><!--useemail-->
+    <div class="input-group">
+      <div class="input-group-addon form-control">Send Emails
+        <%= f.check_box :useemail, :class => "input-lg form-control" %></div>
+    </div>
+  </div>
+  <div class="col-xs-6 col-sm-2"><!--email-->
+    <br>
+    <%= f.text_field :email, :class => "input-lg form-control", "placeholder" => "email"  %>
+  </div>
+  <div class="col-xs-4 col-sm-2"><!--usephone-->
+    <div class="input-group">
+      <div class="input-group-addon form-control">Send Texts
+        <%= f.check_box :usephone, :class => "input-lg form-control" %></div>
+    </div>
+  </div>
+  <div class="col-xs-4 col-sm-2"><!--phone-->
+    <br>
+    <%= f.text_field :phone, :class => "input-lg form-control", "placeholder" => "8015551234"  %>
+  </div>
+  <div class="col-xs-4 col-sm-2"><!--submit-->
+    <br>
+    <%= f.submit "Create", :class=> "btn btn-info btn-lg pull-right" %>
+  </div>
+
+<% end %>
+</div>

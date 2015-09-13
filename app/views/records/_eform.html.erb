@@ -68,52 +68,111 @@
             <%= f.select :progress, options_for_select(listofprogress, @record.progress.to_s), {prompt: true}, { :class => "btn btn-default btn-lg dropdown-toggle input-lg form-control"} %>
         </div>
       </div>
-      <div class="col-xs-6 col-sm-4">
+      <!--<div class="col-xs-6 col-sm-4">
         <div class="input-group">
           <div class="input-group-addon">Progress<br />Made </div>
-          <%= f.select :progressmail, options_for_select([["don't email", false], ["do email", true]], @record.progressmail),{:selected => params[:progressmail]}, {:class => "input-lg form-control"} %>
+          <% f.select :progressmail, options_for_select([["don't email", false], ["do email", true]], @record.progressmail),{:selected => params[:progressmail]}, {:class => "input-lg form-control"} %>
         </div>
       </div>
       <div class="col-xs-6 col-sm-4">
         <div class="input-group">
           <div class="input-group-addon">Phase<br />Completion </div>
-          <%= f.select :phasemail, options_for_select([["don't email", false], ['do email', true]], @record.phasemail),{:selected => params[:phasemail]}, {:class => "input-lg form-control"} %>
+          <% f.select :phasemail, options_for_select([["don't email", false], ['do email', true]], @record.phasemail),{:selected => params[:phasemail]}, {:class => "input-lg form-control"} %>
+        </div>
+      </div>-->
+      <div class="col-xs-6 col-sm-4">
+        <div class="input-group">
+          <div class="input-group-addon">Loan Type </div>
+          <% listofloantypes = [["Unknown", "Unknown"],["Puchase", "Purchase"],["Refinance", "Refinance"],["Refinance C/O", "Refinance C/O"],["Refinance R/T", "Refinance R/T"],["Other", "Other"]] %>
+            <%= f.select :loantype, options_for_select(listofloantypes, @record.loantype.to_s), {prompt: false}, { :class => "btn btn-default btn-lg dropdown-toggle input-lg form-control"} %>
         </div>
       </div>
-      <div class="col-xs-2 col-sm-2">
+      <div class="col-xs-6 col-sm-2">
+          <%= f.text_field :loanquote, :class => "input-lg form-control", "placeholder" => "rate quoted"  %>
+      </div>
+      <div class="col-xs-6 col-sm-2">
+        <%= f.text_field :ratelock, :class => "input-lg form-control", "placeholder" => "rate lock"  %>
+      </div>
+      <div class="col-xs-6 col-sm-4">
         <div class="input-group">
-          <div class="input-group-addon">Not a Team Deal</div>
-            <%= f.check_box :splitpay, {:value => params[:splitpay], :class => "input-lg form-control"} %>
+          <div class="input-group-addon">Rate Lock Expiration </div>
+            <%= f.date_select :ratelockexp, :class => "input-lg form-control" %>
         </div>
-      </div>          
+      </div>
+      <div class="col-xs-12 col-sm-12">
+      </div>
+      <% if @record.loantype.to_s == "Purchase" %>
+        <div class="col-xs-6 col-sm-4">
+          <div class="input-group">
+            <div class="input-group-addon">REPC Signed </div>
+              <%= f.date_select :purchasesigned, :class => "input-lg form-control" %>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4">
+          <div class="input-group">
+            <div class="input-group-addon">REPC Expiration </div>
+              <%= f.date_select :contractexp, :class => "input-lg form-control" %>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4">
+          <div class="input-group">
+            <div class="input-group-addon">Appraisal Deadline </div>
+              <%= f.date_select :appraisaldue, :class => "input-lg form-control" %>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4">
+          <div class="input-group">
+            <div class="input-group-addon">Closing Deadline </div>
+              <%= f.date_select :closingdue, :class => "input-lg form-control" %>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4">
+          <div class="input-group">
+            <div class="input-group-addon">Loan Approval Deadline </div>
+              <%= f.date_select :loanapprovaldue, :class => "input-lg form-control" %>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12">
+        </div>
+      <% end %>
+      <div class="col-xs-2 col-sm-7">
+        <div class="input-group">
+          <div class="input-group-addon form-control">Not a Team Deal
+            <%= f.check_box :splitpay, {:value => params[:splitpay], :class => "input-lg form-control"} %></div>
+        </div>
+      </div>
+
+
+      <div class="col-xs-6 col-sm-1">
+      </div>
 
       <% if current_user.profile.title == "admin" || current_user.profile.title == "master" %>
         <%if @record.progress == "Completed" || @record.progress == "Paid" %>
-          <div class="col-xs-6 col-sm-6">
+          <div class="col-xs-6 col-sm-6"><br />
             <div class="input-group">
               <div class="input-group-addon">Loan Officer<br />Pay </div>
               <%= f.number_field :lopay, :class => 'text_field', :step => 0.01, :class => "input-lg form-control" %>
             </div>
           </div>
-          <div class="col-xs-6 col-sm-6">
+          <div class="col-xs-6 col-sm-6"><br />
             <div class="input-group">
               <div class="input-group-addon">Processor<br />Pay </div>
               <%= f.number_field :propay, :class => 'text_field', :step => 0.01, :class => "input-lg form-control" %>
             </div>
           </div>
-          <div class="col-xs-6 col-sm-6">
+          <div class="col-xs-6 col-sm-6"><br />
             <div class="input-group">
               <div class="input-group-addon">Programmer<br />Pay </div>
               <%= f.number_field :jpay, :class => 'text_field', :step => 0.01, :class => "input-lg form-control" %>
             </div>
           </div>
-          <div class="col-xs-6 col-sm-6">
+          <div class="col-xs-6 col-sm-6"><br />
             <div class="input-group">
               <div class="input-group-addon">Marketer<br />Pay </div>
               <%= f.number_field :opay, :class => 'text_field', :step => 0.01, :class => "input-lg form-control" %>
             </div>
           </div>
-          <div class="col-xs-10 col-sm-10">
+          <div class="col-xs-10 col-sm-8">
           </div>
         <% end %>
       <% end %>
@@ -128,8 +187,8 @@
           </div>
         </div>
       </div>
--->      
-      <div class="col-xs-12 col-sm-2">
+-->
+      <div class="col-xs-12 col-sm-4">
         <div class="text-right">
           <div class="actions">
             <% if current_user.profile.title == "admin" || current_user.profile.title == "master" || current_user.id == @record.loanofficer_id || current_user.id == @record.processor_id %>
@@ -138,7 +197,7 @@
               <%= f.submit "Submit", :class=> "btn btn-info btn-lg", :onClick=> @mylink %>
           </div>
         </div>
-      </div>   
-    </div>  
+      </div>
+    </div>
   <% end %>
-</div>  
+</div>

@@ -1,0 +1,44 @@
+<% @profile.contacts.order(:created_at).each do |contact|%>
+  <%= form_for [@profile, @profile.contacts.build] do |f| %>
+    <% if !contact.firstname.blank? %>
+      <div class="row">
+        <div class="col-xs-3 col-sm-2">
+          <div class="input-group">
+            <div class="input-group-addon form-control">Use Contact
+              <%= f.check_box :useme, {:checked => contact.useme, :class => "input-lg form-control"} %></div>
+          </div>
+        </div>
+
+        <div class="col-xs-3 col-sm-2"><!--useemail-->
+          <div class="input-group">
+            <div class="input-group-addon form-control">Send Emails
+              <%= f.check_box :useemail, {:checked => contact.useemail, :class => "input-lg form-control"} %></div>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-2"><!--email-->
+          <br>
+          <%= f.text_field :email, "value" => contact.email, :class => "input-lg form-control", "placeholder" => "email"  %>
+        </div>
+        <div class="col-xs-3 col-sm-2"><!--usephone-->
+          <div class="input-group">
+            <div class="input-group-addon form-control">Send Texts
+              <%= f.check_box :usephone, {:checked => contact.usephone, :class => "input-lg form-control"} %></div>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-2"><!--phone-->
+          <br>
+          <%= f.text_field :phone, "value" => contact.phone, :class => "input-lg form-control", "placeholder" => "8015551234"  %>
+        </div>
+        <div class="col-xs-3 col-sm-2"><!--delete-->
+          <br>
+          <%= link_to(image_tag("trash.png", size: "18x20", alt: "Remove", "style"=>"padding:2px"), profile_contact_path(@profile, contact), method: :delete, :class => "btn btn-default btn-sm pull-right", data: { confirm: 'Are you sure you want to permanently destroy this contact information?' } ) %>
+        </div>
+        <div class="col-xs-3 col-sm-2"><!--submit-->
+          <br>
+          <%= f.submit "Update", :class=> "btn btn-info btn-lg pull-right", :onclick=> "value=#{contact.id}" %>
+        </div>
+      </div>
+      <hr />
+    <% end %>
+  <% end %>
+<% end %>
