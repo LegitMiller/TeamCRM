@@ -6,10 +6,12 @@
       <%= @profile.name %>
       <% if current_user.profile.title == "master" || current_user.profile.title == "admin" %>
         <%= link_to "Edit", edit_profile_path(@profile), :class => "btn btn-default btn-md"%>
-        <%= link_to "Destroy", profile, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-default btn-md"%>
+        <%= link_to "Destroy", @profile, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-default btn-md"%>
       <% end %>
     </h1>
   </div>
+
+  
   <div class="col-xs-3 col-sm-3">
     <br />
     <%= @profile.phone %>
