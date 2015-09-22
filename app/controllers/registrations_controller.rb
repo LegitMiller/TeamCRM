@@ -1,5 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
-
+skip_before_action :verify_authenticity_token
 #  def destroy
 #  	current_user.owned_groups.each do |group|
 #  		group.destroy
