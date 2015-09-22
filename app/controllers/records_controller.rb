@@ -217,7 +217,7 @@ class RecordsController < ApplicationController
 
     respond_to do |format|
       if @record.save
-        addphasestep(params[:id], 0)
+        #addphasestep(params[:id], 0) # I don't know why this was here, but it caused problems so I commented it out, then I tested adding in some checkboxes on the account I made this this commented out and it worked fine, so I don't think we need it. I hope it was just a thing I put in to test something.
         #format.html { redirect_to @record, notice: 'Record was successfully created.' }
         format.html { redirect_to root_path, notice: 'Record was successfully created.' }
         #format.json { render :show, status: :created, location: @record }
@@ -582,6 +582,7 @@ class RecordsController < ApplicationController
 
   def addphasestep(recid, myphaseid)
     myphaseid= myphaseid + 1
+
     if Phase.exists?(:phase_id => myphaseid)
       #create step
       Phasestep.where(record_id: recid, phase_id: myphaseid).first_or_create

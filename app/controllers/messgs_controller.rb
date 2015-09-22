@@ -108,6 +108,7 @@ class MessgsController < ApplicationController
     @messg = Messg.find_by_id(messgid)
     @record = Record.find_by_id(recordid)
     message = @messg.message
+    textmsg = @messg.intro
     subject = "Loan Status Update"
 
 
@@ -116,8 +117,8 @@ class MessgsController < ApplicationController
         #we have to figure out how to add more email addresses
         #UserMailer.send_simple(@record.firstname + " " + @record.lastname, @record.email, subject, message) #don't send to this information just to the contact info.
         @record.contacts.order(:created_at).each do |contact|
-          UserMailer.send_simple(contact.firstname + " " + contact.lastname, contact.email, subject, message) if contact.useme == true && contact.useemail == true && contact.contacttype == "coborrower"
-          UserMailer.send_phone(contact.firstname + " " + contact.lastname, contact.phone, @messg.intro) if contact.useme == true && contact.usephone == true && contact.contacttype == "coborrower"
+          UserMailer.send_simple(contact.firstname + " " + contact.lastname, contact.email, subject, message) if contact.useme == true && contact.useemail == true && contact.contacttype == "borrower"
+          UserMailer.send_phone(contact.firstname + " " + contact.lastname, contact.phone, @messg.intro) if contact.useme == true && contact.usephone == true && contact.contacttype == "borrower"
         end
       end
       if bcoborrower == "1"

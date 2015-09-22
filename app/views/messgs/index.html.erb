@@ -48,7 +48,7 @@
           <td><%= returnsend messg.processor %></td>
           <td><%= returnsend messg.admin %></td>
           <% if !@myrecord.blank? %>
-            <td><%= link_to 'Edit', {:controller => :messgs, :action => :show, :recordid=>@myrecord.id, :id => messg.id }, class: 'btn btn-default btn-lg btn-warning' %></td>
+            <td><%= link_to 'Send', {:controller => :messgs, :action => :show, :recordid=>@myrecord.id, :id => messg.id }, class: 'btn btn-default btn-lg btn-info' %></td>
           <% else %>
             <td><%= link_to 'Edit', messg, class: 'btn btn-default btn-lg btn-warning' %></td>
           <% end %>
@@ -62,7 +62,9 @@
 
 <br>
 
-<%= link_to 'New Messg', new_messg_path, class: 'btn btn-default btn-lg btn-info', "data-no-turbolink"=>"true" %>
+<% if @myrecord.blank? %>
+  <%= link_to 'New Messg', new_messg_path, class: 'btn btn-default btn-lg btn-info', "data-no-turbolink"=>"true" %>
+<% end %>
 
 <br>
 
