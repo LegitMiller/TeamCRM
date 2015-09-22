@@ -13,6 +13,12 @@
     <% end %>
 
     <div class="form-group">
+<% if current_user.profile.title == "admin" %>
+      <div class="col-xs-4 col-sm-4">
+        <br>
+        <%= f.text_field :user_id, :class => "input-lg form-control", "placeholder" => "name" %>
+      </div>
+<% end %>
 
       <div class="col-xs-4 col-sm-4">
         <br>
