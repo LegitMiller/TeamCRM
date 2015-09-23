@@ -20,13 +20,13 @@ class HomeController < ApplicationController
     elsif current_user.profile.title == "escrow officer"
       #@records = Record.where('progress= ? OR progress= ? OR processor_id= ?', 'appraisal ordered','appraisal received',current_user.id).order(sort_column + " " + sort_direction)
       @records = Record.where(escrow_id: current_user.id).order("lastname" + " " + "asc")
-    else 
+    else
       @records = Record.where(loanofficer_id: current_user.id).order("lastname" + " " + "asc")
     end
-    
+
     @listofcolors = { 0=> "default", 1=> "danger", 2=> "warning", 3=> "success", 4=> "info", 5=> "active", 6=> "active"}
     #@listofcolors = ["default", "danger", "warning", "success", "primary", "info"]
-    
+
     @phases = Phase.all
     @progressions = Progression.all
 
@@ -50,5 +50,5 @@ class HomeController < ApplicationController
   def mygroups
 #  	@groups = current_user.owned_groups.order(:created_at)
   end
-  
+
 end

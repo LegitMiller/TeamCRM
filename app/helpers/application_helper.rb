@@ -1,7 +1,7 @@
 module ApplicationHelper
 	def sortable(column, title = nil)
 	  title ||= column.titleize
-	  if sort_column == column 
+	  if sort_column == column
 	  	testvar = true
 	  end
 	  css_class = column == sort_column ? "current #{sort_direction}" : nil
@@ -10,7 +10,7 @@ module ApplicationHelper
 		  link_to title, {:sort => column, :direction => direction}, {:class => 'btn btn-default btn-xs btn-warning'}
 	  else
 		  link_to title, {:sort => column, :direction => direction}, {:class => 'btn btn-default btn-xs'}
-	  end 
+	  end
   end
 
   def getname(myid, noclass = nil)
@@ -18,27 +18,46 @@ module ApplicationHelper
   		if noclass == true
 				myclass = ''
 			else
-				myclass = 'btn btn-default btn-xs'	      
-      end	
+				myclass = 'btn btn-default btn-xs'
+      end
     	uprofile = User.find(myid).profile
 	    if uprofile.name.blank?
 	      link_to uprofile.email, uprofile, :class => myclass
 	    else
 	      link_to uprofile.name, uprofile, :class => myclass
 	    end
-  	else	
+  	else
   		"none"
 	  end
   end
+	def gettextname(myid)
+		if User.exists?(myid)
+			uprofile = User.find(myid).profile
+			if uprofile.name.blank?
+				uprofile.email
+			else
+				uprofile.name
+			end
+		else
+			"none"
+		end
+	end
   def editname(myid)
   	if User.exists?(myid) and myid == current_user.id
-	    if current_user.profile.name.blank? 
-	      link_to current_user.profile.email, edit_profile_path(current_user.id), :class => 'btn btn-default btn-xs'
+	    if current_user.profile.name.blank?
+	      link_to current_user.profile.email, edit_profile_path(current_user.id)#, :class => 'btn btn-default btn-xs'
 	    else
-	      link_to current_user.profile.name, edit_profile_path(current_user.id), :class => 'btn btn-default btn-xs'
+	      link_to current_user.profile.name, edit_profile_path(current_user.id)#, :class => 'btn btn-default btn-xs'
 	    end
-  	else	
+  	else
   		"none"
 	  end
   end
+	def link_fa_to(icon_name, text, link, extra)
+		if !extra.blank?
+  		link_to content_tag(:i, nil, :class => "fa fa-#{icon_name}") + "  #{text}", link, method: extra
+		else
+			link_to content_tag(:i, nil, :class => "fa fa-#{icon_name}") + "  #{text}", link
+		end
+ 	end
 end

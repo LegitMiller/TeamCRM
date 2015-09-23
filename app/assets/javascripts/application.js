@@ -12,7 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap
-//= require turbolinks
+// require bootstrap
+// require turbolinks
 //= require_tree .
-
+//= stub plugins/flot/flot-data
+//= stub plugins/dataTables/dataTables.bootstrap
+//= stub plugins/morris/morris-data
+//= stub plugins/morris/morris
+//= stub plugins/morris/morris.min
+//= stub plugins/morris/raphael.min

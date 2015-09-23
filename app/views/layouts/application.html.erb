@@ -2,33 +2,77 @@
 <html>
 <head>
   <title>TeamCRM</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'application', media: 'all' %><!--, 'data-turbolinks-track' => true-->
+
   <%= csrf_meta_tags %>
 </head>
 <body>
-	<div class = "container">
-		<ul class = "nav nav-tabs">
-			<li><%= link_to(image_tag("Group-icon.png"), root_path, "style"=>"padding:0px", "title"=>"Dashboard") %></li>
+
+<div >
+  <ul class = "navbar-inverse nav nav-tabs">
+    <li><%= link_to(image_tag("Group-icon.png"), root_path, "style"=>"padding:0px", "title"=>"Dashboard") %></li>
+    <% if !current_user.blank? %>
+      <li class="dropdown pull-right">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= gettextname current_user.id %> <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li>
+            <%= link_to "<i class='fa fa-fw fa-gear'></i>".html_safe + " Profile", edit_profile_path(current_user.id), "data-no-turbolink"=>"true" %>
+          </li>
+          <li>
+            <%= link_to "<i class='fa fa-fw fa-key'></i>".html_safe + " Account", edit_user_registration_path %>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <%= link_to "<i class='fa fa-fw fa-power-off'></i>".html_safe + " Log Out", :destroy_user_session, method: :delete %>
+          </li>
+        </ul>
+      </li>
+      <li class="dropdown pull-right">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users"></i> Clients <b class="caret"></b></a>
+        <ul class="dropdown-menu alert-dropdown">
+          <li>
+              <%= link_to "<i class='fa fa-search'></i>".html_safe + " Search", records_path %>
+          </li>
+          <li class="divider"></li>
+          <li>
+              <%= link_to "<i class='fa fa-plus'></i>".html_safe + " New", new_record_path %>
+          </li>
+        </ul>
+      </li>
+      <% if current_user.profile.title == "admin" or current_user.profile.title == "master" %>
+        <li class="dropdown pull-right">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-trophy"></i> Admin <b class="caret"></b></a>
+            <ul class="dropdown-menu alert-dropdown">
+                <li>
+                    <%= link_to "<i class='fa fa-pencil-square-o'></i>".html_safe + " Phases", phases_path %>
+                </li>
+                <li>
+                    <%= link_to "<i class='fa fa-phone'></i>".html_safe + " Messages", messgs_path %>
+                </li>
+                <li>
+                    <%= link_to "<i class='fa fa-bug'></i>".html_safe + " Users", profiles_path %>
+                </li>
+            </ul>
+        </li>
+      <% end %>
+    <% else %>
+      <h4><li class = "pull-right">TeamCRM</li></h4>
+    <% end %>
+  </ul>
+</div>
+
+<div class="my-fluid-container">
 
 
 
 
-			<% if !current_user.blank? %>
-				<li class = "pull-right"><%= link_to "Logout", :destroy_user_session, method: :delete %></li>
 
-				<li class = "pull-right"><%= editname current_user.id %></li>
 
-			<% else %>
-				<h4><li class = "pull-right">TeamCRM</li></h4>
-			<% end %>
-		</ul>
-
-		<%= yield %>
+  <%= yield %>
 
 		<div class ="notice"><%= notice %></div>
 		<div class ="alert"><%= alert %></div>
-
-	</div>
+</div>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 </body>
 </html>

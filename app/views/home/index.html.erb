@@ -1,66 +1,33 @@
 <div class="row">
   <div class="col-xs-3 col-sm-3">
-    <h1>Dashboard</h1>
+    <h1 class="page-header">
+        Dashboard <small>My Current Clients</small>
+    </h1>
   </div>
-
   <div class="col-xs-9 col-sm-9">
-  <br />
-      <div class="pull-right">
-        <% if current_user.profile.title == "admin" or current_user.profile.title == "master" %>
-          <%= link_to "Edit Progression Points", phases_path, class: 'btn btn-default btn-lg btn-warning', "data-no-turbolink"=>"true" %>
-          <%= link_to "Edit Messages", messgs_path, class: 'btn btn-default btn-lg btn-warning', "data-no-turbolink"=>"true" %>
-        <% end %>
-        <%= link_to 'New Record', new_record_path, class: 'btn btn-default btn-lg btn-info', "data-no-turbolink"=>"true"  %>
-        <%= link_to "Client Search", records_path, class: 'btn btn-default btn-lg btn-warning', "data-no-turbolink"=>"true" %>
-        <%= link_to "Profile Search", profiles_path, class: 'btn btn-default btn-lg btn-warning', "data-no-turbolink"=>"true" %>
-      </div>
+    <div class="pull-right">
+      <br />
+      <br />
+      <table class="table table-hover" id="records">
+        <tbody>
+          <tr> Color Key:
+            <% i = 0 %>
+            <% @phases.order(:phase_id).each do |phase| %>
+              <td class=<%="#{@listofcolors[i]}"%> ><center><%= phase.name %></center></td>
+              <% i = i + 1 %>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-
-
-    <% if current_user.profile.title == "master" %>
-
-    <h4>set status to </h4>
-    <% if current_user.profile.status == "busy" %>
-      <%= link_to "Free", {:controller => :profiles, :action => :changestatus}, :method => 'post', :class =>"btn btn-lg btn-default" %>
-      <%= link_to "Busy", root_path, :class =>"btn btn-lg btn-success active" %>
-    <% elsif current_user.profile.status == "free"  %>
-      <%= link_to "Free", root_path, :class =>"btn btn-lg btn-success active" %>
-      <%= link_to "Busy", {:controller => :profiles, :action => :changestatus}, :method => 'post', :class =>"btn btn-lg btn-default" %>
-    <% else %>
-      <%= link_to "Free", {:controller => :profiles, :action => :changestatus}, :method => 'post', :class =>"btn btn-lg btn-default" %>
-    <% end %>
-    <br />
-
-  <% end %>
-
-
-  <div class="row">
-    <div class="col-xs-3 col-sm-3">
-      <h2>My Current Clients</h2>
-    </div>
-    <div class="col-xs-9 col-sm-9">
-      <div class="pull-right">
-        <table class="table table-hover" id="records">
-          <tbody>
-            <tr> Color Key:
-              <% i = 0 %>
-              <% @phases.order(:phase_id).each do |phase| %>
-                <td class=<%="#{@listofcolors[i]}"%> ><center><%= phase.name %></center></td>
-                <% i = i + 1 %>
-              <% end %>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+</div>
 
 
   <table class="table table-hover" id="records">
     <thead>
       <tr>
-        <th>Name</th>
+        <th>Frist Name</th>
         <th>Updated</th>
         <th>Progress</th>
         <th>Loan Officer</th>
@@ -174,9 +141,6 @@
   </div>
   <div class="col-xs-3 col-sm-3">
     <%= link_to "Messgs", messgs_path, class: 'btn btn-default btn-lg', "data-no-turbolink"=>"true" %>
-  </div>
-  <div class="col-xs-3 col-sm-3">
-    <%= link_to "Contacts", contacts_path, class: 'btn btn-default btn-lg', "data-no-turbolink"=>"true" %>
   </div>
 </div>
 

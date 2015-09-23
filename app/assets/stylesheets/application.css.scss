@@ -15,9 +15,33 @@
  */
 
 @import "bootstrap";
+body {
+background-color: #F9F9F9;
+.my-fluid-container {
+  margin-left: 20px;
+  margin-right: 20px;
+  }
+}
+.my-default { background-color: #FFFFFF; } //button
+.my-danger { background-color: #B2675E; } //button
+.my-warning { background-color: #CEE2B7; } //button
+.my-success { background-color: #1B998B; } //button
+.my-info { background-color: #468189; } //button
+.my-active { background-color: #3D3358; } //button
+
+.my-default:hover { background-color: #F5F5F5; } //button
+.my-danger:hover { background-color: #F2DEDE; } //button
+.my-warning:hover { background-color: #F9F2CC; } //button
+.my-success:hover { background-color: #DFF0D8; } //button
+.my-info:hover { background-color: #D9EDF7; } //button
+.my-active:hover { background-color: #D8D8D8; } //button
 
 
 /*
+.btn-warning { background-color: #FFFFFF; } //button
+
+
+
 *.pretty th .current {
 *  padding-right: 12px;
 *  background-repeat: no-repeat;
